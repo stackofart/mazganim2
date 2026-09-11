@@ -1,0 +1,192 @@
+{
+  "sourceSlogan": "Nettoyage et désinfection de climatiseurs muraux",
+  "priceNote": "Un contrôle supplémentaire ou les modèles complexes (VRF, multi-split) sont facturés séparément après accord préalable.",
+  "priceLabels": ["Un climatiseur", "Deux climatiseurs", "Trois climatiseurs"],
+  "nav": ["Services", "Les étapes", "Tarifs", "Questions"],
+  "book": "Réserver",
+  "bookLong": "Réserver un nettoyage",
+  "included": "Ce qui est inclus",
+  "details": "Voir le détail",
+  "close": "Fermer",
+  "menu": "Menu",
+  "skip": "Aller au contenu",
+  "language": "Langue",
+  "hero": ["Une maison fraîche.", "Un air", "vraiment propre."],
+  "intro": "Nettoyage et désinfection de climatiseurs muraux dans le centre d’Israël. D’Ashdod à Hadera.",
+  "care": "Le respect de votre intérieur. Le souci du détail.",
+  "caption": ["Une fraîcheur qui se ressent.", "Dès la première inspiration."],
+  "imageAlt": "Salon lumineux avec un climatiseur mural",
+  "benefits": [
+    ["Plus de 5 ans", "dans le Goush Dan et environs"],
+    ["Dès 250 ₪", "pour un climatiseur mural"],
+    ["Centre d’Israël", "d’Ashdod à Hadera"],
+    ["Contact facile", "par téléphone et Telegram"]
+  ],
+  "servicesEyebrow": "UNE PETITE ATTENTION. UNE GRANDE DIFFÉRENCE.",
+  "servicesTitle": "Bien plus que des filtres propres",
+  "servicesIntro": "Nettoyage et désinfection professionnels pour maisons et bureaux.",
+  "services": [
+    [
+      "Nettoyage en profondeur",
+      "Nettoyage des filtres, de l’échangeur et des surfaces internes.",
+      [
+        "Inspection et démontage soigneux",
+        "Lavage des filtres lavables",
+        "Nettoyage de l’échangeur à la vapeur ou à faible pression"
+      ]
+    ],
+    [
+      "Nettoyage du drainage",
+      "Rinçage des conduits et du bac à condensats.",
+      [
+        "Nettoyage du bac à condensats",
+        "Rinçage des saletés dans les conduits",
+        "Vérification de l’écoulement"
+      ]
+    ],
+    [
+      "Désinfection et remontage",
+      "Traitement des composants internes et contrôle du système.",
+      [
+        "Application d’un désinfectant adapté",
+        "Remontage et réinstallation des filtres",
+        "Test de fonctionnement après l’entretien"
+      ]
+    ]
+  ],
+  "detailNote": "L’entretien de l’unité extérieure, les modèles complexes et les travaux supplémentaires sont convenus à l’avance.",
+  "processEyebrow": "SIMPLEMENT, ÉTAPE PAR ÉTAPE.",
+  "processTitle": "Du premier message à un air plus frais",
+  "steps": [
+    [
+      "Parlez-nous de votre climatiseur",
+      "Indiquez le nombre d’unités, le type de système et votre ville."
+    ],
+    [
+      "Convenons des détails",
+      "Nous précisons le prix, les travaux et un horaire adapté."
+    ],
+    [
+      "Nous nous occupons du nettoyage",
+      "Nettoyage, désinfection, remontage et contrôle du système."
+    ]
+  ],
+  "pricingEyebrow": "DES TARIFS CLAIRS",
+  "pricingTitle": "Plus propre chez vous. Plus avantageux ensemble.",
+  "pricingIntro": "Tarifs pour des climatiseurs muraux nettoyés lors d’une seule visite. Choisissez la quantité pour votre demande.",
+  "selected": "Sélectionné",
+  "select": "Choisir",
+  "quote": "Sur devis",
+  "estimate": "Total au tarif indiqué",
+  "estimateNote": "Les conditions finales et travaux supplémentaires sont convenus avant la visite.",
+  "regionEyebrow": "PRÈS DE CHEZ VOUS",
+  "regionTitle": "D’Ashdod à Hadera",
+  "regionText": "Nous intervenons dans le centre d’Israël, le Goush Dan et les environs. Votre ville n’est pas listée ? Contactez-nous.",
+  "cities": [
+    "Tel-Aviv-Jaffa",
+    "Rishon LeTsion",
+    "Petah Tikva",
+    "Netanya",
+    "Bnei Brak",
+    "Ashdod",
+    "Holon",
+    "Ramat Gan",
+    "Rehovot",
+    "Bat Yam",
+    "Herzliya",
+    "Hadera"
+  ],
+  "faqEyebrow": "BON À SAVOIR",
+  "faqTitle": "Vos questions, nos réponses",
+  "faqIntro": "Besoin de précisions ? Parlons-en lors de la réservation.",
+  "ask": "Poser une question",
+  "faqs": [
+    [
+      "Que comprend le nettoyage ?",
+      "Inspection, démontage, nettoyage des filtres et composants internes, rinçage du drainage, désinfection, remontage et test. Les détails dépendent du modèle et de son état."
+    ],
+    [
+      "Où intervenez-vous ?",
+      "Dans le centre d’Israël, d’Ashdod à Hadera, notamment à Tel-Aviv, Rishon LeTsion, Petah Tikva, Netanya et dans les villes voisines."
+    ],
+    [
+      "Combien coûte le nettoyage de plusieurs unités ?",
+      "Un climatiseur mural : 250 ₪ ; deux : 450 ₪ ; trois : 600 ₪. Demandez un devis pour une quantité supérieure."
+    ],
+    [
+      "Intervenez-vous sur les systèmes complexes ?",
+      "Le diagnostic supplémentaire et l’entretien VRF ou multi-split sont facturés séparément après accord préalable."
+    ],
+    [
+      "Comment préparer la visite ?",
+      "Libérez l’espace sous le climatiseur, éloignez les objets fragiles et signalez toute difficulté d’accès."
+    ],
+    [
+      "Une demande envoyée confirme-t-elle la réservation ?",
+      "Non. Nous convenons ensuite de l’horaire, du prix et des travaux avant de confirmer la réservation."
+    ]
+  ],
+  "bookingEyebrow": "VOTRE PROCHAINE INSPIRATION, PLUS FRAÎCHE",
+  "bookingTitle": ["Commençons par", "votre climatiseur."],
+  "bookingIntro": "Quelques détails pour discuter du tarif et d’un horaire adapté.",
+  "promise": "Vous confirmez après accord sur tous les détails.",
+  "formTitle": "Demande de nettoyage",
+  "formIntro": "Laissez votre numéro, nous vous recontacterons.",
+  "name": "Votre nom",
+  "optional": "facultatif",
+  "city": "Ville",
+  "phone": "Téléphone",
+  "phoneHint": "Mobile israélien : 05XXXXXXXX ou +9725XXXXXXXX",
+  "type": "Type de climatiseur",
+  "types": [
+    "Climatiseur mural",
+    "Multi-split",
+    "VRF",
+    "Je ne sais pas — besoin de conseil"
+  ],
+  "quantity": "Nombre d’unités",
+  "decrease": "Diminuer la quantité",
+  "increase": "Augmenter la quantité",
+  "note": "Commentaire",
+  "namePlaceholder": "Comment vous appeler ?",
+  "cityPlaceholder": "Où intervenir ?",
+  "notePlaceholder": "Modèle, état ou horaire souhaité",
+  "send": "Envoyer la demande",
+  "sending": "Envoi…",
+  "sent": "Demande acceptée par le formulaire",
+  "sentNote": "L’horaire et le prix final restent à confirmer avec le spécialiste.",
+  "sendAnother": "Nouvelle demande",
+  "sendError": "Échec de l’envoi. Réessayez ou contactez-nous par téléphone ou Telegram.",
+  "invalidPhone": "Saisissez un mobile au format 05XXXXXXXX ou +9725XXXXXXXX.",
+  "invalidRequest": "Vérifiez la ville, le système et le nombre d’unités.",
+  "prepare": "Préparer un message",
+  "ready": "Votre message est prêt",
+  "copy": "Copier le message",
+  "copied": "Message copié",
+  "copyError": "Sélectionnez et copiez le message ci-dessous.",
+  "whatsapp": "Ouvrir WhatsApp",
+  "formNote": "Envoyer la demande transmet vos données à l’entreprise via Formspree.",
+  "messageNote": "Vous envoyez vous-même le message depuis votre messagerie.",
+  "privacy": "À propos des données",
+  "requestHello": "Bonjour ! Je souhaite réserver un nettoyage de climatiseur.",
+  "source": "Source",
+  "message": "Message",
+  "contact": "Nous contacter directement",
+  "privacyTitle": "Vos données",
+  "privacyText": [
+    "Pour vous rappeler, le formulaire transmet les informations saisies à l’entreprise via Formspree, uniquement après votre clic sur Envoyer la demande.",
+    "Ouvrir WhatsApp transmet le texte à l’application. Vous décidez de l’envoyer. L’utilisation de Telegram relève de ses propres règles.",
+    "Les paramètres de campagne sont conservés pendant la session de cet onglet pour identifier la source du contact. Aucun pixel publicitaire n’est connecté. Pour toute question sur les données envoyées, contactez CoolClean par téléphone."
+  ],
+  "understood": "Compris",
+  "shareTitle": "L’air frais se partage.",
+  "shareText": "Parlez de nous à vos proches.",
+  "share": "Partager le site",
+  "shared": "Lien copié",
+  "shareError": "Copiez le lien dans la barre d’adresse.",
+  "footer": "Un climatiseur propre. Un intérieur agréable.",
+  "privacyLink": "Confidentialité",
+  "noJs": "Informations et contacts disponibles sans JavaScript. Activez JavaScript pour utiliser le formulaire.",
+  "pageTitle": "Nettoyage de climatiseurs dans le centre d’Israël",
+  "description": "CoolClean : nettoyage et désinfection de climatiseurs d’Ashdod à Hadera. Une unité murale 250 ₪, deux 450 ₪, trois 600 ₪. Réservez en ligne."
+}

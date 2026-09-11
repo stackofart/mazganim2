@@ -16,3 +16,5 @@ Hero: `public/images/hero.jpg`. Создано встроенным ImageGen, 15
 > Constraints: decorative concept imagery, not documentation of a real customer installation. No people, no text, no labels, no logos, no watermark, no UI.
 
 Golos Text: Google Fonts, latin and cyrillic variable WOFF2, SIL Open Font License. Fonts are served locally; the browser does not call Google Fonts.
+
+Для иврита и арабского добавлены локальные Noto Sans Hebrew и Noto Sans Arabic из Google Fonts. Их лицензии: `public/fonts/OFL-noto-hebrew.txt` и `public/fonts/OFL-noto-arabic.txt`.

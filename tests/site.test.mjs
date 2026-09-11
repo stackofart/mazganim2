@@ -1,76 +1,72 @@
-import test from "node:test";
-import assert from "node:assert/strict";
-import { readFile, access } from "node:fs/promises";
-import { makeRequest, whatsappUrl } from "../src/lib.js";
-import { company } from "../src/data/company.js";
+import test from 'node:test'
+import assert from 'node:assert/strict'
+import {readFile,access} from 'node:fs/promises'
+import {calculatePrice,normalizePhone,makeRequest,whatsappUrl,sendLead} from '../src/lib.js'
+import {company} from '../src/data/company.js'
+import {languages,locales,contentFor,localePath} from '../src/data/content.js'
 
-test("request validates type, bounded quantity and city", () => {
-  assert.throws(() => makeRequest({ type: "wall", quantity: 0, city: "City" }));
-  assert.throws(() =>
-    makeRequest({ type: "wall", quantity: 11, city: "City" }),
-  );
-  assert.throws(() =>
-    makeRequest({ type: "wall", quantity: 1.5, city: "City" }),
-  );
-  assert.throws(() =>
-    makeRequest({ type: "unknown-value", quantity: 1, city: "City" }),
-  );
-  assert.throws(() => makeRequest({ type: "wall", quantity: 1, city: "  " }));
-  const text = makeRequest(
-    {
-      type: "wall",
-      quantity: 2,
-      city: "Тестовый город",
-      name: "Тест",
-      note: "Нужна чистка",
-    },
-    { utm_source: "instagram", utm_campaign: "summer" },
-  );
-  assert.match(text, /Количество: 2/);
-  assert.match(text, /Источник: instagram \/ summer/);
-});
-test("unconfigured destination never directs leads to a made-up number", () => {
-  if (!company.whatsapp) assert.equal(whatsappUrl("test"), "");
-  else {
-    const url = new URL(whatsappUrl("Привет & + ?"));
-    assert.equal(url.host, "wa.me");
-    assert.equal(url.searchParams.get("text"), "Привет & + ?");
-  }
-});
-test("SSG delivers content, metadata, valid JSON-LD and only real local anchors", async () => {
-  const html = await readFile("dist/index.html", "utf8");
-  assert.equal((html.match(/<h1[ >]/g) || []).length, 1);
-  for (const id of ["services", "process", "prices", "faq", "contact"])
-    assert.ok(html.includes(`id="${id}"`));
-  assert.ok(html.includes("Глубокая чистка"));
-  assert.match(html, /<fieldset[^>]*disabled/);
-  assert.match(html, /<meta name="description" content="Чистка кондиционеров/);
-  assert.ok(html.includes("Запрос на чистку"));
-  const json = html.match(
-    /<script type="application\/ld\+json">([\s\S]*?)<\/script>/,
-  )[1];
-  const data = JSON.parse(json);
-  assert.equal(data["@context"], "https://schema.org");
-  assert.equal(
-    data["@graph"].find((n) => n["@type"] === "FAQPage").mainEntity.length,
-    6,
-  );
-  assert.match(html, /<link rel="canonical" href="https:\/\/[^\"]+\/"/);
-  for (const match of html.matchAll(/href="#([^\"]+)"/g))
-    assert.ok(html.includes(`id="${match[1]}"`), `Missing ${match[1]} target`);
-  if (!company.verified) {
-    assert.match(html, /noindex, nofollow/);
-    assert.ok(!data["@graph"].some((n) => n["@type"] === "HVACBusiness"));
-  }
-  for (const match of html.matchAll(
-    /(?:src|href)="(\/(?:assets|fonts|images)\/[^\"?#]+)"/g,
-  ))
-    await access(`dist${match[1]}`);
-});
-test("robots and sitemap reflect the same configured origin", async () => {
-  const robots = await readFile("dist/robots.txt", "utf8"),
-    sitemap = await readFile("dist/sitemap.xml", "utf8");
-  const root = robots.match(/Sitemap: (https:\/\/[^\s]+)\/sitemap.xml/)[1];
-  assert.ok(sitemap.includes(`<loc>${root}/</loc>`));
-  if (!company.verified) assert.match(robots, /Disallow: \//);
-});
+test('prices match the rendered reference; unsupported quantities require a quote',()=>{
+ for(const [quantity,price] of [[1,250],[2,450],[3,600]])assert.equal(calculatePrice({type:'wall',quantity}),price)
+ for(const input of [{type:'wall',quantity:4},{type:'wall',quantity:0},{type:'wall',quantity:1.5},{type:'multi',quantity:2},{type:'vrf',quantity:1},{type:'unknown',quantity:1}])assert.equal(calculatePrice(input),null)
+})
+test('Israeli mobile numbers normalize to E.164 and invalid phones fail',()=>{
+ assert.equal(normalizePhone('054-757-7371'),'+972547577371')
+ assert.equal(normalizePhone('+972 (54) 757 7371'),'+972547577371')
+ for(const phone of ['123','054123456','0441234567','+9720541234567','<script>',''])assert.equal(normalizePhone(phone),null)
+})
+test('requests validate fields and retain localized prices and campaign attribution',()=>{
+ for(const quantity of [0,11,1.5])assert.throws(()=>makeRequest({type:'wall',quantity,city:'City'}))
+ assert.throws(()=>makeRequest({type:'other',quantity:1,city:'City'}))
+ assert.throws(()=>makeRequest({type:'wall',quantity:1,city:' '}))
+ for(const lang of languages){const t=contentFor(lang.code);const message=makeRequest({type:'wall',quantity:2,city:'Test city',phone:'0541234567'}, {utm_source:'instagram',utm_campaign:'summer'},lang.code);assert.ok(message.includes(t.requestHello));assert.ok(message.includes('450 ₪'));assert.ok(message.includes('instagram / summer'));assert.ok(message.includes('+972541234567'))}
+})
+test('WhatsApp does not use the original placeholder destinations',()=>{
+ if(!company.whatsapp)assert.equal(whatsappUrl('test'),'')
+ else{const url=new URL(whatsappUrl('Hello & + ?'));assert.equal(url.hostname,'wa.me');assert.equal(url.pathname,'/'+company.whatsapp.replace(/\D/g,''));assert.equal(url.searchParams.get('text'),'Hello & + ?')}
+})
+const lead={name:'Test',city:'Test city',phone:'0541234567',type:'wall',quantity:2,note:'Test only'}
+test('callback transport posts to the original endpoint and succeeds only after acceptance',async()=>{
+ let called=0
+ const result=await sendLead(lead,{locale:'en',campaign:{utm_source:'test'},fetcher:async(url,options)=>{
+  called++;assert.equal(url,'https://formspree.io/f/mpwrzaby');assert.equal(options.method,'POST');assert.equal(options.credentials,'omit');const payload=JSON.parse(options.body);assert.equal(payload.phone,'+972541234567');assert.equal(payload.utm_source,'test');assert.ok(payload.message.includes('450 ₪'));return {ok:true}
+ }})
+ assert.equal(called,1);assert.equal(result.status,'accepted')
+})
+test('callback failure is never reported as a successful lead',async()=>{
+ await assert.rejects(sendLead(lead,{fetcher:async()=>({ok:false,status:422})}))
+ await assert.rejects(sendLead(lead,{fetcher:async()=>{throw new Error('Network unavailable')}}))
+ let called=false
+ await assert.rejects(sendLead({...lead,phone:'123'},{fetcher:async()=>{called=true;return{ok:true}}}))
+ await assert.rejects(sendLead({...lead,website:'spam'},{fetcher:async()=>{called=true;return{ok:true}}}))
+ assert.equal(called,false)
+})
+test('all five language dictionaries have matching keys and complete core content',()=>{
+ const keys=Object.keys(locales.ru).sort()
+ for(const lang of languages){assert.deepEqual(Object.keys(locales[lang.code]).sort(),keys);const t=contentFor(lang.code);assert.equal(t.faqs.length,6);assert.equal(t.services.length,3);assert.equal(t.cities.length,12);assert.equal(t.priceLabels.length,3)}
+})
+test('every SSG page has its own content, canonical, hreflang, direction and offers',async()=>{
+ for(const lang of languages){
+  const path=lang.code==='ru'?'dist/index.html':`dist/${lang.code}/index.html`
+  const html=await readFile(path,'utf8'),t=contentFor(lang.code)
+  assert.match(html,new RegExp(`<html lang="${lang.code}" dir="${lang.dir}">`))
+  assert.equal((html.match(/<h1[ >]/g)||[]).length,1)
+  assert.match(html,/<fieldset[^>]*disabled/)
+  assert.match(html,/index, follow, max-image-preview:large/)
+  const canonical=html.match(/<link rel="canonical" href="([^"]+)"/)[1]
+  assert.equal(new URL(canonical).pathname,localePath(lang.code))
+  assert.equal((html.match(/<link rel="alternate" hreflang=/g)||[]).length,6)
+  assert.ok(html.includes('tel:+972547577371'));assert.ok(html.includes('https://t.me/IGideonI'))
+  const data=JSON.parse(html.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/)[1])
+  const page=data['@graph'].find(n=>n['@type']==='WebPage');assert.equal(page.inLanguage,lang.code);assert.equal(page.description,t.description)
+  const business=data['@graph'].find(n=>n['@type']==='HVACBusiness');assert.equal(business.name,'CoolClean');assert.deepEqual(business.hasOfferCatalog.itemListElement.map(o=>o.price),[250,450,600])
+  assert.equal(data['@graph'].find(n=>n['@type']==='FAQPage').mainEntity.length,6)
+  for(const match of html.matchAll(/href="#([^\"]+)"/g))assert.ok(html.includes(`id="${match[1]}"`))
+  for(const match of html.matchAll(/(?:src|href)="(\/(?:assets|fonts|images)\/[^\"?#]+)"/g))await access(`dist${match[1]}`)
+ }
+})
+test('sitemap exposes all language pages and robots allows indexing',async()=>{
+ const sitemap=await readFile('dist/sitemap.xml','utf8'),robots=await readFile('dist/robots.txt','utf8')
+ assert.equal((sitemap.match(/<url>/g)||[]).length,5)
+ assert.match(robots,/Allow: \//)
+ for(const lang of languages)assert.ok(sitemap.includes(`hreflang="${lang.code}"`))
+})

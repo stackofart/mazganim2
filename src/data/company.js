@@ -1,11 +1,30 @@
-// Business details are centralized here and must be confirmed before public launch.
+// Extracted from stackofart/mazganim at c8a86eebd08f9fc875a120a14e60bccd3aec1956.
+// The original WhatsApp URLs were placeholders; keep unset until confirmed.
 export const company = {
-  name: "Mazganim",
+  name: "CoolClean",
   siteUrl: "https://mazganim-clean-air.nat-tan.chatgpt.site",
-  phone: "",
+  phone: "+972547577371",
+  displayPhone: "054-757-7371",
   whatsapp: "",
-  serviceArea: [],
+  telegram: "https://t.me/IGideonI",
+  formEndpoint: "https://formspree.io/f/mpwrzaby",
+  serviceArea: [
+    "Tel Aviv-Yafo",
+    "Rishon LeZion",
+    "Petah Tikva",
+    "Netanya",
+    "Bnei Brak",
+    "Ashdod",
+    "Holon",
+    "Ramat Gan",
+    "Rehovot",
+    "Bat Yam",
+    "Herzliya",
+    "Hadera",
+  ],
   currency: "ILS",
-  verified: false,
+  prices: { 1: 250, 2: 450, 3: 600 },
+  verified: true,
   source: "https://github.com/stackofart/mazganim",
+  sourceCommit: "c8a86eebd08f9fc875a120a14e60bccd3aec1956",
 };

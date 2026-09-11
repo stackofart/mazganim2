@@ -1,0 +1,192 @@
+{
+  "sourceSlogan": "Cleaning & Disinfecting Wall-Mounted Air-Conditioners",
+  "priceNote": "Extra inspection or complex models (VRF, multi-split) are billed separately by prior arrangement.",
+  "priceLabels": ["One AC unit", "Two AC units", "Three AC units"],
+  "nav": ["Services", "How it works", "Pricing", "FAQ"],
+  "book": "Book a clean",
+  "bookLong": "Book a cleaning",
+  "included": "What is included",
+  "details": "See what is included",
+  "close": "Close",
+  "menu": "Menu",
+  "skip": "Skip to content",
+  "language": "Language",
+  "hero": ["A cooler home.", "Air that feels", "truly fresh."],
+  "intro": "Wall-mounted AC cleaning and disinfection in central Israel. From Ashdod to Hadera.",
+  "care": "Care for your home. Attention to every detail.",
+  "caption": ["Freshness you can feel.", "From the very first breath."],
+  "imageAlt": "Bright living room with a wall-mounted air conditioner",
+  "benefits": [
+    ["5+ years", "in Gush Dan and nearby areas"],
+    ["From ₪250", "for one wall-mounted AC"],
+    ["Central Israel", "from Ashdod to Hadera"],
+    ["Easy to reach", "by phone and Telegram"]
+  ],
+  "servicesEyebrow": "A LITTLE CARE. A BIG DIFFERENCE.",
+  "servicesTitle": "More than clean filters",
+  "servicesIntro": "Professional cleaning and disinfection for homes and offices.",
+  "services": [
+    [
+      "Deep cleaning",
+      "We clean filters, the heat exchanger and internal surfaces.",
+      [
+        "Inspection and careful disassembly",
+        "Washing of washable filters",
+        "Heat exchanger cleaning with steam or gentle water pressure"
+      ]
+    ],
+    [
+      "Drain cleaning",
+      "We flush the drain channels and condensate tray.",
+      [
+        "Cleaning the condensate tray",
+        "Flushing dirt from drain channels",
+        "Checking condensate drainage"
+      ]
+    ],
+    [
+      "Disinfection and assembly",
+      "We treat internal components and check the system.",
+      [
+        "Treatment with a suitable disinfectant",
+        "Reassembly and filter installation",
+        "A functional check after servicing"
+      ]
+    ]
+  ],
+  "detailNote": "Outdoor unit servicing, complex models and additional work are agreed in advance.",
+  "processEyebrow": "STRAIGHTFORWARD, STEP BY STEP.",
+  "processTitle": "From your first message to fresher air",
+  "steps": [
+    [
+      "Tell us about your AC",
+      "Share the number of units, system type and your city."
+    ],
+    [
+      "Agree on the details",
+      "We confirm the price, scope of work and a convenient time."
+    ],
+    [
+      "Leave the cleaning to us",
+      "We clean, disinfect, reassemble and check the system."
+    ]
+  ],
+  "pricingEyebrow": "CLEAR PRICING",
+  "pricingTitle": "A cleaner home. Better together.",
+  "pricingIntro": "Prices for wall-mounted units cleaned in one visit. Select the quantity to add it to your request.",
+  "selected": "Selected",
+  "select": "Select",
+  "quote": "By arrangement",
+  "estimate": "Listed total",
+  "estimateNote": "Final terms and additional work are agreed before the visit.",
+  "regionEyebrow": "CLOSE TO HOME",
+  "regionTitle": "From Ashdod to Hadera",
+  "regionText": "Serving central Israel, Gush Dan and surrounding areas. If your city is not listed, ask us about availability.",
+  "cities": [
+    "Tel Aviv-Yafo",
+    "Rishon LeZion",
+    "Petah Tikva",
+    "Netanya",
+    "Bnei Brak",
+    "Ashdod",
+    "Holon",
+    "Ramat Gan",
+    "Rehovot",
+    "Bat Yam",
+    "Herzliya",
+    "Hadera"
+  ],
+  "faqEyebrow": "GOOD TO KNOW",
+  "faqTitle": "Your questions, answered",
+  "faqIntro": "Need more information? Ask when you book.",
+  "ask": "Ask a question",
+  "faqs": [
+    [
+      "What does cleaning include?",
+      "Inspection, disassembly, cleaning filters and internal components, drain flushing, disinfection, reassembly and testing. Exact steps depend on the model and condition."
+    ],
+    [
+      "Which areas do you cover?",
+      "Central Israel from Ashdod to Hadera, including Tel Aviv, Rishon LeZion, Petah Tikva, Netanya and nearby cities."
+    ],
+    [
+      "How much does cleaning several units cost?",
+      "One wall-mounted AC costs ₪250, two cost ₪450, and three cost ₪600. Contact us for a quote for more units."
+    ],
+    [
+      "Do you service complex systems?",
+      "Additional diagnostics and VRF or multi-split servicing are priced separately by prior arrangement."
+    ],
+    [
+      "How should I prepare?",
+      "Clear the space beneath the AC, move fragile objects and tell us about any access difficulties beforehand."
+    ],
+    [
+      "Does a submitted request confirm a booking?",
+      "No. We will agree on the time, price and scope of work after receiving your request."
+    ]
+  ],
+  "bookingEyebrow": "YOUR NEXT BREATH, FRESHER",
+  "bookingTitle": ["Let’s start with", "your air conditioner."],
+  "bookingIntro": "A few details help us discuss the price and a convenient time.",
+  "promise": "Your booking is confirmed after all details are agreed.",
+  "formTitle": "Request a cleaning",
+  "formIntro": "Leave your phone number and we will get in touch.",
+  "name": "Your name",
+  "optional": "optional",
+  "city": "City",
+  "phone": "Phone",
+  "phoneHint": "Israeli mobile: 05XXXXXXXX or +9725XXXXXXXX",
+  "type": "AC type",
+  "types": [
+    "Wall-mounted AC",
+    "Multi-split",
+    "VRF",
+    "Not sure — please advise"
+  ],
+  "quantity": "Number of units",
+  "decrease": "Decrease quantity",
+  "increase": "Increase quantity",
+  "note": "Comment",
+  "namePlaceholder": "How should we address you?",
+  "cityPlaceholder": "Where do you need cleaning?",
+  "notePlaceholder": "Model, condition or preferred time",
+  "send": "Send request",
+  "sending": "Sending…",
+  "sent": "Request accepted by the form",
+  "sentNote": "The visit time and final price still need to be agreed with our specialist.",
+  "sendAnother": "New request",
+  "sendError": "The request could not be sent. Please retry or contact us by phone or Telegram.",
+  "invalidPhone": "Enter a mobile number as 05XXXXXXXX or +9725XXXXXXXX.",
+  "invalidRequest": "Check the city, system type and number of units.",
+  "prepare": "Prepare a message",
+  "ready": "Your message is ready",
+  "copy": "Copy message",
+  "copied": "Message copied",
+  "copyError": "Select and copy the message below.",
+  "whatsapp": "Open WhatsApp",
+  "formNote": "Send request shares your details with the company via Formspree.",
+  "messageNote": "You send the message yourself in the messenger of your choice.",
+  "privacy": "About your data",
+  "requestHello": "Hello! I would like to book an AC cleaning.",
+  "source": "Source",
+  "message": "Message",
+  "contact": "Contact us directly",
+  "privacyTitle": "Your data",
+  "privacyText": [
+    "For a callback, this form shares the details you enter with the company through Formspree, only when you press Send request.",
+    "Opening WhatsApp passes the prepared text to that app. You choose whether to send it. Telegram is subject to that service’s own terms.",
+    "Campaign tags are stored for this tab’s session to identify the source of an enquiry. No advertising pixels are connected. Contact CoolClean by phone about data you have already submitted."
+  ],
+  "understood": "Understood",
+  "shareTitle": "Fresh air is worth sharing.",
+  "shareText": "Tell someone you care about.",
+  "share": "Share this site",
+  "shared": "Link copied",
+  "shareError": "Copy the link from your address bar.",
+  "footer": "A clean AC. A comfortable home.",
+  "privacyLink": "Privacy",
+  "noJs": "Service information and direct contacts work without JavaScript. Enable JavaScript to use the form.",
+  "pageTitle": "AC cleaning in central Israel",
+  "description": "CoolClean AC cleaning and disinfection from Ashdod to Hadera. One wall-mounted unit ₪250, two ₪450, three ₪600. Book online."
+}
