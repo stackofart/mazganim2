@@ -102,7 +102,9 @@ Cloudflare устанавливает зависимости по `package-lock.
 
 ## Ресурсы и дополнительная автоматизация
 
-Главная иллюстрация `public/images/mountain-coast.webp` и обложка `public/images/social-cover.jpg` созданы встроенным ImageGen: израильский пейзаж в духе японской гравюры. Это художественная сцена, а не фотография выполненной работы. Промпты — `docs/assets.md`. Golos Text, Noto Sans Hebrew и Noto Sans Arabic размещены локально под SIL OFL; лицензии в `public/fonts/`.
+Первый экран — квартирная SVG-сцена с кондиционером и птицей. Позиция курсора возле WhatsApp или клавиатурный фокус меняют позу и реплику. Возле формы есть маленький персонаж, реагирующий на начало заполнения. Тексты всех пяти языков — `src/data/scene.js`; поведение и ограничения — [docs/apartment-scene.md](docs/apartment-scene.md).
+
+Пейзаж `public/images/mountain-coast.webp` сохранён как прежний художественный материал. Обложка `public/images/social-cover.jpg` продолжает использоваться для ссылок. Они созданы встроенным ImageGen; промпты — `docs/assets.md`. Golos Text, Noto Sans Hebrew и Noto Sans Arabic размещены локально под SIL OFL; лицензии в `public/fonts/`.
 
 Необязательный WebMCP `prepare_cleaning_request` заполняет видимую форму и готовит сообщение. Ничего не отправляет. Обычный сайт от него не зависит.
 

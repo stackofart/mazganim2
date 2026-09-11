@@ -4,6 +4,34 @@ import {readFile,access} from 'node:fs/promises'
 import {calculatePrice,normalizePhone,makeRequest,whatsappUrl,sendLead} from '../src/lib.js'
 import {company} from '../src/data/company.js'
 import {languages,locales,contentFor,localePath} from '../src/data/content.js'
+import {sceneCopy} from '../src/data/scene.js'
+import {proximityPose,sceneState,bookingMood} from '../src/scene-state.js'
+
+test('CTA proximity has a stable boundary and keyboard intent takes priority',()=>{
+ const rect={left:200,right:420,top:400,bottom:454}
+ assert.deepEqual(proximityPose({x:20,y:420},rect),{near:false,progress:0})
+ const entering=proximityPose({x:45,y:420},rect)
+ assert.equal(entering.near,true)
+ assert.equal(proximityPose({x:35,y:420},rect,true).near,true)
+ assert.equal(proximityPose({x:20,y:420},rect,true).near,false)
+ assert.equal(proximityPose({x:50,y:250},rect).near,false)
+ assert.equal(sceneState(entering).mood,'hopeful')
+ assert.equal(sceneState({...entering,focused:true}).mood,'ready')
+ assert.equal(sceneState({hovered:true}).mood,'ready')
+ assert.equal(sceneState({leaving:true}).mood,'ready')
+ assert.deepEqual(sceneState(),{mood:'resigned',anticipation:0})
+})
+test('form activity advances anticipation without inventing a sent or booked state',()=>{
+ assert.equal(bookingMood(false,{city:'Test',phone:'0541234567'}),'resigned')
+ assert.equal(bookingMood(true,{city:' ',phone:''}),'hopeful')
+ assert.equal(bookingMood(true,{city:'Test',phone:'0541234567'}),'ready')
+ for(const lang of languages){
+  const copy=sceneCopy[lang.code]
+  assert.deepEqual(Object.keys(copy).sort(),Object.keys(sceneCopy.ru).sort())
+  assert.deepEqual(Object.keys(copy.lines).sort(),['hopeful','ready','resigned'])
+  assert.ok(copy.leaving && copy.alt && copy.price.includes('{price}'))
+ }
+})
 
 test('prices match the rendered reference; unsupported quantities require a quote',()=>{
  for(const [quantity,price] of [[1,250],[2,450],[3,600]])assert.equal(calculatePrice({type:'wall',quantity}),price)
@@ -61,6 +89,9 @@ test('every SSG page has its own content, canonical, hreflang, direction and off
   const html=await readFile(path,'utf8'),t=contentFor(lang.code)
   assert.match(html,new RegExp(`<html lang="${lang.code}" dir="${lang.dir}">`))
   assert.equal((html.match(/<h1[ >]/g)||[]).length,1)
+  assert.ok(html.includes(sceneCopy[lang.code].headline[0]))
+  assert.ok(html.includes(sceneCopy[lang.code].lines.resigned))
+  assert.match(html,/data-mood="resigned"/)
   assert.match(html,/<fieldset[^>]*disabled/)
   assert.match(html,/index, follow, max-image-preview:large/)
   const canonical=html.match(/<link rel="canonical" href="([^"]+)"/)[1]

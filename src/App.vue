@@ -1,12 +1,19 @@
 <script setup>
-import { ref, computed, onMounted } from "vue";
+import { ref, computed, onMounted, onUnmounted } from "vue";
 import Icon from "./components/Icon.vue";
 import BookingForm from "./components/BookingForm.vue";
+import ApartmentScene from "./components/ApartmentScene.vue";
+import { sceneCopy } from "./data/scene.js";
+import { useSceneInteraction } from "./composables/useSceneInteraction.js";
 import { company } from "./data/company.js";
 import { contentFor, languages, localePath } from "./data/content.js";
 import { captureCampaign, track, whatsappUrl } from "./lib.js";
 const props = defineProps({ locale: { type: String, default: "ru" } });
 const t = computed(() => contentFor(props.locale));
+const scene = computed(() => sceneCopy[props.locale] || sceneCopy.ru);
+const heroWhatsapp = ref(null);
+const heroInteraction = useSceneInteraction(heroWhatsapp);
+const bookingEngaged = ref(false);
 const direction = computed(() =>
   ["he", "ar"].includes(props.locale) ? "rtl" : "ltr",
 );
@@ -34,6 +41,7 @@ const nav = computed(() =>
 const phoneUrl = `tel:${company.phone}`;
 const directWhatsapp = computed(() => whatsappUrl(t.value.requestHello));
 function startLead() {
+  bookingEngaged.value = true;
   track("lead_start", { locale: props.locale });
   menuOpen.value = false;
 }
@@ -43,15 +51,23 @@ function openService(service) {
   track("service_view", { locale: props.locale, service: service.id });
 }
 function selectPrice(quantity) {
+  bookingEngaged.value = true;
   booking.value.service = "cleaning";
   booking.value.type = "wall";
   booking.value.quantity = quantity;
   track("price_select", { quantity, locale: props.locale });
 }
 function selectGas() {
+  bookingEngaged.value = true;
   booking.value.service = "refrigerant";
   track("service_select", { service: "refrigerant", locale: props.locale });
-  document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
+  document.getElementById("contact")?.scrollIntoView({ behavior: "auto" });
+}
+function followContactLink(event) {
+  if (event.target.closest('a[href="#contact"]')) bookingEngaged.value = true;
+}
+function readContactHash() {
+  if (location.hash === "#contact") bookingEngaged.value = true;
 }
 function switchLanguage(event) {
   location.assign(localePath(event.target.value));
@@ -80,10 +96,13 @@ onMounted(() => {
   captureCampaign();
   document.documentElement.lang = props.locale;
   document.documentElement.dir = direction.value;
+  readContactHash();
+  window.addEventListener("hashchange", readContactHash);
 });
+onUnmounted(() => window.removeEventListener("hashchange", readContactHash));
 </script>
 <template>
-  <div :dir="direction" :lang="locale" class="site-content">
+  <div :dir="direction" :lang="locale" class="site-content" @click="followContactLink">
     <a class="skip-link" href="#main">{{ t.skip }}</a>
     <header class="site-header">
       <div class="container header-inner">
@@ -139,32 +158,28 @@ onMounted(() => {
       </nav>
     </header>
     <main id="main">
-      <section class="hero container">
+      <section class="hero container" @pointermove.passive="heroInteraction.move" @pointerleave="heroInteraction.resetPointer">
         <div class="hero-copy">
           <div class="eyebrow">
             <span class="tiny-line"></span>{{ t.sourceSlogan }}
           </div>
-          <h1><span>{{ t.hero[0] }}</span><span>{{ t.hero[1] }}</span></h1>
-          <p class="hero-description">{{ t.intro }}</p>
+          <h1><span>{{ scene.headline[0] }}</span> <span>{{ scene.headline[1] }}</span></h1>
+          <p class="hero-description">{{ scene.intro }}</p>
+          <p class="hero-price">{{ scene.price.replace('{price}', company.prices[1]) }}</p>
           <div class="hero-actions">
-            <a v-if="directWhatsapp" :href="directWhatsapp" class="button whatsapp-button" target="_blank" rel="noopener noreferrer" @click="track('lead_whatsapp_click', { locale, placement: 'hero' })"
+            <a v-if="directWhatsapp" ref="heroWhatsapp" :href="directWhatsapp" class="button whatsapp-button" target="_blank" rel="noopener noreferrer"
+              @pointerenter="heroInteraction.enter" @pointerleave="heroInteraction.exit" @focus="heroInteraction.focus" @blur="heroInteraction.blur"
+              @click="heroInteraction.depart(); track('lead_whatsapp_click', { locale, placement: 'hero' })"
               ><Icon name="chat" :size="21" />{{ t.whatsappCta }}</a
-            ><a href="#services" class="text-link"
-              >{{ t.included }}<span>↗</span></a
+            ><a href="#prices" class="text-link"
+              >{{ t.nav[2] }}<span>↗</span></a
             >
           </div>
           <div class="hero-note">
             <Icon name="shield" :size="18" />{{ t.care }}
           </div>
         </div>
-        <figure class="hero-visual">
-          <picture>
-            <source type="image/webp" srcset="/images/mountain-coast-768.webp 768w, /images/mountain-coast.webp 1536w" sizes="(max-width: 800px) 100vw, 55vw" />
-            <img class="hero-photo" src="/images/mountain-coast.webp" width="1536" height="1024" :alt="t.imageAlt" fetchpriority="high" />
-          </picture>
-          <span class="print-stamp" lang="he" dir="rtl">אוויר<br />טוב</span>
-          <figcaption class="print-caption"><span>{{ t.printLabel }}</span><span dir="ltr">COOLCLEAN — 01</span></figcaption>
-        </figure>
+        <ApartmentScene :text="scene" :mood="heroInteraction.pose.value.mood" :anticipation="heroInteraction.pose.value.anticipation" :leaving="heroInteraction.leaving.value" />
       </section>
       <div class="benefits-wrap">
         <div class="container benefits">
@@ -355,6 +370,7 @@ onMounted(() => {
           <BookingForm
             v-model="booking"
             :locale="locale"
+            :engaged="bookingEngaged"
             @privacy="privacyDialog.showModal()"
           />
         </div>
