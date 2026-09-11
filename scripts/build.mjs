@@ -4,6 +4,9 @@ import { resolve } from "node:path";
 import { company } from "../src/data/company.js";
 import { contentFor, languages, localePath } from "../src/data/content.js";
 const env = { ...loadEnv("production", process.cwd(), ""), ...process.env };
+if (env.WORKERS_CI === "1" && !env.SITE_URL) {
+  throw new Error("Set SITE_URL in Cloudflare build variables before deploying.");
+}
 const origin = new URL(env.SITE_URL || company.siteUrl).origin;
 if (!origin.startsWith("https://")) throw new Error("SITE_URL must use HTTPS.");
 const isPublic =

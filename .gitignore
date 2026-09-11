@@ -29,4 +29,6 @@ dist-ssr
 .env
 .env.*
 !.env.example
+.dev.vars
+.dev.vars.*
 .idea/
