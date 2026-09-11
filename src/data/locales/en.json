@@ -192,7 +192,7 @@
   "notePlaceholder": "Model, condition or preferred time",
   "send": "Send request",
   "sending": "Sending…",
-  "sent": "Request accepted by the form",
+  "sent": "Request sent",
   "sentNote": "The visit time and final price still need to be agreed with our specialist.",
   "sendAnother": "New request",
   "sendError": "The request could not be sent. Please retry or contact us by phone or Telegram.",
@@ -204,7 +204,7 @@
   "copied": "Message copied",
   "copyError": "Select and copy the message below.",
   "whatsapp": "Open WhatsApp",
-  "formNote": "Send request shares your details with the company via Formspree.",
+  "formNote": "Sending this request shares your details with the company by email through Cloudflare.",
   "messageNote": "You send the message yourself in the messenger of your choice.",
   "privacy": "About your data",
   "requestHello": "Hello! I would like to discuss AC servicing.",
@@ -213,7 +213,7 @@
   "contact": "Contact us directly",
   "privacyTitle": "Your data",
   "privacyText": [
-    "For a callback, this form shares the details you enter with the company through Formspree, only when you press Send request.",
+    "When you press Send request, your details and campaign tags are emailed to the company through Cloudflare. The website has no request database; the email is stored in the company mailbox. Cloudflare Turnstile processes technical browser data to prevent spam before you submit the form.",
     "Opening WhatsApp passes the prepared text to that app. You choose whether to send it. Telegram is subject to that service’s own terms.",
     "Campaign tags are stored for this tab’s session to identify the source of an enquiry. No advertising pixels are connected. Contact CoolClean by phone about data you have already submitted."
   ],
@@ -254,5 +254,10 @@
     ]
   ],
   "printLabel": "MOUNTAINS · SEA · HOME",
-  "regionKicker": "THE COAST WE CALL HOME"
+  "regionKicker": "THE COAST WE CALL HOME",
+  "challengeLoading": "Checking spam protection…",
+  "challengeError": "The security check is incomplete or has expired. Please try it again.",
+  "challengeRetry": "Retry check",
+  "rateLimitError": "Too many attempts. Please wait a minute or call us.",
+  "formUnavailable": "Sending is temporarily unavailable. Refresh the page or contact us by phone or Telegram."
 }

@@ -1,6 +1,7 @@
 <script setup>
 import { ref, computed, onMounted, onUnmounted, watch, nextTick } from "vue";
 import Icon from "./Icon.vue";
+import LeadChallenge from "./LeadChallenge.vue";
 import { contentFor } from "../data/content.js";
 import {
   readCampaign,
@@ -14,6 +15,7 @@ const props = defineProps({ locale: { type: String, default: "ru" } });
 const emit = defineEmits(["privacy"]);
 const values = defineModel({ required: true });
 const t = computed(() => contentFor(props.locale));
+const challenge = ref(null), turnstileToken = ref("");
 const interactive = ref(false),
   ready = ref(false),
   copied = ref(false),
@@ -73,6 +75,7 @@ async function submit() {
     await sendLead(values.value, {
       locale: props.locale,
       campaign: readCampaign(),
+      turnstileToken: turnstileToken.value,
       signal: submission.signal,
     });
     status.value = "success";
@@ -97,6 +100,7 @@ async function submit() {
   } catch (e) {
     status.value = "error";
     error.value = e.name === "AbortError" ? t.value.sendError : e.message;
+    challenge.value?.reset();
   } finally {
     clearTimeout(timer);
     submission = undefined;
@@ -295,10 +299,11 @@ onUnmounted(() => {
           tabindex="-1"
           autocomplete="off"
       /></label>
+      <LeadChallenge ref="challenge" :locale="locale" :text="t" @token="turnstileToken = $event" />
       <button
         type="submit"
         class="button form-submit"
-        :disabled="status === 'sending'"
+        :disabled="status === 'sending' || !turnstileToken"
       >
         {{ status === "sending" ? t.sending : t.send
         }}<Icon name="arrow" :size="18" />

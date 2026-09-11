@@ -192,7 +192,7 @@
   "notePlaceholder": "Modèle, état ou horaire souhaité",
   "send": "Envoyer la demande",
   "sending": "Envoi…",
-  "sent": "Demande acceptée par le formulaire",
+  "sent": "Demande envoyée",
   "sentNote": "L’horaire et le prix final restent à confirmer avec le spécialiste.",
   "sendAnother": "Nouvelle demande",
   "sendError": "Échec de l’envoi. Réessayez ou contactez-nous par téléphone ou Telegram.",
@@ -204,7 +204,7 @@
   "copied": "Message copié",
   "copyError": "Sélectionnez et copiez le message ci-dessous.",
   "whatsapp": "Ouvrir WhatsApp",
-  "formNote": "Envoyer la demande transmet vos données à l’entreprise via Formspree.",
+  "formNote": "L’envoi transmet vos coordonnées à l’entreprise par e-mail via Cloudflare.",
   "messageNote": "Vous envoyez vous-même le message depuis votre messagerie.",
   "privacy": "À propos des données",
   "requestHello": "Bonjour ! Je souhaite discuter de l’entretien de ma climatisation.",
@@ -213,7 +213,7 @@
   "contact": "Nous contacter directement",
   "privacyTitle": "Vos données",
   "privacyText": [
-    "Pour vous rappeler, le formulaire transmet les informations saisies à l’entreprise via Formspree, uniquement après votre clic sur Envoyer la demande.",
+    "Après votre clic sur Envoyer la demande, vos coordonnées et les paramètres de campagne sont envoyés par e-mail à l’entreprise via Cloudflare. Le site ne conserve aucune base de demandes ; le message est conservé dans la boîte mail de l’entreprise. Cloudflare Turnstile traite des données techniques du navigateur contre le spam avant l’envoi du formulaire.",
     "Ouvrir WhatsApp transmet le texte à l’application. Vous décidez de l’envoyer. L’utilisation de Telegram relève de ses propres règles.",
     "Les paramètres de campagne sont conservés pendant la session de cet onglet pour identifier la source du contact. Aucun pixel publicitaire n’est connecté. Pour toute question sur les données envoyées, contactez CoolClean par téléphone."
   ],
@@ -254,5 +254,10 @@
     ]
   ],
   "printLabel": "MONTAGNES · MER · MAISON",
-  "regionKicker": "LA CÔTE QUE NOUS CONNAISSONS"
+  "regionKicker": "LA CÔTE QUE NOUS CONNAISSONS",
+  "challengeLoading": "Vérification antispam en cours…",
+  "challengeError": "La vérification est incomplète ou a expiré. Veuillez réessayer.",
+  "challengeRetry": "Relancer la vérification",
+  "rateLimitError": "Trop de tentatives. Patientez une minute ou appelez-nous.",
+  "formUnavailable": "L’envoi est temporairement indisponible. Actualisez la page ou contactez-nous par téléphone ou Telegram."
 }

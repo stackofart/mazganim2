@@ -1,12 +1,7 @@
 import { company } from "./data/company.js";
 import { contentFor } from "./data/content.js";
-export const campaignKeys = [
-  "utm_source",
-  "utm_medium",
-  "utm_campaign",
-  "utm_content",
-  "utm_term",
-];
+import { campaignKeys, calculatePrice, normalizePhone } from "./lead-fields.js";
+export { campaignKeys, calculatePrice, normalizePhone };
 export function captureCampaign() {
   try {
     const params = new URLSearchParams(location.search);
@@ -46,18 +41,6 @@ export function track(event, properties = {}) {
   // Intentionally does not send anything. Connect your consent-aware analytics in one place.
   window.dataLayer = window.dataLayer || [];
   window.dataLayer.push({ event, ...properties, ...readCampaign() });
-}
-export function calculatePrice({ type, quantity, service = "cleaning" }) {
-  const count = Number(quantity);
-  return service === "cleaning" && type === "wall" && Number.isInteger(count)
-    ? (company.prices[count] ?? null)
-    : null;
-}
-export function normalizePhone(value) {
-  const number = String(value || "").replace(/[\s()-]/g, "");
-  if (/^05\d{8}$/.test(number)) return `+972${number.slice(1)}`;
-  if (/^\+9725\d{8}$/.test(number)) return number;
-  return null;
 }
 export function makeRequest(values, campaign = {}, locale = "ru") {
   const t = contentFor(locale);
@@ -107,24 +90,28 @@ export function whatsappUrl(message) {
 // Single transport function: tests inject fetch so they never submit real leads.
 export async function sendLead(
   values,
-  { locale = "ru", campaign = {}, fetcher = fetch, signal } = {},
+  { locale = "ru", campaign = {}, turnstileToken, fetcher = fetch, signal } = {},
 ) {
   const t = contentFor(locale);
   const phone = normalizePhone(values.phone);
   if (!phone) throw new Error(t.invalidPhone);
-  const message = makeRequest(values, campaign, locale);
+  makeRequest(values, campaign, locale);
   if (values.website) throw new Error(t.sendError);
+  if (!turnstileToken) throw new Error(t.challengeError);
   const payload = {
     name: String(values.name || "")
       .trim()
       .slice(0, 80),
     phone,
     city: String(values.city).trim().slice(0, 100),
-    message,
+    type: values.type,
+    service: values.service || "cleaning",
+    quantity: Number(values.quantity),
+    note: String(values.note || "").trim().slice(0, 300),
     locale,
-    _subject: `${company.name}: AC service request`,
-    _gotcha: "",
-    ...Object.fromEntries(
+    website: "",
+    turnstileToken,
+    campaign: Object.fromEntries(
       campaignKeys
         .filter((k) => typeof campaign[k] === "string")
         .map((k) => [k, campaign[k].slice(0, 120)]),
@@ -137,6 +124,10 @@ export async function sendLead(
     credentials: "omit",
     signal,
   });
-  if (!response.ok) throw new Error(t.sendError);
-  return { status: "accepted" };
+  const result = await response.json().catch(() => null);
+  if (!response.ok || result?.status !== "accepted") {
+    const messages = { challenge_failed: t.challengeError, rate_limited: t.rateLimitError, unavailable: t.formUnavailable };
+    throw new Error(messages[result?.error] || t.sendError);
+  }
+  return { status: "accepted", requestId: result.requestId };
 }
