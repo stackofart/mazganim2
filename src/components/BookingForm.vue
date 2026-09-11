@@ -1,9 +1,6 @@
 <script setup>
 import { ref, computed, onMounted, onUnmounted, watch, nextTick } from "vue";
 import Icon from "./Icon.vue";
-import BookingCharacter from "./BookingCharacter.vue";
-import { sceneCopy } from "../data/scene.js";
-import { bookingMood } from "../scene-state.js";
 import { contentFor } from "../data/content.js";
 import {
   readCampaign,
@@ -13,14 +10,10 @@ import {
   calculatePrice,
   sendLead,
 } from "../lib.js";
-const props = defineProps({ locale: { type: String, default: "ru" }, engaged: Boolean });
+const props = defineProps({ locale: { type: String, default: "ru" } });
 const emit = defineEmits(["privacy"]);
 const values = defineModel({ required: true });
 const t = computed(() => contentFor(props.locale));
-const scene = computed(() => sceneCopy[props.locale] || sceneCopy.ru);
-const touched = ref(false), whatsappLeaving = ref(false);
-const characterMood = computed(() => bookingMood(props.engaged || touched.value, values.value));
-function engage() { touched.value = true; whatsappLeaving.value = false; }
 const interactive = ref(false),
   ready = ref(false),
   copied = ref(false),
@@ -46,7 +39,6 @@ watch(
   { deep: true, flush: "sync" },
 );
 function prepareRequest() {
-  engage();
   error.value = "";
   try {
     makeRequest(values.value, {}, props.locale);
@@ -177,8 +169,7 @@ onUnmounted(() => {
 });
 </script>
 <template>
-  <form class="booking-form" @submit.prevent="submit" @focusin="engage" @input="engage" @change="engage">
-    <BookingCharacter v-if="status !== 'success'" :text="scene" :mood="characterMood" :leaving="whatsappLeaving" />
+  <form class="booking-form" @submit.prevent="submit">
     <div
       v-if="status === 'success'"
       id="form-success"
@@ -337,7 +328,6 @@ onUnmounted(() => {
           target="_blank"
           rel="noopener noreferrer"
           @click="
-            whatsappLeaving = true;
             track('lead_whatsapp_click', {
               locale,
               system_type: values.type,

@@ -16,7 +16,6 @@ const heroSection = ref(null);
 const showFloatingContact = ref(false);
 let heroObserver;
 const heroInteraction = useSceneInteraction(heroWhatsapp);
-const bookingEngaged = ref(false);
 const direction = computed(() =>
   ["he", "ar"].includes(props.locale) ? "rtl" : "ltr",
 );
@@ -44,7 +43,6 @@ const nav = computed(() =>
 const phoneUrl = `tel:${company.phone}`;
 const directWhatsapp = computed(() => whatsappUrl(t.value.requestHello));
 function startLead() {
-  bookingEngaged.value = true;
   track("lead_start", { locale: props.locale });
   menuOpen.value = false;
 }
@@ -52,25 +50,6 @@ function openService(service) {
   selectedService.value = service;
   detailDialog.value.showModal();
   track("service_view", { locale: props.locale, service: service.id });
-}
-function selectPrice(quantity) {
-  bookingEngaged.value = true;
-  booking.value.service = "cleaning";
-  booking.value.type = "wall";
-  booking.value.quantity = quantity;
-  track("price_select", { quantity, locale: props.locale });
-}
-function selectGas() {
-  bookingEngaged.value = true;
-  booking.value.service = "refrigerant";
-  track("service_select", { service: "refrigerant", locale: props.locale });
-  document.getElementById("contact")?.scrollIntoView({ behavior: "auto" });
-}
-function followContactLink(event) {
-  if (event.target.closest('a[href="#contact"]')) bookingEngaged.value = true;
-}
-function readContactHash() {
-  if (location.hash === "#contact") bookingEngaged.value = true;
 }
 function switchLanguage(event) {
   location.assign(localePath(event.target.value));
@@ -99,20 +78,17 @@ onMounted(() => {
   captureCampaign();
   document.documentElement.lang = props.locale;
   document.documentElement.dir = direction.value;
-  readContactHash();
-  window.addEventListener("hashchange", readContactHash);
   heroObserver = new IntersectionObserver(([entry]) => {
     showFloatingContact.value = !entry.isIntersecting;
   });
   if (heroSection.value) heroObserver.observe(heroSection.value);
 });
 onUnmounted(() => {
-  window.removeEventListener("hashchange", readContactHash);
   heroObserver?.disconnect();
 });
 </script>
 <template>
-  <div :dir="direction" :lang="locale" class="site-content" @click="followContactLink">
+  <div :dir="direction" :lang="locale" class="site-content">
     <a class="skip-link" href="#main">{{ t.skip }}</a>
     <header class="site-header">
       <div class="container header-inner">
@@ -251,40 +227,17 @@ onUnmounted(() => {
           </div>
         </div>
         <p class="pricing-intro">{{ t.pricingIntro }}</p>
-        <div class="price-grid">
-          <button
+        <dl class="price-grid">
+          <div
             v-for="quantity in [1, 2, 3]"
             :key="quantity"
-            type="button"
             class="price-option"
-            :class="{
-              selected:
-                booking.service === 'cleaning' && booking.type === 'wall' && booking.quantity === quantity,
-            }"
-            :aria-pressed="
-              booking.service === 'cleaning' && booking.type === 'wall' && booking.quantity === quantity
-            "
-            @click="selectPrice(quantity)"
           >
-            <span class="price-label">{{ t.priceLabels[quantity - 1] }}</span
-            ><strong
-              ><bdi>{{ company.prices[quantity] }} <span>₪</span></bdi></strong
-            ><span class="price-selection"
-              >{{
-                booking.service === "cleaning" && booking.type === "wall" && booking.quantity === quantity
-                  ? t.selected
-                  : t.select
-              }}<Icon
-                :name="
-                  booking.service === 'cleaning' && booking.type === 'wall' && booking.quantity === quantity
-                    ? 'check'
-                    : 'plus'
-                "
-                :size="18"
-            /></span>
-          </button>
-        </div>
-        <div class="gas-callout"><Icon name="gauge" :size="33" /><div><h3>{{ t.gasPriceTitle }}</h3><p>{{ t.gasPriceText }}</p></div><button class="text-link" @click="selectGas">{{ t.gasCta }}<Icon name="arrow" :size="18" /></button></div>
+            <dt class="price-label">{{ t.priceLabels[quantity - 1] }}</dt>
+            <dd class="price-value"><bdi>{{ company.prices[quantity] }} <span>₪</span></bdi></dd>
+          </div>
+        </dl>
+        <div class="gas-callout"><Icon name="gauge" :size="33" /><div><h3>{{ t.gasPriceTitle }}</h3><p>{{ t.gasPriceText }}</p></div></div>
         <div class="price-bottom">
           <p>{{ t.priceNote }} {{ t.estimateNote }}</p>
           <a class="text-link" href="#contact" @click="startLead"
@@ -370,14 +323,10 @@ onUnmounted(() => {
                 ><Icon name="chat" :size="18" />WhatsApp</a
               >
             </div>
-            <div class="booking-promise">
-              <Icon name="shield" :size="19" /><span>{{ t.promise }}</span>
-            </div>
           </div>
           <BookingForm
             v-model="booking"
             :locale="locale"
-            :engaged="bookingEngaged"
             @privacy="privacyDialog.showModal()"
           />
         </div>

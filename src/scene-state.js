@@ -13,9 +13,3 @@ export function sceneState({ near = false, progress = 0, focused = false, hovere
   if (near) return { mood: "hopeful", anticipation: Math.min(.8, progress * .8) };
   return { mood: "resigned", anticipation: 0 };
 }
-
-export function bookingMood(engaged, values) {
-  if (!engaged) return "resigned";
-  // This is anticipation only. Submission success remains owned by the form.
-  return String(values.city || "").trim() && String(values.phone || "").trim() ? "ready" : "hopeful";
-}

@@ -5,7 +5,7 @@ import {calculatePrice,normalizePhone,makeRequest,whatsappUrl,sendLead} from '..
 import {company} from '../src/data/company.js'
 import {languages,locales,contentFor,localePath} from '../src/data/content.js'
 import {sceneCopy} from '../src/data/scene.js'
-import {proximityPose,sceneState,bookingMood} from '../src/scene-state.js'
+import {proximityPose,sceneState} from '../src/scene-state.js'
 
 test('CTA proximity has a stable boundary and keyboard intent takes priority',()=>{
  const rect={left:200,right:420,top:400,bottom:454}
@@ -21,10 +21,7 @@ test('CTA proximity has a stable boundary and keyboard intent takes priority',()
  assert.equal(sceneState({leaving:true}).mood,'ready')
  assert.deepEqual(sceneState(),{mood:'resigned',anticipation:0})
 })
-test('form activity advances anticipation without inventing a sent or booked state',()=>{
- assert.equal(bookingMood(false,{city:'Test',phone:'0541234567'}),'resigned')
- assert.equal(bookingMood(true,{city:' ',phone:''}),'hopeful')
- assert.equal(bookingMood(true,{city:'Test',phone:'0541234567'}),'ready')
+test('scene translations include all three states, alt text and price template',()=>{
  for(const lang of languages){
   const copy=sceneCopy[lang.code]
   assert.deepEqual(Object.keys(copy).sort(),Object.keys(sceneCopy.ru).sort())
