@@ -7,7 +7,7 @@ export const company = {
   displayPhone: "054-757-7371",
   whatsapp: "",
   telegram: "https://t.me/IGideonI",
-  formEndpoint: "https://formspree.io/f/mpwrzaby",
+  formEndpoint: "/api/leads",
   serviceArea: [
     "Tel Aviv-Yafo",
     "Rishon LeZion",

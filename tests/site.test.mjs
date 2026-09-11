@@ -25,20 +25,29 @@ test('WhatsApp does not use the original placeholder destinations',()=>{
  else{const url=new URL(whatsappUrl('Hello & + ?'));assert.equal(url.hostname,'wa.me');assert.equal(url.pathname,'/'+company.whatsapp.replace(/\D/g,''));assert.equal(url.searchParams.get('text'),'Hello & + ?')}
 })
 const lead={name:'Test',city:'Test city',phone:'0541234567',type:'wall',quantity:2,note:'Test only'}
-test('callback transport posts to the original endpoint and succeeds only after acceptance',async()=>{
+test('callback transport posts structured data to our Worker and requires explicit acceptance',async()=>{
  let called=0
- const result=await sendLead(lead,{locale:'en',campaign:{utm_source:'test'},fetcher:async(url,options)=>{
-  called++;assert.equal(url,'https://formspree.io/f/mpwrzaby');assert.equal(options.method,'POST');assert.equal(options.credentials,'omit');const payload=JSON.parse(options.body);assert.equal(payload.phone,'+972541234567');assert.equal(payload.utm_source,'test');assert.ok(payload.message.includes('450 ₪'));return {ok:true}
+ const result=await sendLead(lead,{locale:'en',turnstileToken:'test-token',campaign:{utm_source:'test'},fetcher:async(url,options)=>{
+  called++;assert.equal(url,'/api/leads');assert.equal(options.method,'POST');assert.equal(options.credentials,'omit');const payload=JSON.parse(options.body);assert.equal(payload.phone,'+972541234567');assert.equal(payload.campaign.utm_source,'test');assert.equal(payload.type,'wall');assert.equal(payload.quantity,2);assert.equal(payload.turnstileToken,'test-token');assert.equal(payload.to,undefined);return {ok:true,json:async()=>({status:'accepted',requestId:'test-id'})}
  }})
  assert.equal(called,1);assert.equal(result.status,'accepted')
 })
 test('callback failure is never reported as a successful lead',async()=>{
- await assert.rejects(sendLead(lead,{fetcher:async()=>({ok:false,status:422})}))
- await assert.rejects(sendLead(lead,{fetcher:async()=>{throw new Error('Network unavailable')}}))
+ await assert.rejects(sendLead(lead,{turnstileToken:'test-token',fetcher:async()=>({ok:false,status:422,json:async()=>({error:'invalid_request'})})}))
+ await assert.rejects(sendLead(lead,{turnstileToken:'test-token',fetcher:async()=>({ok:true,json:async()=>({})})}))
+ await assert.rejects(sendLead(lead,{turnstileToken:'test-token',fetcher:async()=>{throw new Error('Network unavailable')}}))
  let called=false
  await assert.rejects(sendLead({...lead,phone:'123'},{fetcher:async()=>{called=true;return{ok:true}}}))
  await assert.rejects(sendLead({...lead,website:'spam'},{fetcher:async()=>{called=true;return{ok:true}}}))
  assert.equal(called,false)
+})
+test('the client explains challenge, rate and configuration failures in the selected language',async()=>{
+ for(const locale of ['ru','he','en','ar','fr']){
+  const t=contentFor(locale)
+  for(const [error,key] of [['challenge_failed','challengeError'],['rate_limited','rateLimitError'],['unavailable','formUnavailable']]){
+   await assert.rejects(sendLead(lead,{locale,turnstileToken:'test-token',fetcher:async()=>({ok:false,json:async()=>({error})})}),{message:t[key]})
+  }
+ }
 })
 test('all five language dictionaries have matching keys and complete core content',()=>{
  const keys=Object.keys(locales.ru).sort()

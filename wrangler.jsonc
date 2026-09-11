@@ -1,13 +1,23 @@
 {
   "$schema": "./node_modules/wrangler/config-schema.json",
   "name": "mazganim-clean-air",
+  "main": "worker/index.js",
   "compatibility_date": "2026-09-11",
   "workers_dev": true,
   "preview_urls": false,
   "assets": {
+    "binding": "ASSETS",
     "directory": "./dist",
+    "run_worker_first": ["/api/*"],
     "html_handling": "auto-trailing-slash",
     "not_found_handling": "404-page",
   },
+  "send_email": [{ "name": "LEAD_EMAIL" }],
+  "ratelimits": [{
+    "name": "LEAD_RATE_LIMITER",
+    "namespace_id": "2026091101",
+    "simple": { "limit": 5, "period": 60 },
+  }],
+  "vars": { "SITE_URL": "https://mazganim-clean-air.gerasim459.workers.dev" },
   "observability": { "enabled": true },
 }

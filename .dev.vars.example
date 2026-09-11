@@ -1,0 +1,6 @@
+# Copy to .dev.vars for local Wrangler development. Never commit .dev.vars.
+# wrangler dev simulates email locally; do not enable remote bindings for tests.
+LEAD_EMAIL_FROM="requests@your-domain.example"
+LEAD_EMAIL_TO="owner@example.net"
+TURNSTILE_SITE_KEY=""
+TURNSTILE_SECRET_KEY=""

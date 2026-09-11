@@ -8,7 +8,7 @@
     "build": "node scripts/build.mjs",
     "build:checked": "npm run check:launch && npm run build && npm run check",
     "preview": "vite preview --host 127.0.0.1",
-    "check": "node --test tests/site.test.mjs",
+    "check": "node --test tests/*.test.mjs",
     "check:launch": "node scripts/check-launch.mjs",
     "dev:worker": "wrangler dev",
     "deploy": "npm run build:checked && wrangler deploy"
