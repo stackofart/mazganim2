@@ -1,30 +1,58 @@
 {
-  "sourceSlogan": "Cleaning & Disinfecting Wall-Mounted Air-Conditioners",
+  "sourceSlogan": "Clean · Disinfect · Recharge",
   "priceNote": "Extra inspection or complex models (VRF, multi-split) are billed separately by prior arrangement.",
-  "priceLabels": ["One AC unit", "Two AC units", "Three AC units"],
-  "nav": ["Services", "How it works", "Pricing", "FAQ"],
+  "priceLabels": [
+    "One AC unit",
+    "Two AC units",
+    "Three AC units"
+  ],
+  "nav": [
+    "Services",
+    "How it works",
+    "Pricing",
+    "FAQ"
+  ],
   "book": "Book a clean",
-  "bookLong": "Book a cleaning",
-  "included": "What is included",
+  "bookLong": "Explore services",
+  "included": "Services and prices",
   "details": "See what is included",
   "close": "Close",
   "menu": "Menu",
   "skip": "Skip to content",
   "language": "Language",
-  "hero": ["A cooler home.", "Air that feels", "truly fresh."],
-  "intro": "Wall-mounted AC cleaning and disinfection in central Israel. From Ashdod to Hadera.",
-  "care": "Care for your home. Attention to every detail.",
-  "caption": ["Freshness you can feel.", "From the very first breath."],
-  "imageAlt": "Bright living room with a wall-mounted air conditioner",
-  "benefits": [
-    ["5+ years", "in Gush Dan and nearby areas"],
-    ["From ₪250", "for one wall-mounted AC"],
-    ["Central Israel", "from Ashdod to Hadera"],
-    ["Easy to reach", "by phone and Telegram"]
+  "hero": [
+    "Mountain fresh.",
+    "Home comfort.",
+    ""
   ],
-  "servicesEyebrow": "A LITTLE CARE. A BIG DIFFERENCE.",
-  "servicesTitle": "More than clean filters",
-  "servicesIntro": "Professional cleaning and disinfection for homes and offices.",
+  "intro": "AC cleaning and refrigerant recharge in central Israel. A home you can exhale in, even on the hottest days.",
+  "care": "We agree on the work and price first. Then take care of your home.",
+  "caption": [
+    "Inspired by nature.",
+    "Made for your home."
+  ],
+  "imageAlt": "Woodblock-style illustration of terracotta mountains, Mediterranean sea and white houses",
+  "benefits": [
+    [
+      "5+ years",
+      "in Gush Dan and nearby areas"
+    ],
+    [
+      "From ₪250",
+      "for one wall-mounted AC"
+    ],
+    [
+      "Central Israel",
+      "from Ashdod to Hadera"
+    ],
+    [
+      "Easy to reach",
+      "WhatsApp · Telegram"
+    ]
+  ],
+  "servicesEyebrow": "01 / CARE FOR YOUR AIR",
+  "servicesTitle": "Three ways to feel at home.",
+  "servicesIntro": "Cleaning, disinfection and refrigerant recharge. First, we work out what your system needs.",
   "services": [
     [
       "Deep cleaning",
@@ -36,12 +64,12 @@
       ]
     ],
     [
-      "Drain cleaning",
-      "We flush the drain channels and condensate tray.",
+      "Refrigerant recharge",
+      "We check whether a recharge is needed and agree on the right refrigerant and scope of work.",
       [
-        "Cleaning the condensate tray",
-        "Flushing dirt from drain channels",
-        "Checking condensate drainage"
+        "System check before recharging",
+        "Refrigerant selected for your AC model",
+        "Recharge when needed and a cooling check"
       ]
     ],
     [
@@ -103,7 +131,7 @@
   "faqs": [
     [
       "What does cleaning include?",
-      "Inspection, disassembly, cleaning filters and internal components, drain flushing, disinfection, reassembly and testing. Exact steps depend on the model and condition."
+      "Inspection, careful disassembly, cleaning filters and internal components, disinfection, reassembly and testing. The exact work depends on the model and condition."
     ],
     [
       "Which areas do you cover?",
@@ -124,13 +152,24 @@
     [
       "Does a submitted request confirm a booking?",
       "No. We will agree on the time, price and scope of work after receiving your request."
+    ],
+    [
+      "Does my AC need a refrigerant recharge every year?",
+      "No. Refrigerant circulates in a closed system and is not consumed like fuel. A low level calls for investigation and a possible leak check. We agree on a recharge after checking the system."
+    ],
+    [
+      "How much does an AC refrigerant recharge cost?",
+      "The price depends on the model, refrigerant type and quantity, and system condition. Send us the model and describe the problem. Recharging is quoted separately and is not included in cleaning prices."
     ]
   ],
   "bookingEyebrow": "YOUR NEXT BREATH, FRESHER",
-  "bookingTitle": ["Let’s start with", "your air conditioner."],
+  "bookingTitle": [
+    "Let’s start with",
+    "your air conditioner."
+  ],
   "bookingIntro": "A few details help us discuss the price and a convenient time.",
   "promise": "Your booking is confirmed after all details are agreed.",
-  "formTitle": "Request a cleaning",
+  "formTitle": "Tell us about your AC",
   "formIntro": "Leave your phone number and we will get in touch.",
   "name": "Your name",
   "optional": "optional",
@@ -168,7 +207,7 @@
   "formNote": "Sending this request shares your details with the company by email through Cloudflare.",
   "messageNote": "You send the message yourself in the messenger of your choice.",
   "privacy": "About your data",
-  "requestHello": "Hello! I would like to book an AC cleaning.",
+  "requestHello": "Hello! I would like to discuss AC servicing.",
   "source": "Source",
   "message": "Message",
   "contact": "Contact us directly",
@@ -180,15 +219,42 @@
   ],
   "understood": "Understood",
   "shareTitle": "Fresh air is worth sharing.",
-  "shareText": "Tell someone you care about.",
+  "shareText": "CoolClean — AC cleaning and refrigerant recharge in central Israel.",
   "share": "Share this site",
   "shared": "Link copied",
   "shareError": "Copy the link from your address bar.",
-  "footer": "A clean AC. A comfortable home.",
+  "footer": "Mountain freshness. Home comfort.",
   "privacyLink": "Privacy",
   "noJs": "Service information and direct contacts work without JavaScript. Enable JavaScript to use the form.",
-  "pageTitle": "AC cleaning in central Israel",
-  "description": "CoolClean AC cleaning and disinfection from Ashdod to Hadera. One wall-mounted unit ₪250, two ₪450, three ₪600. Book online.",
+  "pageTitle": "AC cleaning and refrigerant recharge in central Israel",
+  "description": "CoolClean: AC cleaning, disinfection and refrigerant recharge from Ashdod to Hadera. Cleaning from ₪250. Ask for a quote and book on WhatsApp.",
+  "whatsappCta": "Chat on WhatsApp",
+  "serviceLabel": "Service needed",
+  "serviceOptions": [
+    "Cleaning and disinfection",
+    "Refrigerant recharge"
+  ],
+  "gasPriceTitle": "Need a refrigerant recharge?",
+  "gasPriceText": "Quoted after a system check. Recharging is not included in cleaning prices.",
+  "gasCta": "Ask about recharging",
+  "guideEyebrow": "A LITTLE KNOW-HOW",
+  "guideTitle": "Listen to your air conditioner.",
+  "guides": [
+    [
+      "Not as cool as it used to be?",
+      "Weak cooling does not necessarily mean low refrigerant. Dirt or another fault may be involved. Describe what your AC is doing so we can discuss where to start."
+    ],
+    [
+      "An unpleasant smell?",
+      "Tell us when it appears and when the unit was last cleaned. This helps us discuss cleaning and disinfection; the scope is confirmed after inspection."
+    ],
+    [
+      "Want a quicker answer?",
+      "On WhatsApp, send your city, number of units, the model or a photo of its label, and a short description of the problem. This makes arranging service easier."
+    ]
+  ],
+  "printLabel": "MOUNTAINS · SEA · HOME",
+  "regionKicker": "THE COAST WE CALL HOME",
   "challengeLoading": "Checking spam protection…",
   "challengeError": "The security check is incomplete or has expired. Please try it again.",
   "challengeRetry": "Retry check",

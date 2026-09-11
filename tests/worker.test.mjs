@@ -51,6 +51,7 @@ test("invalid, oversized or injected form fields never send email", async () => 
     { ...valid, phone: "123" }, { ...valid, phone: ["0541234567"] }, { ...valid, name: {} },
     { ...valid, note: "x".repeat(301) }, { ...valid, quantity: "2" }, { ...valid, quantity: 0 },
     { ...valid, quantity: 11 }, { ...valid, quantity: 1.5 }, { ...valid, type: "other" },
+    { ...valid, service: "other" }, { ...valid, service: null },
     { ...valid, locale: "de" }, { ...valid, website: "bot" }, { ...valid, turnstileToken: "" },
     { ...valid, campaign: [] }, { ...valid, campaign: { utm_source: {} } },
     { ...valid, campaign: { utm_source: "x".repeat(121) } }, "x".repeat(8193)];
@@ -140,4 +141,14 @@ test("quote-only systems never acquire a fixed price and text cannot inject mail
   const result = await handleRequest(s.request({ ...valid, type: "vrf", name: "Test\r\nBcc: attacker@example.com", note: "<b>plain text</b>" }), s.env, s.fetcher);
   assert.equal(result.status, 202); assert.match(s.sent[0].text, /По согласованию/);
   assert.doesNotMatch(s.sent[0].text, /\nBcc:/); assert.equal(s.sent[0].bcc, undefined);
+});
+
+test("refrigerant leads name the service and remain quote-only regardless of supplied price", async () => {
+  const s = setup();
+  const result = await handleRequest(s.request({ ...valid, service: "refrigerant", price: 450 }), s.env, s.fetcher);
+  assert.equal(result.status, 202);
+  assert.equal(s.sent.length, 1);
+  assert.match(s.sent[0].text, /Услуга: Заправка газом/);
+  assert.match(s.sent[0].text, /Ориентировочная стоимость: По согласованию/);
+  assert.doesNotMatch(s.sent[0].text, /450 ₪/);
 });

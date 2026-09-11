@@ -4,9 +4,9 @@ export const campaignKeys = ["utm_source", "utm_medium", "utm_campaign", "utm_co
 export const systemTypes = ["wall", "multi", "vrf", "unknown"];
 export const leadLocales = ["ru", "he", "en", "ar", "fr"];
 
-export function calculatePrice({ type, quantity }) {
+export function calculatePrice({ type, quantity, service = "cleaning" }) {
   const count = Number(quantity);
-  return type === "wall" && Number.isInteger(count) ? (company.prices[count] ?? null) : null;
+  return service === "cleaning" && type === "wall" && Number.isInteger(count) ? (company.prices[count] ?? null) : null;
 }
 
 export function normalizePhone(value) {

@@ -19,6 +19,7 @@ const booking = ref({
   name: "",
   city: "",
   phone: "",
+  service: "cleaning",
   type: "wall",
   quantity: 1,
   note: "",
@@ -42,9 +43,15 @@ function openService(service) {
   track("service_view", { locale: props.locale, service: service.id });
 }
 function selectPrice(quantity) {
+  booking.value.service = "cleaning";
   booking.value.type = "wall";
   booking.value.quantity = quantity;
   track("price_select", { quantity, locale: props.locale });
+}
+function selectGas() {
+  booking.value.service = "refrigerant";
+  track("service_select", { service: "refrigerant", locale: props.locale });
+  document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
 }
 function switchLanguage(event) {
   location.assign(localePath(event.target.value));
@@ -81,7 +88,7 @@ onMounted(() => {
     <header class="site-header">
       <div class="container header-inner">
         <a class="brand" :href="localePath(locale)" :aria-label="company.name"
-          ><span class="brand-mark"><Icon name="air" :size="29" /></span
+          ><span class="brand-mark"><Icon name="mountain" :size="32" /></span
           ><span dir="ltr">CoolClean<span class="brand-dot">.</span></span></a
         >
         <nav class="desktop-nav" :aria-label="t.menu">
@@ -103,8 +110,8 @@ onMounted(() => {
                 {{ lang.label }}
               </option>
             </select></label
-          ><a class="button button-small" href="#contact" @click="startLead"
-            >{{ t.book }}<Icon name="arrow" :size="17" /></a
+          ><a v-if="directWhatsapp" class="button button-small whatsapp-button" :href="directWhatsapp" :aria-label="t.whatsappCta" target="_blank" rel="noopener noreferrer" @click="track('lead_whatsapp_click', { locale, placement: 'header' })"
+            ><Icon name="chat" :size="18" /><span>WhatsApp</span></a
           ><button
             class="menu-button"
             :aria-expanded="menuOpen"
@@ -137,14 +144,11 @@ onMounted(() => {
           <div class="eyebrow">
             <span class="tiny-line"></span>{{ t.sourceSlogan }}
           </div>
-          <h1>
-            {{ t.hero[0] }}<br />{{ t.hero[1] }}<br />
-            <span>{{ t.hero[2] }}</span>
-          </h1>
+          <h1><span>{{ t.hero[0] }}</span><span>{{ t.hero[1] }}</span></h1>
           <p class="hero-description">{{ t.intro }}</p>
           <div class="hero-actions">
-            <a href="#contact" class="button" @click="startLead"
-              >{{ t.bookLong }}<Icon name="arrow" :size="19" /></a
+            <a v-if="directWhatsapp" :href="directWhatsapp" class="button whatsapp-button" target="_blank" rel="noopener noreferrer" @click="track('lead_whatsapp_click', { locale, placement: 'hero' })"
+              ><Icon name="chat" :size="21" />{{ t.whatsappCta }}</a
             ><a href="#services" class="text-link"
               >{{ t.included }}<span>↗</span></a
             >
@@ -153,27 +157,14 @@ onMounted(() => {
             <Icon name="shield" :size="18" />{{ t.care }}
           </div>
         </div>
-        <div class="hero-visual">
-          <img
-            class="hero-photo"
-            src="/images/hero.jpg"
-            width="1536"
-            height="1024"
-            :alt="t.imageAlt"
-            fetchpriority="high"
-          />
-          <div class="image-caption">
-            <span class="caption-icon"><Icon name="air" :size="22" /></span>
-            <div>
-              <strong>{{ t.caption[0] }}</strong
-              ><span>{{ t.caption[1] }}</span>
-            </div>
-            <Icon class="caption-spark" name="sparkle" :size="24" />
-          </div>
-          <span class="photo-label" lang="en" dir="ltr"
-            >CLEAN AIR. CLEAR MIND.</span
-          >
-        </div>
+        <figure class="hero-visual">
+          <picture>
+            <source type="image/webp" srcset="/images/mountain-coast-768.webp 768w, /images/mountain-coast.webp 1536w" sizes="(max-width: 800px) 100vw, 55vw" />
+            <img class="hero-photo" src="/images/mountain-coast.webp" width="1536" height="1024" :alt="t.imageAlt" fetchpriority="high" />
+          </picture>
+          <span class="print-stamp" lang="he" dir="rtl">אוויר<br />טוב</span>
+          <figcaption class="print-caption"><span>{{ t.printLabel }}</span><span dir="ltr">COOLCLEAN — 01</span></figcaption>
+        </figure>
       </section>
       <div class="benefits-wrap">
         <div class="container benefits">
@@ -196,13 +187,13 @@ onMounted(() => {
           <article
             v-for="service in t.services"
             :key="service.id"
+            :id="service.id"
             class="service-card"
           >
-            <span class="service-icon"
-              ><Icon :name="service.icon" :size="29"
-            /></span>
+            <div class="service-top"><span class="service-icon"><Icon :name="service.icon" :size="29" /></span><span class="service-number" aria-hidden="true">0{{ t.services.indexOf(service) + 1 }}</span></div>
             <h3>{{ service.name }}</h3>
             <p>{{ service.text }}</p>
+            <ul class="service-points"><li v-for="point in service.details" :key="point"><Icon name="check" :size="15" />{{ point }}</li></ul>
             <button
               class="service-link"
               @click="openService(service)"
@@ -246,10 +237,10 @@ onMounted(() => {
             class="price-option"
             :class="{
               selected:
-                booking.type === 'wall' && booking.quantity === quantity,
+                booking.service === 'cleaning' && booking.type === 'wall' && booking.quantity === quantity,
             }"
             :aria-pressed="
-              booking.type === 'wall' && booking.quantity === quantity
+              booking.service === 'cleaning' && booking.type === 'wall' && booking.quantity === quantity
             "
             @click="selectPrice(quantity)"
           >
@@ -258,12 +249,12 @@ onMounted(() => {
               ><bdi>{{ company.prices[quantity] }} <span>₪</span></bdi></strong
             ><span class="price-selection"
               >{{
-                booking.type === "wall" && booking.quantity === quantity
+                booking.service === "cleaning" && booking.type === "wall" && booking.quantity === quantity
                   ? t.selected
                   : t.select
               }}<Icon
                 :name="
-                  booking.type === 'wall' && booking.quantity === quantity
+                  booking.service === 'cleaning' && booking.type === 'wall' && booking.quantity === quantity
                     ? 'check'
                     : 'plus'
                 "
@@ -271,6 +262,7 @@ onMounted(() => {
             /></span>
           </button>
         </div>
+        <div class="gas-callout"><Icon name="gauge" :size="33" /><div><h3>{{ t.gasPriceTitle }}</h3><p>{{ t.gasPriceText }}</p></div><button class="text-link" @click="selectGas">{{ t.gasCta }}<Icon name="arrow" :size="18" /></button></div>
         <div class="price-bottom">
           <p>{{ t.priceNote }} {{ t.estimateNote }}</p>
           <a class="text-link" href="#contact" @click="startLead"
@@ -281,7 +273,7 @@ onMounted(() => {
       <section id="area" class="area-section">
         <div class="container area-layout">
           <div>
-            <div class="eyebrow">{{ t.regionEyebrow }}</div>
+            <div class="eyebrow">{{ t.regionKicker }}</div>
             <h2>{{ t.regionTitle }}</h2>
             <p>{{ t.regionText }}</p>
             <a
@@ -299,6 +291,10 @@ onMounted(() => {
             </li>
           </ul>
         </div>
+      </section>
+      <section id="guide" class="section container guide-section">
+        <div class="section-heading"><div><div class="eyebrow">{{ t.guideEyebrow }}</div><h2>{{ t.guideTitle }}</h2></div><Icon name="leaf" :size="48" /></div>
+        <div class="guide-grid"><article v-for="(guide, i) in t.guides" :key="guide[0]"><span class="guide-index" aria-hidden="true">0{{ i + 1 }}</span><h3>{{ guide[0] }}</h3><p>{{ guide[1] }}</p></article></div>
       </section>
       <section id="faq" class="faq-section container section">
         <div>
@@ -394,6 +390,7 @@ onMounted(() => {
         >
       </nav>
     </footer>
+    <a v-if="directWhatsapp" class="floating-whatsapp" :href="directWhatsapp" target="_blank" rel="noopener noreferrer" :aria-label="t.whatsappCta" @click="track('lead_whatsapp_click', { locale, placement: 'floating' })"><Icon name="chat" :size="25" /><span>WhatsApp</span></a>
     <dialog
       ref="detailDialog"
       class="detail-dialog"
@@ -423,6 +420,7 @@ onMounted(() => {
           class="button"
           @click="
             detailDialog.close();
+            booking.service = selectedService.id === 'refrigerant' ? 'refrigerant' : 'cleaning';
             startLead();
           "
           >{{ t.book }}<Icon name="arrow" :size="18"

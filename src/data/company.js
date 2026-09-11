@@ -1,11 +1,11 @@
 // Extracted from stackofart/mazganim at c8a86eebd08f9fc875a120a14e60bccd3aec1956.
-// The original WhatsApp URLs were placeholders; keep unset until confirmed.
+// WhatsApp uses the company contact number; change it here if needed.
 export const company = {
   name: "CoolClean",
   siteUrl: "https://mazganim-clean-air.gerasim459.workers.dev",
   phone: "+972547577371",
   displayPhone: "054-757-7371",
-  whatsapp: "",
+  whatsapp: "+972547577371",
   telegram: "https://t.me/IGideonI",
   formEndpoint: "/api/leads",
   serviceArea: [
