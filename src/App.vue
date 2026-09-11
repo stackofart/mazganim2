@@ -185,9 +185,6 @@ onUnmounted(() => {
               >{{ t.nav[2] }}<span>↗</span></a
             >
           </div>
-          <div class="hero-note">
-            <Icon name="shield" :size="18" />{{ t.care }}
-          </div>
         </div>
         <ApartmentScene :text="scene" :mood="heroInteraction.pose.value.mood" :anticipation="heroInteraction.pose.value.anticipation" :leaving="heroInteraction.leaving.value" />
       </section>
@@ -385,17 +382,6 @@ onUnmounted(() => {
           />
         </div>
       </section>
-      <section class="referral-strip container">
-        <div>
-          <Icon name="air" :size="30" />
-          <p>
-            {{ t.shareTitle }}<span>{{ t.shareText }}</span>
-          </p>
-        </div>
-        <button class="share-button" @click="shareSite">
-          {{ t.share }}<Icon name="arrow" :size="18" /></button
-        ><span class="share-status" role="status">{{ shareStatus }}</span>
-      </section>
     </main>
     <footer class="container footer">
       <a class="brand" :href="localePath(locale)"
@@ -404,7 +390,8 @@ onUnmounted(() => {
       ><button class="footer-privacy" @click="privacyDialog.showModal()">
         {{ t.privacyLink }}</button
       ><span>© 2026 CoolClean</span>
-      <nav class="footer-languages" :aria-label="t.language">
+      <div class="footer-tools">
+        <nav class="footer-languages" :aria-label="t.language">
         <a
           v-for="lang in languages"
           :key="lang.code"
@@ -414,7 +401,14 @@ onUnmounted(() => {
           :aria-current="locale === lang.code ? 'page' : undefined"
           >{{ lang.label }}</a
         >
-      </nav>
+        </nav>
+        <div class="footer-share">
+          <button class="share-button" @click="shareSite">
+            {{ t.share }}<Icon name="arrow" :size="18" />
+          </button>
+          <span class="share-status" role="status">{{ shareStatus }}</span>
+        </div>
+      </div>
     </footer>
     <a v-if="directWhatsapp" v-show="showFloatingContact" class="floating-whatsapp" :href="directWhatsapp" target="_blank" rel="noopener noreferrer" :aria-label="t.whatsappCta" @click="track('lead_whatsapp_click', { locale, placement: 'floating' })"><Icon name="chat" :size="25" /><span>WhatsApp</span></a>
     <dialog

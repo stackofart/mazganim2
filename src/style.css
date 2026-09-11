@@ -108,7 +108,6 @@ h3 { font-size: 23px; font-weight: 600; line-height: 1.25; letter-spacing: -.5px
 .hero-price { margin-top: 16px; font-size: 14px; line-height: 1.7; font-weight: 500; }
 .hero-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 15px 24px; margin-top: 32px; }
 .hero-actions .button { padding-inline: 20px; }
-.hero-note { display: flex; align-items: center; gap: 10px; max-width: 410px; font-size: 11px; color: var(--muted); line-height: 1.7; margin-top: 22px; }
 .benefits-wrap { background: var(--ink); color: #f4ead7; }
 .benefits { display: grid; grid-template-columns: repeat(4,1fr); padding-block: 26px; }
 .benefits > div { display: flex; align-items: center; gap: 15px; padding-inline: 26px; border-inline-start: 1px solid #b9c3a942; min-width: 0; }
@@ -165,14 +164,17 @@ h3 { font-size: 23px; font-weight: 600; line-height: 1.25; letter-spacing: -.5px
 .guide-grid h3 { font-size: 22px; margin: 21px 0 16px; }
 .guide-grid p { font-size: 13px; color: var(--muted); }
 .faq-section { display: grid; grid-template-columns: .8fr 1.2fr; gap: 85px; padding-top: 15px; }
-.faq-section > div > p { font-size: 14px; color: var(--muted); margin: 22px 0; }
+.faq-section h2 { font-size: clamp(36px,3.2vw,46px); }
+.faq-section .eyebrow { font-size: 12px; }
+.faq-section > div > p { font-size: 16px; color: var(--muted); margin: 22px 0; }
+.faq-section .text-link { font-size: 16px; min-height: 44px; }
 .faq-list { border-top: 1px solid #b8bfad; }
 .faq-list details { border-bottom: 1px solid #b8bfad; padding-block: 20px; }
-.faq-list summary { display: flex; justify-content: space-between; gap: 20px; cursor: pointer; font-size: 15px; font-weight: 500; list-style: none; line-height: 1.5; }
+.faq-list summary { display: flex; justify-content: space-between; gap: 20px; cursor: pointer; font-size: 18px; font-weight: 500; list-style: none; line-height: 1.5; }
 .faq-list summary::-webkit-details-marker { display: none; }
 .faq-plus { display: flex; color: var(--accent); align-self: start; padding-top: 2px; }
 .faq-list details[open] .faq-plus { transform: rotate(45deg); }
-.faq-list p { margin-top: 18px; font-size: 13px; color: var(--muted); }
+.faq-list p { margin-top: 16px; font-size: 16px; color: var(--muted); line-height: 1.75; }
 .booking-section { padding-block: 85px; background: #203d38; color: var(--paper); }
 .booking-layout { display: grid; grid-template-columns: .95fr 1.05fr; gap: 100px; align-items: start; }
 .booking-copy { padding-top: 35px; }
@@ -213,18 +215,16 @@ h3 { font-size: 23px; font-weight: 600; line-height: 1.25; letter-spacing: -.5px
 .form-success { padding-block: 35px; }
 .form-success h3 { margin: 22px 0; }
 .form-success p { font-size: 14px; margin-bottom: 28px; }
-.referral-strip { display: flex; align-items: center; justify-content: space-between; gap: 35px; padding-block: 42px; border-bottom: 1px solid var(--line); }
-.referral-strip > div { display: flex; align-items: center; gap: 24px; }
-.referral-strip p { font-size: 16px; font-weight: 500; }
-.referral-strip p span { display: block; font-size: 11px; font-weight: 400; color: var(--muted); margin-top: 5px; }
-.share-button { display: inline-flex; gap: 15px; align-items: center; background: transparent; border-bottom: 1px solid var(--ink); color: var(--ink); padding: 12px 0; font-size: 12px; flex-shrink: 0; }
-.share-status { font-size: 11px; }
+.share-button { display: inline-flex; gap: 12px; align-items: center; background: transparent; border-bottom: 1px solid var(--ink); color: var(--ink); padding: 12px 0; min-height: 44px; font-size: 14px; flex-shrink: 0; }
+.share-status { font-size: 12px; color: var(--muted); }
 .share-status:empty { display: none; }
 .footer { display: flex; align-items: center; flex-wrap: wrap; gap: 20px; padding-block: 35px 60px; }
 .footer .brand { font-size: 24px; }
 .footer > span,.footer-privacy { color: var(--muted); font-size: 10px; }
 .footer-privacy { background: transparent; margin-inline-start: auto; }
-.footer-languages { display: flex; width: 100%; justify-content: center; gap: 23px; font-size: 11px; padding-top: 5px; }
+.footer-tools { display: flex; width: 100%; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px 24px; border-top: 1px solid var(--line); padding-top: 16px; }
+.footer-languages { display: flex; flex-wrap: wrap; gap: 12px 23px; font-size: 12px; }
+.footer-share { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; }
 .floating-whatsapp { position: fixed; bottom: max(22px,env(safe-area-inset-bottom)); inset-inline-end: 22px; display: flex; align-items: center; gap: 10px; z-index: 25; padding: 14px 18px; border-radius: 4px; background: #19684e; color: #fff; border: 1px solid #ffffff6b; box-shadow: 0 4px 20px #152c3430; font-size: 12px; }
 .floating-whatsapp:hover { background: #12533e; }
 .detail-dialog { width: min(580px,calc(100% - 32px)); max-height: 85dvh; margin: auto; padding: 0; background: var(--paper); color: var(--ink); border: 1px solid #a4af9b; border-radius: 3px; }
@@ -283,7 +283,6 @@ h3 { font-size: 23px; font-weight: 600; line-height: 1.25; letter-spacing: -.5px
   .hero-actions { margin-top: 20px; gap: 12px 18px; }
   .hero-actions .button { font-size: 13px; }
   .hero-actions .text-link { font-size: 13px; }
-  .hero-note { font-size: 12px; margin-top: 16px; }
   .benefits { grid-template-columns: 1fr 1fr; gap: 22px 16px; padding-block: 24px; }
   .benefits > div { padding-inline: 0; border: 0; }
   .benefits > div:nth-child(even) { border-inline-start: 1px solid #b9c3a942; padding-inline-start: 18px; }
@@ -327,7 +326,6 @@ h3 { font-size: 23px; font-weight: 600; line-height: 1.25; letter-spacing: -.5px
   .guide-grid p { font-size: 14px; }
   .faq-section { grid-template-columns: 1fr; gap: 30px; padding-top: 0; }
   .faq-section > div > p { margin-block: 16px 10px; }
-  .faq-list summary { font-size: 14px; }
   .booking-section { padding-block: 60px; }
   .booking-layout { grid-template-columns: 1fr; gap: 34px; }
   .booking-copy { padding: 0; }
@@ -339,9 +337,6 @@ h3 { font-size: 23px; font-weight: 600; line-height: 1.25; letter-spacing: -.5px
   .form-fields h3 { font-size: 25px; }
   .booking-form label { font-size: 12px; }
   .form-row { grid-template-columns: 1fr; gap: 0; }
-  .referral-strip { align-items: start; flex-direction: column; gap: 20px; padding-block: 35px; }
-  .referral-strip > div { gap: 17px; }
-  .share-button { margin-inline-start: 47px; }
   .footer { gap: 17px; padding-bottom: 95px; }
   .footer > span { max-width: 160px; }
   .footer-privacy { margin-inline-start: 0; }

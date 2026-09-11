@@ -57,4 +57,4 @@ Create a finished social sharing cover image for CoolClean, using the attached o
 - `public/images/bird-mark-source.png` — большой исходник знака; верхняя птица с солнцем из пользовательского референса, очищенная от надписей и фона.
 - `public/favicon.png` — версия знака для вкладки браузера, 64×64.
 
-Точные финальные промпты и режим генерации: [character-assets.json](character-assets.json). Изображения конвертированы в WebP через cwebp; изображение персонажа возле формы — CSS-фрагмент той же сцены, дополнительная картинка для него не загружается.
+Точные финальные промпты и режим генерации: [character-assets.json](character-assets.json). Изображения конвертированы в WebP через cwebp. Возле формы картинка удалена; осталась текстовая реплика.
