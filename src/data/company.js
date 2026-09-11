@@ -2,7 +2,7 @@
 // The original WhatsApp URLs were placeholders; keep unset until confirmed.
 export const company = {
   name: "CoolClean",
-  siteUrl: "https://mazganim-clean-air.nat-tan.chatgpt.site",
+  siteUrl: "https://mazganim-clean-air.gerasim459.workers.dev",
   phone: "+972547577371",
   displayPhone: "054-757-7371",
   whatsapp: "",

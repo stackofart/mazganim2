@@ -1,5 +1,7 @@
 # CoolClean
 
+Сайт: [mazganim-clean-air.gerasim459.workers.dev](https://mazganim-clean-air.gerasim459.workers.dev). Репозиторий: [stackofart/mazganim2](https://github.com/stackofart/mazganim2).
+
 Сайт чистки и дезинфекции настенных кондиционеров в центральном Израиле. Vue 3 + Vite, готовый HTML на этапе сборки, Cloudflare Workers Static Assets. Без собственного API, базы данных и серверного рендера на запрос. Для обратного звонка используется существующая форма Formspree из референса.
 
 ## Данные из референса
@@ -52,7 +54,7 @@ npx wrangler deploy --dry-run
 
 ## Cloudflare Workers
 
-Перед сборкой задайте `SITE_URL` в `.env` или окружении сборки. Используйте реальный HTTPS-домен, поскольку от него зависят canonical, Open Graph и sitemap. Пример — `.env.example`. По умолчанию используется адрес закрытого предпросмотра Sites.
+`SITE_URL` задан в переменных сборки Cloudflare: `https://mazganim-clean-air.gerasim459.workers.dev`. От него зависят canonical, Open Graph и sitemap. Для локальной сборки используется тот же адрес из `company.siteUrl`; при необходимости переопределите его через `.env` или окружение. Пример — `.env.example`.
 
 ```sh
 npx wrangler login
@@ -61,23 +63,24 @@ npm run deploy
 
 Команда проверяет бизнес-данные, собирает сайт, запускает тесты и выполняет `wrangler deploy`. При необходимости смените имя Worker в `wrangler.jsonc`. После подключения собственного домена пересоберите с новым `SITE_URL`.
 
-Для автоматической публикации используйте Cloudflare Workers Builds:
+Автоматическая публикация настроена через Cloudflare Workers Builds:
 
 | Настройка | Значение |
 | --- | --- |
 | Worker name | `mazganim-clean-air` — должно совпадать с `wrangler.jsonc` |
+| GitHub repository | `stackofart/mazganim2` |
 | Production branch | `main` |
 | Root directory | `/` |
 | Build command | `npm run build:checked` |
 | Deploy command | `npx wrangler deploy` |
-| Build variable `SITE_URL` | Реальный HTTPS-адрес сайта в Cloudflare или собственный домен |
+| Build variable `SITE_URL` | `https://mazganim-clean-air.gerasim459.workers.dev` |
 | Node.js | 22 — версия задана в `.nvmrc` |
 
 Cloudflare устанавливает зависимости по `package-lock.json`, запускает сборку и тесты, затем публикует результат. Ошибка сборки или тестов останавливает публикацию. Без `SITE_URL` сборка в Workers Builds завершается ошибкой, чтобы не опубликовать SEO-ссылки на закрытый предпросмотр. В переменных **сборки**, а не runtime-настройках, задайте реальный адрес.
 
-После подключения репозитория каждый push в `main` обновляет сайт. Сохранение файла на компьютере само по себе публикацию не запускает: изменения нужно закоммитить и отправить в GitHub. Для отката можно отменить проблемный коммит через `git revert` и отправить новый коммит.
+Каждый push в `main` обновляет сайт. Сохранение файла на компьютере само по себе публикацию не запускает: изменения нужно закоммитить и отправить в GitHub. Изменение файла через веб-интерфейс GitHub с коммитом в `main` тоже запускает публикацию. Автосборки других веток отключены. Для отката можно отменить проблемный коммит через `git revert` и отправить новый коммит.
 
-Конфигурация `.openai/hosting.json` нужна только закрытому предпросмотру Sites и не требуется для вашего аккаунта Cloudflare. Cloudflare-токены, `.env` и `.dev.vars` не должны попадать в репозиторий. Включение связи с GitHub выполняется один раз в Cloudflare; до успешного подключения и первой сборки автопубликация не активна.
+Конфигурация `.openai/hosting.json` нужна только закрытому предпросмотру Sites и не требуется для вашего аккаунта Cloudflare. Cloudflare-токены, `.env` и `.dev.vars` не должны попадать в репозиторий. Публикацию выполняет сама платформа Cloudflare через существующее подключение GitHub; GitHub Actions и локальная авторизация Wrangler для обычных обновлений не нужны.
 
 ## Заявки и контакты
 
