@@ -96,17 +96,17 @@ Cloudflare устанавливает зависимости по `package-lock.
 
 Метки `utm_source`, `utm_medium`, `utm_campaign`, `utm_content`, `utm_term` хранятся на время вкладки и попадают в обращение. Кнопка «Поделиться» сохраняет текущий язык и добавляет `utm_source=referral&utm_medium=share`. Не размещайте персональные данные в UTM.
 
-События в `window.dataLayer`: `lead_start`, `service_view`, `price_select`, `lead_prepared`, `lead_submitted`, `lead_whatsapp_click`, `telegram_click`, `lead_copy`, `phone_click`, `site_share`. Контактные данные в события не включены. **GA4, GTM, Meta Pixel не подключены**; это готовые точки подключения вашей аналитики. `lead_submitted` означает приём формы сервисом, а не подтверждённый выезд или продажу. При подключении аналитики обновите CSP, описание обработки данных и настройки согласия.
+События в `window.dataLayer`: `lead_start`, `service_view`, `service_select`, `lead_submitted`, `lead_whatsapp_click`, `telegram_click`, `phone_click`, `site_share`. Контактные данные в события не включены. **GA4, GTM, Meta Pixel не подключены**; это готовые точки подключения вашей аналитики. `lead_submitted` означает приём формы сервисом, а не подтверждённый выезд или продажу. При подключении аналитики обновите CSP, описание обработки данных и настройки согласия.
 
 Шрифты и изображения размещены локально. CSS/JS с хешами кешируются год. Для соцсетей добавлена обложка `public/images/social-cover.jpg` (1200×630) и метатеги Open Graph / X. Непроверенные отзывы, рейтинги, проценты экономии и медицинские гарантии не добавлены.
 
 ## Ресурсы и дополнительная автоматизация
 
-Первый экран — цельная иллюстрация квартиры с добрым, уставшим кондиционером и птицей. При приближении к WhatsApp или клавиатурном фокусе кондиционер открывает глаза; реплика меняется по состоянию. Персонаж присутствует только на первом экране. Тексты всех пяти языков — `src/data/scene.js`; поведение — [docs/apartment-scene.md](docs/apartment-scene.md). Логотип с птицей и солнцем, иллюстрации и точные промпты описаны в [docs/character-assets.json](docs/character-assets.json).
+Первый экран — цельная иллюстрация квартиры с обычным кондиционером без лица и птицей. При приближении к WhatsApp или клавиатурном фокусе меняется только текстовая реплика. Тексты всех пяти языков — `src/data/scene.js`; поведение — [docs/apartment-scene.md](docs/apartment-scene.md). Логотип с птицей и солнцем, иллюстрации и точные промпты описаны в [docs/character-assets.json](docs/character-assets.json).
 
 Пейзаж `public/images/mountain-coast.webp` сохранён как прежний художественный материал. Обложка `public/images/social-cover.jpg` продолжает использоваться для ссылок. Они созданы встроенным ImageGen; промпты — `docs/assets.md`. Golos Text, Noto Sans Hebrew и Noto Sans Arabic размещены локально под SIL OFL; лицензии в `public/fonts/`.
 
-Необязательный WebMCP `prepare_cleaning_request` заполняет видимую форму и готовит сообщение. Ничего не отправляет. Обычный сайт от него не зависит.
+В форме есть прямые кнопки WhatsApp и Telegram, доступные без предварительного заполнения. WhatsApp подставляет данные корректно заполненной формы, иначе открывается с общим приветствием; Telegram ведёт на контакт из `company.telegram`. Кнопка отправки заявки работает отдельно. Необязательный WebMCP `prepare_cleaning_request` заполняет видимую форму и возвращает текст сообщения, ничего не отправляя. Обычный сайт от него не зависит.
 
 Архитектура соответствует [Workers Static Assets](https://developers.cloudflare.com/workers/static-assets/) и рекомендациям Google об [отдельных адресах языковых версий](https://developers.google.com/search/docs/specialty/international/localized-versions).
 

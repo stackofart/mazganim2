@@ -2,6 +2,7 @@
 import { ref, computed, onMounted, onUnmounted, watch, nextTick } from "vue";
 import Icon from "./Icon.vue";
 import { contentFor } from "../data/content.js";
+import { company } from "../data/company.js";
 import {
   readCampaign,
   track,
@@ -15,8 +16,6 @@ const emit = defineEmits(["privacy"]);
 const values = defineModel({ required: true });
 const t = computed(() => contentFor(props.locale));
 const interactive = ref(false),
-  ready = ref(false),
-  copied = ref(false),
   error = ref(""),
   status = ref("idle");
 const price = computed(() => calculatePrice(values.value));
@@ -27,42 +26,15 @@ const requestText = computed(() => {
     return "";
   }
 });
-const contactUrl = computed(() => whatsappUrl(requestText.value));
+const contactUrl = computed(() => whatsappUrl(requestText.value || t.value.requestHello));
 let unregister, submission;
 watch(
   values,
   () => {
-    ready.value = false;
-    copied.value = false;
     error.value = "";
   },
   { deep: true, flush: "sync" },
 );
-function prepareRequest() {
-  error.value = "";
-  try {
-    makeRequest(values.value, {}, props.locale);
-    ready.value = true;
-    track("lead_prepared", {
-      locale: props.locale,
-      system_type: values.value.type,
-      service: values.value.service,
-      quantity: Number(values.value.quantity),
-    });
-    nextTick(() => document.getElementById("request-result")?.focus());
-  } catch (e) {
-    error.value = e.message;
-  }
-}
-async function copyRequest() {
-  try {
-    await navigator.clipboard.writeText(requestText.value);
-    copied.value = true;
-    track("lead_copy", { locale: props.locale });
-  } catch {
-    error.value = t.value.copyError;
-  }
-}
 async function submit() {
   if (status.value === "sending") return;
   error.value = "";
@@ -143,8 +115,6 @@ onMounted(() => {
             makeRequest(staged, {}, props.locale);
             values.value = staged;
             status.value = "idle";
-            await nextTick();
-            ready.value = true;
             await nextTick();
             document
               .getElementById("contact")
@@ -309,40 +279,29 @@ onUnmounted(() => {
           {{ t.privacy }}
         </button>
       </p>
-      <button type="button" class="message-prepare" @click="prepareRequest">
-        <Icon name="chat" :size="18" />{{ t.prepare }}
-      </button>
-      <p v-if="error" role="alert" class="form-error">{{ error }}</p>
-      <div
-        v-if="ready"
-        id="request-result"
-        class="request-result"
-        tabindex="-1"
-      >
-        <strong>{{ t.ready }}</strong>
-        <pre>{{ requestText }}</pre>
+      <div class="messenger-buttons">
         <a
           v-if="contactUrl"
           :href="contactUrl"
           class="button whatsapp-button"
           target="_blank"
           rel="noopener noreferrer"
+          :aria-label="t.whatsappCta"
           @click="
             track('lead_whatsapp_click', {
               locale,
+              placement: 'form',
               system_type: values.type,
               quantity: values.quantity,
             })
           "
-          ><Icon name="chat" :size="19" />{{ t.whatsapp }}</a
+          ><Icon name="chat" :size="19" />WhatsApp</a
         >
-        <p class="form-note">{{ t.messageNote }}</p>
-        <button type="button" class="copy-button" @click="copyRequest">
-          <Icon :name="copied ? 'check' : 'copy'" :size="17" />{{
-            copied ? t.copied : t.copy
-          }}</button
-        ><span class="sr-only" role="status">{{ copied ? t.copied : "" }}</span>
+        <a :href="company.telegram" class="button telegram-button" target="_blank" rel="noopener noreferrer"
+          @click="track('telegram_click', { locale, placement: 'form' })"
+          ><Icon name="telegram" :size="19" />Telegram</a>
       </div>
+      <p v-if="error" role="alert" class="form-error">{{ error }}</p>
     </fieldset>
   </form>
 </template>

@@ -162,7 +162,7 @@ onUnmounted(() => {
             >
           </div>
         </div>
-        <ApartmentScene :text="scene" :mood="heroInteraction.pose.value.mood" :anticipation="heroInteraction.pose.value.anticipation" :leaving="heroInteraction.leaving.value" />
+        <ApartmentScene :text="scene" :mood="heroInteraction.pose.value.mood" :leaving="heroInteraction.leaving.value" />
       </section>
       <div class="benefits-wrap">
         <div class="container benefits">
@@ -237,7 +237,7 @@ onUnmounted(() => {
             <dd class="price-value"><bdi>{{ company.prices[quantity] }} <span>₪</span></bdi></dd>
           </div>
         </dl>
-        <div class="gas-callout"><Icon name="gauge" :size="33" /><div><h3>{{ t.gasPriceTitle }}</h3><p>{{ t.gasPriceText }}</p></div></div>
+        <div class="gas-callout"><Icon name="cylinder" :size="36" /><div><h3>{{ t.gasPriceTitle }}</h3><p>{{ t.gasPriceText }}</p></div></div>
         <div class="price-bottom">
           <p>{{ t.priceNote }} {{ t.estimateNote }}</p>
           <a class="text-link" href="#contact" @click="startLead"
