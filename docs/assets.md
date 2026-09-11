@@ -21,7 +21,7 @@ Golos Text: Google Fonts, latin and cyrillic variable WOFF2, SIL Open Font Licen
 
 ## Mountain print redesign — 2026-09-11
 
-После следующей итерации первый экран заменён квартирной SVG-сценой из `src/components/ApartmentScene.vue` и `AcCharacter.vue`. Пейзаж и его мобильная версия сохранены, но на странице больше не загружаются; обложка соцсетей остаётся актуальным используемым файлом. Сценка собрана из отдельных векторных частей по описанию пользователя, без новых растровых изображений.
+Пейзаж и его мобильная версия сохранены как прежний художественный материал, но на странице больше не загружаются. Обложка соцсетей остаётся используемым файлом. Текущий первый экран описан ниже.
 
 Новые изображения созданы встроенным ImageGen. Это оригинальная художественная интерпретация средиземноморского пейзажа, а не фотография места, сотрудников или выполненных работ. Референс пользователя — японская горная гравюра; финальная композиция самостоятельная. Ивритная печать «אוויר טוב» добавлена живым текстом в интерфейс.
 
@@ -45,3 +45,16 @@ Use case: illustration-story. Create one original landscape artwork for the hero
 ```text
 Create a finished social sharing cover image for CoolClean, using the attached original woodblock landscape as the artwork. Intended Open Graph image, wide 1200 x 630 composition (approximately 1.91:1). Keep the same warm ivory handmade-paper texture, deep teal Mediterranean sea, terracotta mountains and tiny white Israeli homes. Design a sophisticated editorial poster: the left 42% is a clean warm ivory panel with large exceptionally crisp deep teal sans-serif text 'CoolClean.' on one line at top, followed by smaller uppercase text 'AIR CONDITIONER CARE' and 'IN ISRAEL' on separate lines. At bottom left write exactly '054-757-7371'. A small terracotta sun mark above the heading. Right 58% showcases the mountain/sea artwork, with a clean full-height edge between artwork and typography. High contrast text, generous margins, all letters fully inside the canvas. No other words, no Hebrew, no Cyrillic, no mockup device, no watermark. Final production-ready image, not a web page. Preserve the original artwork's beauty and detail.
 ```
+
+## Квартирная иллюстрация и логотип с птицей
+
+Текущий первый экран использует цельную иллюстрацию, созданную встроенным ImageGen. Все предметы нарисованы вместе: добрый уставший кондиционер, окно, птица, израильская застройка и вечерний свет. Это художественный персонаж, а не фотография выполненной работы.
+
+- `public/images/quiet-apartment.webp` — основная сцена, 1536×1024.
+- `public/images/quiet-apartment-768.webp` — её мобильная версия, 768×512.
+- `public/images/quiet-apartment-awake.webp` — вариант с открытыми глазами. CSS показывает только область лица, поэтому остальная комната не меняется при переключении.
+- `public/images/bird-mark.webp` — знак для шапки и подвала, 256×256.
+- `public/images/bird-mark-source.png` — большой исходник знака; верхняя птица с солнцем из пользовательского референса, очищенная от надписей и фона.
+- `public/favicon.png` — версия знака для вкладки браузера, 64×64.
+
+Точные финальные промпты и режим генерации: [character-assets.json](character-assets.json). Изображения конвертированы в WebP через cwebp; изображение персонажа возле формы — CSS-фрагмент той же сцены, дополнительная картинка для него не загружается.

@@ -12,6 +12,9 @@ const props = defineProps({ locale: { type: String, default: "ru" } });
 const t = computed(() => contentFor(props.locale));
 const scene = computed(() => sceneCopy[props.locale] || sceneCopy.ru);
 const heroWhatsapp = ref(null);
+const heroSection = ref(null);
+const showFloatingContact = ref(false);
+let heroObserver;
 const heroInteraction = useSceneInteraction(heroWhatsapp);
 const bookingEngaged = ref(false);
 const direction = computed(() =>
@@ -98,8 +101,15 @@ onMounted(() => {
   document.documentElement.dir = direction.value;
   readContactHash();
   window.addEventListener("hashchange", readContactHash);
+  heroObserver = new IntersectionObserver(([entry]) => {
+    showFloatingContact.value = !entry.isIntersecting;
+  });
+  if (heroSection.value) heroObserver.observe(heroSection.value);
 });
-onUnmounted(() => window.removeEventListener("hashchange", readContactHash));
+onUnmounted(() => {
+  window.removeEventListener("hashchange", readContactHash);
+  heroObserver?.disconnect();
+});
 </script>
 <template>
   <div :dir="direction" :lang="locale" class="site-content" @click="followContactLink">
@@ -107,8 +117,8 @@ onUnmounted(() => window.removeEventListener("hashchange", readContactHash));
     <header class="site-header">
       <div class="container header-inner">
         <a class="brand" :href="localePath(locale)" :aria-label="company.name"
-          ><span class="brand-mark"><Icon name="mountain" :size="32" /></span
-          ><span dir="ltr">CoolClean<span class="brand-dot">.</span></span></a
+          ><img class="brand-mark" src="/images/bird-mark.webp" width="64" height="52" alt="" aria-hidden="true" />
+          <span dir="ltr">CoolClean<span class="brand-dot">.</span></span></a
         >
         <nav class="desktop-nav" :aria-label="t.menu">
           <a v-for="item in nav" :key="item.id" :href="`#${item.id}`">{{
@@ -158,7 +168,7 @@ onUnmounted(() => window.removeEventListener("hashchange", readContactHash));
       </nav>
     </header>
     <main id="main">
-      <section class="hero container" @pointermove.passive="heroInteraction.move" @pointerleave="heroInteraction.resetPointer">
+      <section ref="heroSection" class="hero container" @pointermove.passive="heroInteraction.move" @pointerleave="heroInteraction.resetPointer">
         <div class="hero-copy">
           <div class="eyebrow">
             <span class="tiny-line"></span>{{ t.sourceSlogan }}
@@ -389,7 +399,7 @@ onUnmounted(() => window.removeEventListener("hashchange", readContactHash));
     </main>
     <footer class="container footer">
       <a class="brand" :href="localePath(locale)"
-        ><Icon name="air" :size="28" /><span dir="ltr">CoolClean.</span></a
+        ><img class="brand-mark" src="/images/bird-mark.webp" width="64" height="52" alt="" aria-hidden="true" /><span dir="ltr">CoolClean.</span></a
       ><span>{{ t.footer }}</span
       ><button class="footer-privacy" @click="privacyDialog.showModal()">
         {{ t.privacyLink }}</button
@@ -406,7 +416,7 @@ onUnmounted(() => window.removeEventListener("hashchange", readContactHash));
         >
       </nav>
     </footer>
-    <a v-if="directWhatsapp" class="floating-whatsapp" :href="directWhatsapp" target="_blank" rel="noopener noreferrer" :aria-label="t.whatsappCta" @click="track('lead_whatsapp_click', { locale, placement: 'floating' })"><Icon name="chat" :size="25" /><span>WhatsApp</span></a>
+    <a v-if="directWhatsapp" v-show="showFloatingContact" class="floating-whatsapp" :href="directWhatsapp" target="_blank" rel="noopener noreferrer" :aria-label="t.whatsappCta" @click="track('lead_whatsapp_click', { locale, placement: 'floating' })"><Icon name="chat" :size="25" /><span>WhatsApp</span></a>
     <dialog
       ref="detailDialog"
       class="detail-dialog"
