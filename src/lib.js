@@ -47,9 +47,9 @@ export function track(event, properties = {}) {
   window.dataLayer = window.dataLayer || [];
   window.dataLayer.push({ event, ...properties, ...readCampaign() });
 }
-export function calculatePrice({ type, quantity }) {
+export function calculatePrice({ type, quantity, service = "cleaning" }) {
   const count = Number(quantity);
-  return type === "wall" && Number.isInteger(count)
+  return service === "cleaning" && type === "wall" && Number.isInteger(count)
     ? (company.prices[count] ?? null)
     : null;
 }
@@ -61,6 +61,8 @@ export function normalizePhone(value) {
 }
 export function makeRequest(values, campaign = {}, locale = "ru") {
   const t = contentFor(locale);
+  const service = values.service || "cleaning";
+  if (!["cleaning", "refrigerant"].includes(service)) throw new Error(t.invalidRequest);
   const type = t.systemTypes.find((type) => type.value === values.type);
   const quantity = Number(values.quantity);
   if (!type || !Number.isInteger(quantity) || quantity < 1 || quantity > 10)
@@ -75,6 +77,7 @@ export function makeRequest(values, campaign = {}, locale = "ru") {
   const lines = [
     t.requestHello,
     "",
+    `${t.serviceLabel}: ${t.serviceOptions[service === "refrigerant" ? 1 : 0]}`,
     `${t.type}: ${type.label}`,
     `${t.quantity}: ${quantity}`,
     `${t.city}: ${city}`,
@@ -119,7 +122,7 @@ export async function sendLead(
     city: String(values.city).trim().slice(0, 100),
     message,
     locale,
-    _subject: `${company.name}: AC cleaning request`,
+    _subject: `${company.name}: AC service request`,
     _gotcha: "",
     ...Object.fromEntries(
       campaignKeys

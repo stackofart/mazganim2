@@ -34,6 +34,7 @@ for (const lang of languages) {
       "@id": `${origin}/#website`,
       url: `${origin}/`,
       name: company.name,
+      image: `${origin}/images/social-cover.jpg`,
       inLanguage: languages.map((l) => l.code),
     },
     {
@@ -62,6 +63,8 @@ for (const lang of languages) {
       name: company.name,
       url: `${origin}/`,
       telephone: company.phone,
+      image: `${origin}/images/social-cover.jpg`,
+      sameAs: [company.telegram],
       areaServed: company.serviceArea.map((name) => ({
         "@type": "City",
         name,
@@ -74,7 +77,7 @@ for (const lang of languages) {
       },
       hasOfferCatalog: {
         "@type": "OfferCatalog",
-        name: t.sourceSlogan,
+        name: t.serviceOptions[0],
         itemListElement: [1, 2, 3].map((quantity) => ({
           "@type": "Offer",
           name: t.priceLabels[quantity - 1],
@@ -83,12 +86,22 @@ for (const lang of languages) {
           url: `${url}#prices`,
           itemOffered: {
             "@type": "Service",
-            name: t.sourceSlogan,
+            name: t.serviceOptions[0],
             provider: { "@id": `${origin}/#business` },
           },
         })),
       },
     });
+  if (isPublic) graph.push(...t.services.map(service => ({
+    "@type": "Service",
+    "@id": `${url}#service-${service.id}`,
+    name: service.name,
+    description: service.text,
+    serviceType: service.name,
+    url: `${url}#${service.id}`,
+    provider: { "@id": `${origin}/#business` },
+    areaServed: company.serviceArea.map(name => ({ "@type": "City", name })),
+  })));
   const meta = `
 <link rel="canonical" href="${escapeAttr(url)}" />
 ${languages.map((l) => `<link rel="alternate" hreflang="${l.code}" href="${escapeAttr(origin + localePath(l.code))}" />`).join("\n")}
@@ -100,7 +113,15 @@ ${languages.map((l) => `<link rel="alternate" hreflang="${l.code}" href="${escap
 <meta property="og:title" content="${escapeAttr(title)}" />
 <meta property="og:description" content="${escapeAttr(t.description)}" />
 <meta property="og:url" content="${escapeAttr(url)}" />
-<meta name="twitter:card" content="summary" />
+<meta property="og:image" content="${origin}/images/social-cover.jpg" />
+<meta property="og:image:secure_url" content="${origin}/images/social-cover.jpg" />
+<meta property="og:image:type" content="image/jpeg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="${escapeAttr(company.name + ' — ' + t.pageTitle)}" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="${origin}/images/social-cover.jpg" />
+<meta name="twitter:image:alt" content="${escapeAttr(company.name + ' — ' + t.pageTitle)}" />
 <meta name="twitter:title" content="${escapeAttr(title)}" />
 <meta name="twitter:description" content="${escapeAttr(t.description)}" />
 <script type="application/ld+json">${JSON.stringify({ "@context": "https://schema.org", "@graph": graph }).replaceAll("<", "\\u003c")}</script>`;
@@ -142,7 +163,7 @@ await writeFile(
 );
 await writeFile(
   "dist/404.html",
-  `<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>404 — ${company.name}</title><style>body{font:18px/1.7 system-ui;color:#17272e;margin:12vh auto;padding:24px;max-width:640px}a{color:#1875df;margin:12px;display:inline-block}</style><h1>404 — CoolClean</h1><p>Page not found. Choose your language:</p>${languages.map((l) => `<a href="${localePath(l.code)}" lang="${l.code}">${l.label}</a>`).join("")}</html>`,
+  `<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>404 — ${company.name}</title><style>body{font:18px/1.7 system-ui;color:#203d38;background:#f6f1e6;margin:12vh auto;padding:24px;max-width:640px}a{color:#b84b31;margin:12px;display:inline-block}</style><h1>404 — CoolClean</h1><p>Page not found. Choose your language:</p>${languages.map((l) => `<a href="${localePath(l.code)}" lang="${l.code}">${l.label}</a>`).join("")}</html>`,
 );
 await rm(".ssg", { recursive: true, force: true });
 console.log(

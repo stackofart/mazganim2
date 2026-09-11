@@ -22,8 +22,8 @@ export function contentFor(code = "ru") {
   return {
     ...t,
     services: t.services.map(([name, text, details], i) => ({
-      id: ["deep", "drain", "disinfection"][i],
-      icon: ["ac", "drop", "sparkle"][i],
+      id: ["deep", "refrigerant", "disinfection"][i],
+      icon: ["ac", "gauge", "sparkle"][i],
       name,
       text,
       details,

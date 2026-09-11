@@ -1,6 +1,8 @@
 <script setup>
 defineProps({ name: String, size: { type: [Number, String], default: 24 } });
 const paths = {
+  mountain: ["M2 20 10 5l5 9 3-5 5 11Z", "m7 11 3 2 3-2", "M2 23h21"],
+  gauge: ["M4 14a8 8 0 1 1 16 0", "m12 12 4-4", "M3 16h18v5H3z", "M7 18v1m5-1v1m5-1v1"],
   air: [
     "M3 8h12a3 3 0 1 0-3-3",
     "M2 12h17a3 3 0 1 1-3 3",

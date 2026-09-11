@@ -1,30 +1,58 @@
 {
-  "sourceSlogan": "Nettoyage et désinfection de climatiseurs muraux",
+  "sourceSlogan": "Nettoyage · Désinfection · Recharge",
   "priceNote": "Un contrôle supplémentaire ou les modèles complexes (VRF, multi-split) sont facturés séparément après accord préalable.",
-  "priceLabels": ["Un climatiseur", "Deux climatiseurs", "Trois climatiseurs"],
-  "nav": ["Services", "Les étapes", "Tarifs", "Questions"],
+  "priceLabels": [
+    "Un climatiseur",
+    "Deux climatiseurs",
+    "Trois climatiseurs"
+  ],
+  "nav": [
+    "Services",
+    "Les étapes",
+    "Tarifs",
+    "Questions"
+  ],
   "book": "Réserver",
-  "bookLong": "Réserver un nettoyage",
-  "included": "Ce qui est inclus",
+  "bookLong": "Voir les services",
+  "included": "Services et tarifs",
   "details": "Voir le détail",
   "close": "Fermer",
   "menu": "Menu",
   "skip": "Aller au contenu",
   "language": "Langue",
-  "hero": ["Une maison fraîche.", "Un air", "vraiment propre."],
-  "intro": "Nettoyage et désinfection de climatiseurs muraux dans le centre d’Israël. D’Ashdod à Hadera.",
-  "care": "Le respect de votre intérieur. Le souci du détail.",
-  "caption": ["Une fraîcheur qui se ressent.", "Dès la première inspiration."],
-  "imageAlt": "Salon lumineux avec un climatiseur mural",
-  "benefits": [
-    ["Plus de 5 ans", "dans le Goush Dan et environs"],
-    ["Dès 250 ₪", "pour un climatiseur mural"],
-    ["Centre d’Israël", "d’Ashdod à Hadera"],
-    ["Contact facile", "par téléphone et Telegram"]
+  "hero": [
+    "Fraîcheur des montagnes.",
+    "Douceur du foyer.",
+    ""
   ],
-  "servicesEyebrow": "UNE PETITE ATTENTION. UNE GRANDE DIFFÉRENCE.",
-  "servicesTitle": "Bien plus que des filtres propres",
-  "servicesIntro": "Nettoyage et désinfection professionnels pour maisons et bureaux.",
+  "intro": "Nettoyage et recharge de climatisation dans le centre d’Israël. Un foyer où souffler, même les jours les plus chauds.",
+  "care": "Nous convenons du travail et du prix. Puis prenons soin de votre maison.",
+  "caption": [
+    "Inspiré par la nature.",
+    "Pensé pour votre maison."
+  ],
+  "imageAlt": "Illustration façon estampe japonaise : montagnes terracotta, mer Méditerranée et maisons blanches",
+  "benefits": [
+    [
+      "Plus de 5 ans",
+      "dans le Goush Dan et environs"
+    ],
+    [
+      "Dès 250 ₪",
+      "pour un climatiseur mural"
+    ],
+    [
+      "Centre d’Israël",
+      "d’Ashdod à Hadera"
+    ],
+    [
+      "Contact facile",
+      "WhatsApp · Telegram"
+    ]
+  ],
+  "servicesEyebrow": "01 / PRENDRE SOIN DE VOTRE AIR",
+  "servicesTitle": "Trois façons de se sentir bien.",
+  "servicesIntro": "Nettoyage, désinfection et recharge en fluide frigorigène. Nous déterminons d’abord les besoins de votre système.",
   "services": [
     [
       "Nettoyage en profondeur",
@@ -36,12 +64,12 @@
       ]
     ],
     [
-      "Nettoyage du drainage",
-      "Rinçage des conduits et du bac à condensats.",
+      "Recharge de climatisation",
+      "Nous vérifions si une recharge est nécessaire et convenons du fluide et des travaux adaptés.",
       [
-        "Nettoyage du bac à condensats",
-        "Rinçage des saletés dans les conduits",
-        "Vérification de l’écoulement"
+        "Vérification du système avant recharge",
+        "Choix du fluide adapté au modèle",
+        "Recharge si nécessaire et contrôle du refroidissement"
       ]
     ],
     [
@@ -103,7 +131,7 @@
   "faqs": [
     [
       "Que comprend le nettoyage ?",
-      "Inspection, démontage, nettoyage des filtres et composants internes, rinçage du drainage, désinfection, remontage et test. Les détails dépendent du modèle et de son état."
+      "Inspection, démontage soigneux, nettoyage des filtres et composants internes, désinfection, remontage et test. Les étapes dépendent du modèle et de son état."
     ],
     [
       "Où intervenez-vous ?",
@@ -124,13 +152,24 @@
     [
       "Une demande envoyée confirme-t-elle la réservation ?",
       "Non. Nous convenons ensuite de l’horaire, du prix et des travaux avant de confirmer la réservation."
+    ],
+    [
+      "Faut-il recharger la climatisation chaque année ?",
+      "Non. Le fluide circule en circuit fermé et ne se consomme pas comme du carburant. Un manque demande d’en rechercher la cause et une éventuelle fuite. La recharge est convenue après vérification."
+    ],
+    [
+      "Combien coûte une recharge de climatisation ?",
+      "Le prix dépend du modèle, du type et de la quantité de fluide ainsi que de l’état du système. Envoyez le modèle et décrivez le problème. La recharge est facturée séparément du nettoyage."
     ]
   ],
   "bookingEyebrow": "VOTRE PROCHAINE INSPIRATION, PLUS FRAÎCHE",
-  "bookingTitle": ["Commençons par", "votre climatiseur."],
+  "bookingTitle": [
+    "Commençons par",
+    "votre climatiseur."
+  ],
   "bookingIntro": "Quelques détails pour discuter du tarif et d’un horaire adapté.",
   "promise": "Vous confirmez après accord sur tous les détails.",
-  "formTitle": "Demande de nettoyage",
+  "formTitle": "Parlez-nous de votre climatisation",
   "formIntro": "Laissez votre numéro, nous vous recontacterons.",
   "name": "Votre nom",
   "optional": "facultatif",
@@ -168,7 +207,7 @@
   "formNote": "Envoyer la demande transmet vos données à l’entreprise via Formspree.",
   "messageNote": "Vous envoyez vous-même le message depuis votre messagerie.",
   "privacy": "À propos des données",
-  "requestHello": "Bonjour ! Je souhaite réserver un nettoyage de climatiseur.",
+  "requestHello": "Bonjour ! Je souhaite discuter de l’entretien de ma climatisation.",
   "source": "Source",
   "message": "Message",
   "contact": "Nous contacter directement",
@@ -180,13 +219,40 @@
   ],
   "understood": "Compris",
   "shareTitle": "L’air frais se partage.",
-  "shareText": "Parlez de nous à vos proches.",
+  "shareText": "CoolClean — nettoyage et recharge de climatisation dans le centre d’Israël.",
   "share": "Partager le site",
   "shared": "Lien copié",
   "shareError": "Copiez le lien dans la barre d’adresse.",
-  "footer": "Un climatiseur propre. Un intérieur agréable.",
+  "footer": "Fraîcheur des montagnes. Douceur du foyer.",
   "privacyLink": "Confidentialité",
   "noJs": "Informations et contacts disponibles sans JavaScript. Activez JavaScript pour utiliser le formulaire.",
-  "pageTitle": "Nettoyage de climatiseurs dans le centre d’Israël",
-  "description": "CoolClean : nettoyage et désinfection de climatiseurs d’Ashdod à Hadera. Une unité murale 250 ₪, deux 450 ₪, trois 600 ₪. Réservez en ligne."
+  "pageTitle": "Nettoyage et recharge de climatisation dans le centre d’Israël",
+  "description": "CoolClean : nettoyage, désinfection et recharge de climatisation d’Ashdod à Hadera. Nettoyage dès 250 ₪. Devis et rendez-vous sur WhatsApp.",
+  "whatsappCta": "Écrire sur WhatsApp",
+  "serviceLabel": "Service souhaité",
+  "serviceOptions": [
+    "Nettoyage et désinfection",
+    "Recharge de fluide"
+  ],
+  "gasPriceTitle": "Besoin d’une recharge ?",
+  "gasPriceText": "Devis après vérification du système. La recharge n’est pas comprise dans les tarifs de nettoyage.",
+  "gasCta": "Demander une recharge",
+  "guideEyebrow": "QUELQUES REPÈRES",
+  "guideTitle": "Écoutez votre climatisation.",
+  "guides": [
+    [
+      "Elle refroidit moins bien ?",
+      "Un refroidissement faible ne signifie pas forcément un manque de fluide. Des saletés ou une autre panne peuvent être en cause. Décrivez son comportement pour discuter de la première étape."
+    ],
+    [
+      "Une odeur désagréable ?",
+      "Indiquez quand elle apparaît et la date du dernier nettoyage. Cela aide à discuter du nettoyage et de la désinfection ; les travaux sont définis après inspection."
+    ],
+    [
+      "Une réponse plus rapide ?",
+      "Sur WhatsApp, envoyez votre ville, le nombre d’unités, le modèle ou la photo de son étiquette, et une brève description du problème. Cela facilite l’organisation."
+    ]
+  ],
+  "printLabel": "MONTAGNES · MER · MAISON",
+  "regionKicker": "LA CÔTE QUE NOUS CONNAISSONS"
 }

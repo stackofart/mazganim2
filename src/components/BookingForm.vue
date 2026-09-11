@@ -1,7 +1,6 @@
 <script setup>
 import { ref, computed, onMounted, onUnmounted, watch, nextTick } from "vue";
 import Icon from "./Icon.vue";
-import { company } from "../data/company.js";
 import { contentFor } from "../data/content.js";
 import {
   readCampaign,
@@ -47,6 +46,7 @@ function prepareRequest() {
     track("lead_prepared", {
       locale: props.locale,
       system_type: values.value.type,
+      service: values.value.service,
       quantity: Number(values.value.quantity),
     });
     nextTick(() => document.getElementById("request-result")?.focus());
@@ -79,6 +79,7 @@ async function submit() {
     track("lead_submitted", {
       locale: props.locale,
       system_type: values.value.type,
+      service: values.value.service,
       quantity: Number(values.value.quantity),
     });
     values.value = {
@@ -86,6 +87,7 @@ async function submit() {
       phone: "",
       city: "",
       type: values.value.type,
+      service: values.value.service,
       quantity: values.value.quantity,
       note: "",
       website: "",
@@ -116,6 +118,7 @@ onMounted(() => {
           inputSchema: {
             type: "object",
             properties: {
+              service: { type: "string", enum: ["cleaning", "refrigerant"] },
               city: { type: "string", minLength: 1, maxLength: 100 },
               type: {
                 type: "string",
@@ -188,6 +191,12 @@ onUnmounted(() => {
     >
       <h3>{{ t.formTitle }}</h3>
       <p class="form-subtitle">{{ t.formIntro }}</p>
+      <label>{{ t.serviceLabel }}
+        <select v-model="values.service" name="service" @change="track('service_select', { service: values.service, locale })">
+          <option value="cleaning">{{ t.serviceOptions[0] }}</option>
+          <option value="refrigerant">{{ t.serviceOptions[1] }}</option>
+        </select>
+      </label>
       <div class="form-row">
         <label
           >{{ t.name }} <span>({{ t.optional }})</span
