@@ -76,6 +76,8 @@ function clean(value, max, required = false) {
 function validate(body) {
   if (!body || typeof body !== "object" || Array.isArray(body)) throw new InputError();
   if (body.website) throw new InputError();
+  const service = body.service === undefined ? "cleaning" : body.service;
+  if (!["cleaning", "refrigerant"].includes(service)) throw new InputError();
   if (!systemTypes.includes(body.type) || !leadLocales.includes(body.locale) ||
     !Number.isInteger(body.quantity) || body.quantity < 1 || body.quantity > 10) throw new InputError();
   const phone = normalizePhone(clean(body.phone, 22, true));
@@ -84,7 +86,7 @@ function validate(body) {
   if (!campaign || typeof campaign !== "object" || Array.isArray(campaign)) throw new InputError();
   return {
     name: clean(body.name, 80), city: clean(body.city, 100, true), phone,
-    note: clean(body.note, 300), type: body.type, quantity: body.quantity, locale: body.locale,
+    service, note: clean(body.note, 300), type: body.type, quantity: body.quantity, locale: body.locale,
     turnstileToken: clean(body.turnstileToken, 2048, true),
     campaign: Object.fromEntries(campaignKeys.map(key => [key, clean(campaign[key], 120)])),
   };
@@ -94,9 +96,10 @@ function notification(lead, env, requestId) {
   const types = { wall: "Настенный", multi: "Мультисплит", vrf: "VRF", unknown: "Нужна консультация" };
   const price = calculatePrice(lead);
   const lines = [
-    "Новая заявка на чистку кондиционеров", "",
+    "Новая заявка на обслуживание кондиционеров", "",
     `Номер заявки: ${requestId}`, `Дата: ${new Date().toISOString()}`,
     `Имя: ${lead.name || "Не указано"}`, `Телефон: ${lead.phone}`, `Город: ${lead.city}`,
+    `Услуга: ${lead.service === "refrigerant" ? "Заправка газом" : "Чистка и дезинфекция"}`,
     `Тип: ${types[lead.type]}`, `Количество: ${lead.quantity}`,
     `Ориентировочная стоимость: ${price === null ? "По согласованию" : `${price} ₪`}`,
     `Комментарий: ${lead.note || "Нет"}`, `Язык формы: ${lead.locale}`, "",
