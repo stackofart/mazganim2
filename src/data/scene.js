@@ -13,7 +13,7 @@ export const sceneCopy = {
       "ready": "Спасибо. Ещё поработаем."
     },
     "leaving": "Я пока побуду на посту.",
-    "price": "Чистка от {price} ₪ · Сдерот — Хайфа · до Иерусалима",
+    "price": "от {price}₪",
     "speaker": "Ваш кондиционер",
     "quotes": [
       "Я работаю. Просто немного устал.",
@@ -35,7 +35,7 @@ export const sceneCopy = {
       "ready": "תודה. יש לנו עוד עבודה יחד."
     },
     "leaving": "בינתיים אני נשאר במשמרת.",
-    "price": "ניקוי החל מ־{price} ₪ · משדרות עד חיפה · ועד ירושלים",
+    "price": "החל מ־{price}₪",
     "speaker": "המזגן שלכם",
     "quotes": [
       "אני עובד. רק קצת עייף.",
@@ -57,7 +57,7 @@ export const sceneCopy = {
       "ready": "Thanks. More good days ahead."
     },
     "leaving": "I'll keep things cool here.",
-    "price": "Cleaning from ₪{price} · Sderot to Haifa · to Jerusalem",
+    "price": "from ₪{price}",
     "speaker": "Your air conditioner",
     "quotes": [
       "Still on duty. Just a little tired.",
@@ -79,7 +79,7 @@ export const sceneCopy = {
       "ready": "شكرًا. سنواصل العمل معًا."
     },
     "leaving": "سأبقى هنا في خدمتي.",
-    "price": "التنظيف من {price} ₪ · من سديروت إلى حيفا · وحتى القدس",
+    "price": "من {price}₪",
     "speaker": "مكيّفكم",
     "quotes": [
       "ما زلت أعمل. متعب قليلًا فقط.",
@@ -101,7 +101,7 @@ export const sceneCopy = {
       "ready": "Merci. On a encore de beaux jours."
     },
     "leaving": "Je reste au poste en attendant.",
-    "price": "Nettoyage dès {price} ₪ · de Sdérot à Haïfa · jusqu’à Jérusalem",
+    "price": "dès {price}₪",
     "speaker": "Votre climatiseur",
     "quotes": [
       "Toujours au poste. Juste un peu fatigué.",
