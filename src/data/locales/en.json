@@ -196,7 +196,7 @@
   "sentNote": "The visit time and final price still need to be agreed with our specialist.",
   "sendAnother": "New request",
   "sendError": "The request could not be sent. Please retry or contact us by phone or Telegram.",
-  "invalidPhone": "Enter a mobile number as 05XXXXXXXX or +9725XXXXXXXX.",
+  "invalidPhone": "Enter a mobile number, e.g. 054-123-4567 or +972 54 123 4567.",
   "invalidRequest": "Check the city, system type and number of units.",
   "prepare": "Prepare a message",
   "ready": "Your message is ready",
@@ -215,11 +215,11 @@
   "privacyText": [
     "For a callback, this form shares the details you enter with the company through Formspree, only when you press Send request.",
     "Opening WhatsApp passes the prepared text to that app. You choose whether to send it. Telegram is subject to that service’s own terms.",
-    "Campaign tags are stored for this tab’s session to identify the source of an enquiry. No advertising pixels are connected. Contact CoolClean by phone about data you have already submitted."
+    "Campaign tags are stored for this tab’s session to identify the source of an enquiry. No advertising pixels are connected. Contact {brand} by phone about data you have already submitted."
   ],
   "understood": "Understood",
   "shareTitle": "Fresh air is worth sharing.",
-  "shareText": "CoolClean — AC cleaning and refrigerant recharge in central Israel.",
+  "shareText": "{brand} — AC cleaning and refrigerant recharge in central Israel.",
   "share": "Share this site",
   "shared": "Link copied",
   "shareError": "Copy the link from your address bar.",
@@ -227,7 +227,7 @@
   "privacyLink": "Privacy",
   "noJs": "Service information and direct contacts work without JavaScript. Enable JavaScript to use the form.",
   "pageTitle": "AC cleaning and refrigerant recharge in central Israel",
-  "description": "CoolClean: AC cleaning, disinfection and refrigerant recharge from Ashdod to Hadera. Cleaning from ₪250. Ask for a quote and book on WhatsApp.",
+  "description": "{brand}: AC cleaning, disinfection and refrigerant recharge from Ashdod to Hadera. Cleaning from ₪250. Ask for a quote and book on WhatsApp.",
   "whatsappCta": "Chat on WhatsApp",
   "serviceLabel": "Service needed",
   "serviceOptions": [
@@ -254,5 +254,19 @@
     ]
   ],
   "printLabel": "MOUNTAINS · SEA · HOME",
-  "regionKicker": "SERVICE AREA"
+  "regionKicker": "SERVICE AREA",
+  "validation": {
+    "city": "Enter the city where you need service.",
+    "service": "Choose a service from the list.",
+    "system": "Choose the air conditioner type.",
+    "quantity": "Enter between 1 and 10 units."
+  },
+  "map": {
+    "title": "Service area",
+    "sea": "Mediterranean Sea",
+    "note": "Approximate coverage. Visits outside this area can be arranged.",
+    "open": "Open map",
+    "north": "North"
+  },
+  "areaNav": "Service area"
 }

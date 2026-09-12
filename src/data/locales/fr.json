@@ -196,7 +196,7 @@
   "sentNote": "L’horaire et le prix final restent à confirmer avec le spécialiste.",
   "sendAnother": "Nouvelle demande",
   "sendError": "Échec de l’envoi. Réessayez ou contactez-nous par téléphone ou Telegram.",
-  "invalidPhone": "Saisissez un mobile au format 05XXXXXXXX ou +9725XXXXXXXX.",
+  "invalidPhone": "Saisissez un mobile, par exemple 054-123-4567 ou +972 54 123 4567.",
   "invalidRequest": "Vérifiez la ville, le système et le nombre d’unités.",
   "prepare": "Préparer un message",
   "ready": "Votre message est prêt",
@@ -215,11 +215,11 @@
   "privacyText": [
     "Pour vous rappeler, le formulaire transmet les informations saisies à l’entreprise via Formspree, uniquement après votre clic sur Envoyer la demande.",
     "Ouvrir WhatsApp transmet le texte à l’application. Vous décidez de l’envoyer. L’utilisation de Telegram relève de ses propres règles.",
-    "Les paramètres de campagne sont conservés pendant la session de cet onglet pour identifier la source du contact. Aucun pixel publicitaire n’est connecté. Pour toute question sur les données envoyées, contactez CoolClean par téléphone."
+    "Les paramètres de campagne sont conservés pendant la session de cet onglet pour identifier la source du contact. Aucun pixel publicitaire n’est connecté. Pour toute question sur les données envoyées, contactez {brand} par téléphone."
   ],
   "understood": "Compris",
   "shareTitle": "L’air frais se partage.",
-  "shareText": "CoolClean — nettoyage et recharge de climatisation dans le centre d’Israël.",
+  "shareText": "{brand} — nettoyage et recharge de climatisation dans le centre d’Israël.",
   "share": "Partager le site",
   "shared": "Lien copié",
   "shareError": "Copiez le lien dans la barre d’adresse.",
@@ -227,7 +227,7 @@
   "privacyLink": "Confidentialité",
   "noJs": "Informations et contacts disponibles sans JavaScript. Activez JavaScript pour utiliser le formulaire.",
   "pageTitle": "Nettoyage et recharge de climatisation dans le centre d’Israël",
-  "description": "CoolClean : nettoyage, désinfection et recharge de climatisation d’Ashdod à Hadera. Nettoyage dès 250 ₪. Devis et rendez-vous sur WhatsApp.",
+  "description": "{brand} : nettoyage, désinfection et recharge de climatisation d’Ashdod à Hadera. Nettoyage dès 250 ₪. Devis et rendez-vous sur WhatsApp.",
   "whatsappCta": "Écrire sur WhatsApp",
   "serviceLabel": "Service souhaité",
   "serviceOptions": [
@@ -254,5 +254,19 @@
     ]
   ],
   "printLabel": "MONTAGNES · MER · MAISON",
-  "regionKicker": "ZONE D’INTERVENTION"
+  "regionKicker": "ZONE D’INTERVENTION",
+  "validation": {
+    "city": "Indiquez la ville où intervenir.",
+    "service": "Choisissez une prestation dans la liste.",
+    "system": "Choisissez le type de climatiseur.",
+    "quantity": "Choisissez entre 1 et 10 unités."
+  },
+  "map": {
+    "title": "Zone d’intervention",
+    "sea": "Mer Méditerranée",
+    "note": "Zone indicative. Les déplacements hors de cette zone sont à convenir.",
+    "open": "Ouvrir la carte",
+    "north": "Nord"
+  },
+  "areaNav": "Zone d’intervention"
 }

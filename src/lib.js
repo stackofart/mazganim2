@@ -59,6 +59,18 @@ export function normalizePhone(value) {
   if (/^\+9725\d{8}$/.test(number)) return number;
   return null;
 }
+// Shared by the form and transport so invalid fields never reach the network.
+export function validateLead(values, locale = "ru") {
+  const t = contentFor(locale), errors = {};
+  if (!["cleaning", "refrigerant"].includes(values.service || "cleaning")) errors.service = t.validation.service;
+  const city = String(values.city || "").trim();
+  if (!city || city.length > 100) errors.city = t.validation.city;
+  if (!normalizePhone(values.phone)) errors.phone = t.invalidPhone;
+  if (!t.systemTypes.some(type => type.value === values.type)) errors.system = t.validation.system;
+  const quantity = Number(values.quantity);
+  if (!Number.isInteger(quantity) || quantity < 1 || quantity > 10) errors.quantity = t.validation.quantity;
+  return errors;
+}
 export function makeRequest(values, campaign = {}, locale = "ru") {
   const t = contentFor(locale);
   const service = values.service || "cleaning";
@@ -110,6 +122,10 @@ export async function sendLead(
   { locale = "ru", campaign = {}, fetcher = fetch, signal } = {},
 ) {
   const t = contentFor(locale);
+  const fieldErrors = validateLead(values, locale);
+  if (Object.keys(fieldErrors).length) {
+    throw Object.assign(new Error(Object.values(fieldErrors)[0]), { fieldErrors });
+  }
   const phone = normalizePhone(values.phone);
   if (!phone) throw new Error(t.invalidPhone);
   const message = makeRequest(values, campaign, locale);

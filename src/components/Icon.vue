@@ -1,6 +1,7 @@
 <script setup>
 defineProps({ name: String, size: { type: [Number, String], default: 24 } });
 const paths = {
+  external: ["M14 3h7v7", "m21 3-9 9", "M10 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-5"],
   cylinder: ["M8 2h8v5H8Z", "M10 7v2m4-2v2", "M9 9h6a3 3 0 0 1 3 3v8a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2v-8a3 3 0 0 1 3-3Z", "M6 15h12"],
   telegram: ["m22 2-7 20-4-9-9-4Z", "M22 2 11 13"],
   mountain: ["M2 20 10 5l5 9 3-5 5 11Z", "m7 11 3 2 3-2", "M2 23h21"],

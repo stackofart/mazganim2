@@ -3,6 +3,7 @@ import he from "./locales/he.json" with { type: "json" };
 import en from "./locales/en.json" with { type: "json" };
 import ar from "./locales/ar.json" with { type: "json" };
 import fr from "./locales/fr.json" with { type: "json" };
+import { company } from "./company.js";
 export const locales = { ru, he, en, ar, fr };
 export const languages = [
   { code: "ru", label: "Русский", short: "RU", dir: "ltr" },
@@ -21,9 +22,12 @@ export function contentFor(code = "ru") {
   const t = locales[code] || ru;
   return {
     ...t,
+    description: t.description.replaceAll("{brand}", company.name),
+    shareText: t.shareText.replaceAll("{brand}", company.name),
+    privacyText: t.privacyText.map(text => text.replaceAll("{brand}", company.name)),
     services: t.services.map(([name, text, details], i) => ({
       id: ["deep", "refrigerant", "disinfection"][i],
-      icon: ["ac", "gauge", "sparkle"][i],
+      icon: ["ac", "cylinder", "sparkle"][i],
       name,
       text,
       details,

@@ -1,7 +1,7 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
 import {readFile,access} from 'node:fs/promises'
-import {calculatePrice,normalizePhone,makeRequest,whatsappUrl,sendLead} from '../src/lib.js'
+import {calculatePrice,normalizePhone,makeRequest,whatsappUrl,sendLead,validateLead} from '../src/lib.js'
 import {company} from '../src/data/company.js'
 import {languages,locales,contentFor,localePath} from '../src/data/content.js'
 import {sceneCopy} from '../src/data/scene.js'
@@ -61,6 +61,21 @@ test('WhatsApp does not use the original placeholder destinations',()=>{
  else{const url=new URL(whatsappUrl('Hello & + ?'));assert.equal(url.hostname,'wa.me');assert.equal(url.pathname,'/'+company.whatsapp.replace(/\D/g,''));assert.equal(url.searchParams.get('text'),'Hello & + ?')}
 })
 const lead={name:'Test',city:'Test city',phone:'0541234567',type:'wall',quantity:2,note:'Test only'}
+test('validation identifies each invalid field in every language and blocks transport',async()=>{
+ for(const {code} of languages){
+  assert.deepEqual(validateLead(lead,code),{})
+  const invalid={...lead,city:'  ',phone:'123',type:'other',quantity:0,service:'other'}
+  const errors=validateLead(invalid,code),t=contentFor(code)
+  assert.deepEqual(Object.keys(errors),['service','city','phone','system','quantity'])
+  assert.equal(errors.phone,t.invalidPhone);assert.equal(errors.city,t.validation.city)
+  assert.deepEqual(validateLead({...lead,phone:'123'},code),{phone:t.invalidPhone})
+  let sent=false
+  await assert.rejects(sendLead(invalid,{locale:code,fetcher:async()=>{sent=true;return {ok:true}}}),e=>{
+   assert.deepEqual(e.fieldErrors,errors);return true
+  })
+  assert.equal(sent,false)
+ }
+})
 test('callback transport posts to the original endpoint and succeeds only after acceptance',async()=>{
  let called=0
  const result=await sendLead(lead,{locale:'en',campaign:{utm_source:'test'},fetcher:async(url,options)=>{
@@ -97,7 +112,7 @@ test('every SSG page has its own content, canonical, hreflang, direction and off
   assert.ok(html.includes('tel:+972547577371'));assert.ok(html.includes('https://t.me/IGideonI'))
   const data=JSON.parse(html.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/)[1])
   const page=data['@graph'].find(n=>n['@type']==='WebPage');assert.equal(page.inLanguage,lang.code);assert.equal(page.description,t.description)
-  const business=data['@graph'].find(n=>n['@type']==='HVACBusiness');assert.equal(business.name,'CoolClean');assert.deepEqual(business.hasOfferCatalog.itemListElement.map(o=>o.price),[250,450,600]);assert.ok(business.hasOfferCatalog.itemListElement.every(o=>o.itemOffered.name===t.serviceOptions[0]))
+  const business=data['@graph'].find(n=>n['@type']==='HVACBusiness');assert.equal(business.name,company.name);assert.deepEqual(business.hasOfferCatalog.itemListElement.map(o=>o.price),[250,450,600]);assert.ok(business.hasOfferCatalog.itemListElement.every(o=>o.itemOffered.name===t.serviceOptions[0]))
   assert.equal(data['@graph'].find(n=>n['@type']==='FAQPage').mainEntity.length,8)
   assert.match(html,/<meta property="og:image" content="https:\/\/[^\"]+\/images\/social-cover.jpg"/)
   assert.match(html,/<meta name="twitter:card" content="summary_large_image"/)

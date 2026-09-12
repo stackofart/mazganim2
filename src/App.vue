@@ -3,6 +3,7 @@ import { ref, computed, onMounted, onUnmounted } from "vue";
 import Icon from "./components/Icon.vue";
 import BookingForm from "./components/BookingForm.vue";
 import ApartmentScene from "./components/ApartmentScene.vue";
+import ServiceAreaMap from "./components/ServiceAreaMap.vue";
 import { sceneCopy } from "./data/scene.js";
 import { useSceneInteraction } from "./composables/useSceneInteraction.js";
 import { company } from "./data/company.js";
@@ -11,19 +12,17 @@ import { captureCampaign, track, whatsappUrl } from "./lib.js";
 const props = defineProps({ locale: { type: String, default: "ru" } });
 const t = computed(() => contentFor(props.locale));
 const scene = computed(() => sceneCopy[props.locale] || sceneCopy.ru);
-const heroWhatsapp = ref(null);
+const heroBooking = ref(null);
 const heroSection = ref(null);
 const showFloatingContact = ref(false);
 let heroObserver;
-const heroInteraction = useSceneInteraction(heroWhatsapp);
+const heroInteraction = useSceneInteraction(heroBooking);
 const direction = computed(() =>
   ["he", "ar"].includes(props.locale) ? "rtl" : "ltr",
 );
 const menuOpen = ref(false),
-  detailDialog = ref(null),
   privacyDialog = ref(null),
   shareStatus = ref("");
-const selectedService = ref(t.value.services[0]);
 const booking = ref({
   name: "",
   city: "",
@@ -35,21 +34,16 @@ const booking = ref({
   website: "",
 });
 const nav = computed(() =>
-  ["services", "process", "prices", "faq"].map((id, i) => ({
+  [...["services", "process", "prices", "faq"].map((id, i) => ({
     id,
     label: t.value.nav[i],
-  })),
+  })), { id: "area", label: t.value.areaNav }],
 );
 const phoneUrl = `tel:${company.phone}`;
 const directWhatsapp = computed(() => whatsappUrl(t.value.requestHello));
 function startLead() {
   track("lead_start", { locale: props.locale });
   menuOpen.value = false;
-}
-function openService(service) {
-  selectedService.value = service;
-  detailDialog.value.showModal();
-  track("service_view", { locale: props.locale, service: service.id });
 }
 function switchLanguage(event) {
   location.assign(localePath(event.target.value));
@@ -94,7 +88,7 @@ onUnmounted(() => {
       <div class="container header-inner">
         <a class="brand" :href="localePath(locale)" :aria-label="company.name"
           ><img class="brand-mark" src="/images/bird-mark.webp" width="64" height="52" alt="" aria-hidden="true" />
-          <span dir="ltr">CoolClean<span class="brand-dot">.</span></span></a
+          <span class="brand-name" lang="he" dir="rtl">{{ company.name }}</span></a
         >
         <nav class="desktop-nav" :aria-label="t.menu">
           <a v-for="item in nav" :key="item.id" :href="`#${item.id}`">{{
@@ -115,8 +109,6 @@ onUnmounted(() => {
                 {{ lang.label }}
               </option>
             </select></label
-          ><a v-if="directWhatsapp" class="button button-small whatsapp-button" :href="directWhatsapp" :aria-label="t.whatsappCta" target="_blank" rel="noopener noreferrer" @click="track('lead_whatsapp_click', { locale, placement: 'header' })"
-            ><Icon name="chat" :size="18" /><span>WhatsApp</span></a
           ><button
             class="menu-button"
             :aria-expanded="menuOpen"
@@ -140,7 +132,8 @@ onUnmounted(() => {
           :href="`#${item.id}`"
           @click="menuOpen = false"
           >{{ item.label }}</a
-        ><a href="#area" @click="menuOpen = false">{{ t.regionTitle }}</a>
+        >
+        <a href="#booking-form" @click="startLead">{{ t.book }}</a>
       </nav>
     </header>
     <main id="main">
@@ -153,12 +146,12 @@ onUnmounted(() => {
           <p class="hero-description">{{ scene.intro }}</p>
           <p class="hero-price">{{ scene.price.replace('{price}', company.prices[1]) }}</p>
           <div class="hero-actions">
-            <a v-if="directWhatsapp" ref="heroWhatsapp" :href="directWhatsapp" class="button whatsapp-button" target="_blank" rel="noopener noreferrer"
+            <a ref="heroBooking" href="#booking-form" class="button"
               @pointerenter="heroInteraction.enter" @pointerleave="heroInteraction.exit" @focus="heroInteraction.focus" @blur="heroInteraction.blur"
-              @click="heroInteraction.depart(); track('lead_whatsapp_click', { locale, placement: 'hero' })"
-              ><Icon name="chat" :size="21" />{{ t.whatsappCta }}</a
-            ><a href="#prices" class="text-link"
-              >{{ t.nav[2] }}<span>↗</span></a
+              @click="startLead"
+              >{{ t.book }}</a
+            ><a href="#prices" class="button button-secondary"
+              >{{ t.nav[2] }}</a
             >
           </div>
         </div>
@@ -192,13 +185,6 @@ onUnmounted(() => {
             <h3>{{ service.name }}</h3>
             <p>{{ service.text }}</p>
             <ul class="service-points"><li v-for="point in service.details" :key="point"><Icon name="check" :size="15" />{{ point }}</li></ul>
-            <button
-              class="service-link"
-              @click="openService(service)"
-              :aria-label="`${t.details}: ${service.name}`"
-            >
-              {{ t.details }}<Icon name="arrow" :size="19" />
-            </button>
           </article>
         </div>
       </section>
@@ -247,7 +233,7 @@ onUnmounted(() => {
       </section>
       <section id="area" class="area-section">
         <div class="container area-layout">
-          <div>
+          <div class="area-copy">
             <div class="eyebrow">{{ t.regionKicker }}</div>
             <h2>{{ t.regionTitle }}</h2>
             <p>{{ t.regionText }}</p>
@@ -259,12 +245,13 @@ onUnmounted(() => {
                 company.displayPhone
               }}</bdi></a
             >
-          </div>
           <ul class="city-list">
             <li v-for="city in t.cities" :key="city">
               <Icon name="pin" :size="15" />{{ city }}
             </li>
           </ul>
+          </div>
+          <ServiceAreaMap :text="t" :locale="locale" />
         </div>
       </section>
       <section id="guide" class="section container guide-section">
@@ -313,7 +300,7 @@ onUnmounted(() => {
                 target="_blank"
                 rel="noopener noreferrer"
                 @click="track('telegram_click', { locale })"
-                ><Icon name="chat" :size="18" />Telegram</a
+                ><Icon name="telegram" :size="18" />Telegram</a
               ><a
                 v-if="directWhatsapp"
                 :href="directWhatsapp"
@@ -334,11 +321,11 @@ onUnmounted(() => {
     </main>
     <footer class="container footer">
       <a class="brand" :href="localePath(locale)"
-        ><img class="brand-mark" src="/images/bird-mark.webp" width="64" height="52" alt="" aria-hidden="true" /><span dir="ltr">CoolClean.</span></a
+        ><img class="brand-mark" src="/images/bird-mark.webp" width="64" height="52" alt="" aria-hidden="true" /><span class="brand-name" lang="he" dir="rtl">{{ company.name }}</span></a
       ><span>{{ t.footer }}</span
       ><button class="footer-privacy" @click="privacyDialog.showModal()">
         {{ t.privacyLink }}</button
-      ><span>© 2026 CoolClean</span>
+      ><span>© 2026 <bdi>{{ company.name }}</bdi></span>
       <div class="footer-tools">
         <nav class="footer-languages" :aria-label="t.language">
         <a
@@ -360,42 +347,6 @@ onUnmounted(() => {
       </div>
     </footer>
     <a v-if="directWhatsapp" v-show="showFloatingContact" class="floating-whatsapp" :href="directWhatsapp" target="_blank" rel="noopener noreferrer" :aria-label="t.whatsappCta" @click="track('lead_whatsapp_click', { locale, placement: 'floating' })"><Icon name="chat" :size="25" /><span>WhatsApp</span></a>
-    <dialog
-      ref="detailDialog"
-      class="detail-dialog"
-      @click="(e) => e.target === detailDialog && detailDialog.close()"
-      aria-labelledby="service-dialog-title"
-    >
-      <div class="dialog-content">
-        <button
-          class="dialog-close"
-          :aria-label="t.close"
-          @click="detailDialog.close()"
-        >
-          <Icon name="close" /></button
-        ><span class="service-icon"
-          ><Icon :name="selectedService.icon" :size="28"
-        /></span>
-        <h2 id="service-dialog-title">{{ selectedService.name }}</h2>
-        <p>{{ selectedService.text }}</p>
-        <ul class="check-list">
-          <li v-for="detail in selectedService.details" :key="detail">
-            <Icon name="check" :size="18" />{{ detail }}
-          </li>
-        </ul>
-        <p class="dialog-note">{{ t.detailNote }}</p>
-        <a
-          href="#contact"
-          class="button"
-          @click="
-            detailDialog.close();
-            booking.service = selectedService.id === 'refrigerant' ? 'refrigerant' : 'cleaning';
-            startLead();
-          "
-          >{{ t.book }}<Icon name="arrow" :size="18"
-        /></a>
-      </div>
-    </dialog>
     <dialog
       ref="privacyDialog"
       class="detail-dialog"

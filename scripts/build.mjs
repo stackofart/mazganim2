@@ -163,7 +163,7 @@ await writeFile(
 );
 await writeFile(
   "dist/404.html",
-  `<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>404 — ${company.name}</title><style>body{font:18px/1.7 system-ui;color:#203d38;background:#f6f1e6;margin:12vh auto;padding:24px;max-width:640px}a{color:#b84b31;margin:12px;display:inline-block}</style><h1>404 — CoolClean</h1><p>Page not found. Choose your language:</p>${languages.map((l) => `<a href="${localePath(l.code)}" lang="${l.code}">${l.label}</a>`).join("")}</html>`,
+  `<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>404 — ${company.name}</title><style>body{font:18px/1.7 system-ui;color:#203d38;background:#f6f1e6;margin:12vh auto;padding:24px;max-width:640px}a{color:#b84b31;margin:12px;display:inline-block}</style><h1>404 — ${company.name}</h1><p>Page not found. Choose your language:</p>${languages.map((l) => `<a href="${localePath(l.code)}" lang="${l.code}">${l.label}</a>`).join("")}</html>`,
 );
 await rm(".ssg", { recursive: true, force: true });
 console.log(

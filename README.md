@@ -1,4 +1,4 @@
-# CoolClean
+# זיז
 
 Сайт: [mazganim-clean-air.gerasim459.workers.dev](https://mazganim-clean-air.gerasim459.workers.dev). Репозиторий: [stackofart/mazganim2](https://github.com/stackofart/mazganim2).
 
@@ -8,7 +8,7 @@
 
 Изучен [stackofart/mazganim](https://github.com/stackofart/mazganim), commit `c8a86eebd08f9fc875a120a14e60bccd3aec1956`.
 
-- CoolClean — название из Header, Hero и SEO; одиночное CleanCool в Footer нормализовано.
+- Текущий бренд — זיז. Название хранится в `src/data/company.js`; подставляется в шапку, футер, SEO и переводы.
 - Телефон: `054-757-7371` → `+972547577371`.
 - Telegram: `https://t.me/IGideonI`.
 - География: центральный Израиль, от Ашдода до Хадеры; 12 городов.
@@ -96,7 +96,7 @@ Cloudflare устанавливает зависимости по `package-lock.
 
 Метки `utm_source`, `utm_medium`, `utm_campaign`, `utm_content`, `utm_term` хранятся на время вкладки и попадают в обращение. Кнопка «Поделиться» сохраняет текущий язык и добавляет `utm_source=referral&utm_medium=share`. Не размещайте персональные данные в UTM.
 
-События в `window.dataLayer`: `lead_start`, `service_view`, `service_select`, `lead_submitted`, `lead_whatsapp_click`, `telegram_click`, `phone_click`, `site_share`. Контактные данные в события не включены. **GA4, GTM, Meta Pixel не подключены**; это готовые точки подключения вашей аналитики. `lead_submitted` означает приём формы сервисом, а не подтверждённый выезд или продажу. При подключении аналитики обновите CSP, описание обработки данных и настройки согласия.
+События в `window.dataLayer`: `lead_start`, `service_select`, `lead_submitted`, `lead_whatsapp_click`, `telegram_click`, `phone_click`, `site_share`. Контактные данные в события не включены. **GA4, GTM, Meta Pixel не подключены**; это готовые точки подключения вашей аналитики. `lead_submitted` означает приём формы сервисом, а не подтверждённый выезд или продажу. При подключении аналитики обновите CSP, описание обработки данных и настройки согласия.
 
 Шрифты и изображения размещены локально. CSS/JS с хешами кешируются год. Для соцсетей добавлена обложка `public/images/social-cover.jpg` (1200×630) и метатеги Open Graph / X. Непроверенные отзывы, рейтинги, проценты экономии и медицинские гарантии не добавлены.
 
