@@ -3,6 +3,7 @@ import assert from 'node:assert/strict'
 import {readFile,access} from 'node:fs/promises'
 import {calculatePrice,normalizePhone,makeRequest,whatsappUrl,sendLead,validateLead} from '../src/lib.js'
 import {company} from '../src/data/company.js'
+import {serviceCities} from '../src/data/service-area.js'
 import {languages,locales,contentFor,localePath} from '../src/data/content.js'
 import {sceneCopy} from '../src/data/scene.js'
 import {proximityPose,sceneState} from '../src/scene-state.js'
@@ -27,6 +28,9 @@ test('scene translations include all three states, alt text and price template',
   assert.deepEqual(Object.keys(copy).sort(),Object.keys(sceneCopy.ru).sort())
   assert.deepEqual(Object.keys(copy.lines).sort(),['hopeful','ready','resigned'])
   assert.ok(copy.leaving && copy.alt && copy.price.includes('{price}'))
+  assert.ok(copy.speaker && copy.pause && copy.resume)
+  assert.equal(copy.quotes[0],copy.lines.resigned)
+  assert.equal(new Set(copy.quotes).size,4)
  }
 })
 
@@ -100,7 +104,17 @@ test('callback failure is never reported as a successful lead',async()=>{
 })
 test('all five language dictionaries have matching keys and complete core content',()=>{
  const keys=Object.keys(locales.ru).sort()
- for(const lang of languages){assert.deepEqual(Object.keys(locales[lang.code]).sort(),keys);const t=contentFor(lang.code);assert.equal(t.faqs.length,9);assert.equal(t.services.length,3);assert.equal(t.cities.length,12);assert.equal(t.priceLabels.length,3)}
+ for(const lang of languages){assert.deepEqual(Object.keys(locales[lang.code]).sort(),keys);const t=contentFor(lang.code);assert.equal(t.faqs.length,9);assert.equal(t.services.length,3);assert.equal(t.cities.length,company.serviceArea.length);assert.equal(t.priceLabels.length,3)}
+})
+test('service geography includes both corridors and complete translated city names',()=>{
+ for(const name of ['Sderot','Haifa','Tel Aviv-Yafo','Jerusalem'])assert.ok(company.serviceArea.includes(name))
+ assert.equal(new Set(company.serviceArea).size,company.serviceArea.length)
+ for(const lang of languages){
+  const t=contentFor(lang.code)
+  assert.ok(serviceCities.every(city=>city[lang.code]))
+  assert.deepEqual(t.cityGroups.flatMap(group=>group.cities),t.cities)
+  assert.equal(t.cityGroups.length,t.regionGroups.length)
+ }
 })
 test('every SSG page has its own content, canonical, hreflang, direction and offers',async()=>{
  for(const lang of languages){
@@ -120,6 +134,12 @@ test('every SSG page has its own content, canonical, hreflang, direction and off
   const data=JSON.parse(html.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/)[1])
   const page=data['@graph'].find(n=>n['@type']==='WebPage');assert.equal(page.inLanguage,lang.code);assert.equal(page.description,t.description)
   const business=data['@graph'].find(n=>n['@type']==='HVACBusiness');assert.equal(business.name,company.name);assert.deepEqual(business.hasOfferCatalog.itemListElement.map(o=>o.price),[250,450,600]);assert.ok(business.hasOfferCatalog.itemListElement.every(o=>o.itemOffered.name===t.serviceOptions[0]))
+  assert.deepEqual(business.areaServed.map(city=>city.name),company.serviceArea)
+  for(const city of t.cities)assert.ok(html.includes(city))
+  assert.ok(html.includes(t.brandDescriptor.replaceAll('&','&amp;')))
+  assert.ok(html.includes(sceneCopy[lang.code].speaker))
+  assert.ok(html.includes('quiet-apartment-open.webp'))
+  assert.ok(!html.includes('class="service-area-map"'))
   const faqSchema=data['@graph'].find(n=>n['@type']==='FAQPage').mainEntity
   assert.equal(faqSchema.length,9)
   assert.deepEqual(faqSchema.map(faq=>[faq.name,faq.acceptedAnswer.text]),t.faqs.map(faq=>[faq.question,faq.answer]))

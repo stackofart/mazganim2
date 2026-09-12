@@ -4,6 +4,7 @@ import en from "./locales/en.json" with { type: "json" };
 import ar from "./locales/ar.json" with { type: "json" };
 import fr from "./locales/fr.json" with { type: "json" };
 import { company } from "./company.js";
+import { serviceRegions } from "./service-area.js";
 export const locales = { ru, he, en, ar, fr };
 export const languages = [
   { code: "ru", label: "Русский", short: "RU", dir: "ltr" },
@@ -22,6 +23,8 @@ export function contentFor(code = "ru") {
   const t = locales[code] || ru;
   return {
     ...t,
+    cities: serviceRegions.flat().map(city => city[code] || city.ru),
+    cityGroups: serviceRegions.map((cities, i) => ({ title: t.regionGroups[i], cities: cities.map(city => city[code] || city.ru) })),
     description: t.description.replaceAll("{brand}", company.name),
     shareText: t.shareText.replaceAll("{brand}", company.name),
     privacyText: t.privacyText.map(text => text.replaceAll("{brand}", company.name)),

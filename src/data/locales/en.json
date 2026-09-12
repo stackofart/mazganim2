@@ -8,7 +8,7 @@
   ],
   "nav": [
     "Services",
-    "How it works",
+    "How to book",
     "Pricing",
     "FAQ"
   ],
@@ -25,7 +25,7 @@
     "Home comfort.",
     ""
   ],
-  "intro": "AC cleaning and refrigerant recharge in central Israel. A home you can exhale in, even on the hottest days.",
+  "intro": "Air conditioner cleaning and maintenance from Sderot to Haifa and Tel Aviv to Jerusalem.",
   "care": "We agree on the work and price first. Then take care of your home.",
   "caption": [
     "Inspired by nature.",
@@ -42,8 +42,8 @@
       "for one wall-mounted AC"
     ],
     [
-      "Central Israel",
-      "from Ashdod to Hadera"
+      "Sderot to Haifa",
+      "Tel Aviv to Jerusalem"
     ],
     [
       "Easy to reach",
@@ -51,7 +51,7 @@
     ]
   ],
   "servicesEyebrow": "01 / CARE FOR YOUR AIR",
-  "servicesTitle": "Three ways to feel at home.",
+  "servicesTitle": "Care for your air conditioner.",
   "servicesIntro": "Cleaning, disinfection and refrigerant recharge. First, we work out what your system needs.",
   "services": [
     [
@@ -84,20 +84,20 @@
     ]
   ],
   "detailNote": "Outdoor unit servicing, complex models and additional work are agreed in advance.",
-  "processEyebrow": "STRAIGHTFORWARD, STEP BY STEP.",
-  "processTitle": "From your first message to fresher air",
+  "processEyebrow": "BOOKING A SERVICE",
+  "processTitle": "How to book a service",
   "steps": [
     [
-      "Tell us about your AC",
-      "Share the number of units, system type and your city."
+      "Send a request",
+      "Choose a service and tell us your city, number of units and contact number."
     ],
     [
-      "Agree on the details",
-      "We confirm the price, scope of work and a convenient time."
+      "Agree on the price and time",
+      "We will contact you to discuss the system’s condition, the cost and a suitable appointment."
     ],
     [
-      "Leave the cleaning to us",
-      "We clean, disinfect, reassemble and check the system."
+      "We visit and carry out the work",
+      "We complete the agreed service and check that the air conditioner works properly."
     ]
   ],
   "pricingEyebrow": "CLEAR PRICING",
@@ -109,22 +109,8 @@
   "estimate": "Listed total",
   "estimateNote": "Final terms and additional work are agreed before the visit.",
   "regionEyebrow": "CLOSE TO HOME",
-  "regionTitle": "From Ashdod to Hadera",
-  "regionText": "Serving central Israel, Gush Dan and surrounding areas. If your city is not listed, ask us about availability.",
-  "cities": [
-    "Tel Aviv-Yafo",
-    "Rishon LeZion",
-    "Petah Tikva",
-    "Netanya",
-    "Bnei Brak",
-    "Ashdod",
-    "Holon",
-    "Ramat Gan",
-    "Rehovot",
-    "Bat Yam",
-    "Herzliya",
-    "Hadera"
-  ],
+  "regionTitle": "Sderot to Haifa. And to Jerusalem.",
+  "regionText": "We serve the area from Sderot to Haifa, plus the corridor from Tel Aviv to Jerusalem, including Jerusalem. These are the main cities we cover. If yours is not listed, contact us to check availability.",
   "faqEyebrow": "GOOD TO KNOW",
   "faqTitle": "Your questions, answered",
   "faqIntro": "Need more information? Ask when you book.",
@@ -140,7 +126,7 @@
     ],
     [
       "Which areas do you cover?",
-      "Central Israel from Ashdod to Hadera, including Tel Aviv, Rishon LeZion, Petah Tikva, Netanya and nearby cities."
+      "We serve Sderot to Haifa, including Ashkelon, Ashdod, Rehovot, Rishon LeZion, Tel Aviv, Petah Tikva, Netanya and Hadera. We also cover Tel Aviv to Jerusalem, including Lod, Ramla, Modi’in and Beit Shemesh. See the service area section for the main cities."
     ],
     [
       "How much does cleaning several units cost?",
@@ -224,15 +210,15 @@
   ],
   "understood": "Understood",
   "shareTitle": "Fresh air is worth sharing.",
-  "shareText": "{brand} — AC cleaning and refrigerant recharge in central Israel.",
+  "shareText": "{brand} — air conditioner cleaning and maintenance from Sderot to Haifa and Tel Aviv to Jerusalem.",
   "share": "Share this site",
   "shared": "Link copied",
   "shareError": "Copy the link from your address bar.",
   "footer": "Care for your AC. Comfort for your home.",
   "privacyLink": "Privacy",
   "noJs": "Service information and direct contacts work without JavaScript. Enable JavaScript to use the form.",
-  "pageTitle": "AC cleaning and refrigerant recharge in central Israel",
-  "description": "{brand}: AC cleaning, disinfection and refrigerant recharge from Ashdod to Hadera. Cleaning from ₪250. Ask for a quote and book on WhatsApp.",
+  "pageTitle": "Air conditioner cleaning & maintenance — Sderot, Haifa, Jerusalem",
+  "description": "{brand}: air conditioner cleaning, disinfection and refrigerant recharge from Sderot to Haifa and Tel Aviv to Jerusalem. Cleaning from ₪250. Book online, on Telegram or WhatsApp.",
   "whatsappCta": "Chat on WhatsApp",
   "serviceLabel": "Service needed",
   "serviceOptions": [
@@ -266,12 +252,13 @@
     "system": "Choose the air conditioner type.",
     "quantity": "Enter between 1 and 10 units."
   },
-  "map": {
-    "title": "Service area",
-    "sea": "Mediterranean Sea",
-    "note": "Approximate coverage. Visits outside this area can be arranged.",
-    "open": "Open map",
-    "north": "North"
-  },
-  "areaNav": "Service area"
+  "areaNav": "Service area",
+  "brandDescriptor": "air conditioner cleaning & maintenance",
+  "processIntro": "Send a request on the website or contact us on Telegram / WhatsApp. Here is what happens next.",
+  "regionGroups": [
+    "Sderot & the southern coast",
+    "Tel Aviv & Gush Dan",
+    "Sharon & the coast to Haifa",
+    "Towards Jerusalem"
+  ]
 }

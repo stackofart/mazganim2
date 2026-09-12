@@ -1,3 +1,4 @@
+import { serviceCities } from "./service-area.js";
 // Extracted from stackofart/mazganim at c8a86eebd08f9fc875a120a14e60bccd3aec1956.
 // WhatsApp uses the company contact number; change it here if needed.
 export const company = {
@@ -8,20 +9,7 @@ export const company = {
   whatsapp: "+972547577371",
   telegram: "https://t.me/IGideonI",
   formEndpoint: "https://formspree.io/f/mpwrzaby",
-  serviceArea: [
-    "Tel Aviv-Yafo",
-    "Rishon LeZion",
-    "Petah Tikva",
-    "Netanya",
-    "Bnei Brak",
-    "Ashdod",
-    "Holon",
-    "Ramat Gan",
-    "Rehovot",
-    "Bat Yam",
-    "Herzliya",
-    "Hadera",
-  ],
+  serviceArea: serviceCities.map(city => city.en),
   currency: "ILS",
   prices: { 1: 250, 2: 450, 3: 600 },
   verified: true,

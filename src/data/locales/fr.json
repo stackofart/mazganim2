@@ -8,7 +8,7 @@
   ],
   "nav": [
     "Services",
-    "Les étapes",
+    "Réservation",
     "Tarifs",
     "Questions"
   ],
@@ -25,7 +25,7 @@
     "Douceur du foyer.",
     ""
   ],
-  "intro": "Nettoyage et recharge de climatisation dans le centre d’Israël. Un foyer où souffler, même les jours les plus chauds.",
+  "intro": "Nettoyage et entretien de climatisation de Sdérot à Haïfa et de Tel-Aviv à Jérusalem.",
   "care": "Nous convenons du travail et du prix. Puis prenons soin de votre maison.",
   "caption": [
     "Inspiré par la nature.",
@@ -42,8 +42,8 @@
       "pour un climatiseur mural"
     ],
     [
-      "Centre d’Israël",
-      "d’Ashdod à Hadera"
+      "De Sdérot à Haïfa",
+      "De Tel-Aviv à Jérusalem"
     ],
     [
       "Contact facile",
@@ -51,7 +51,7 @@
     ]
   ],
   "servicesEyebrow": "01 / PRENDRE SOIN DE VOTRE AIR",
-  "servicesTitle": "Trois façons de se sentir bien.",
+  "servicesTitle": "Des services pour votre climatiseur.",
   "servicesIntro": "Nettoyage, désinfection et recharge en fluide frigorigène. Nous déterminons d’abord les besoins de votre système.",
   "services": [
     [
@@ -84,20 +84,20 @@
     ]
   ],
   "detailNote": "L’entretien de l’unité extérieure, les modèles complexes et les travaux supplémentaires sont convenus à l’avance.",
-  "processEyebrow": "SIMPLEMENT, ÉTAPE PAR ÉTAPE.",
-  "processTitle": "Du premier message à un air plus frais",
+  "processEyebrow": "PRENDRE RENDEZ-VOUS",
+  "processTitle": "Comment réserver une intervention",
   "steps": [
     [
-      "Parlez-nous de votre climatiseur",
-      "Indiquez le nombre d’unités, le type de système et votre ville."
+      "Envoyez une demande",
+      "Choisissez un service et indiquez votre ville, le nombre de climatiseurs et votre téléphone."
     ],
     [
-      "Convenons des détails",
-      "Nous précisons le prix, les travaux et un horaire adapté."
+      "Convenons du prix et du rendez-vous",
+      "Nous vous contactons pour préciser l’état du système, le tarif et la date de visite."
     ],
     [
-      "Nous nous occupons du nettoyage",
-      "Nettoyage, désinfection, remontage et contrôle du système."
+      "Nous venons réaliser l’intervention",
+      "Nous effectuons le service convenu et vérifions le bon fonctionnement du climatiseur."
     ]
   ],
   "pricingEyebrow": "DES TARIFS CLAIRS",
@@ -109,22 +109,8 @@
   "estimate": "Total au tarif indiqué",
   "estimateNote": "Les conditions finales et travaux supplémentaires sont convenus avant la visite.",
   "regionEyebrow": "PRÈS DE CHEZ VOUS",
-  "regionTitle": "D’Ashdod à Hadera",
-  "regionText": "Nous intervenons dans le centre d’Israël, le Goush Dan et les environs. Votre ville n’est pas listée ? Contactez-nous.",
-  "cities": [
-    "Tel-Aviv-Jaffa",
-    "Rishon LeTsion",
-    "Petah Tikva",
-    "Netanya",
-    "Bnei Brak",
-    "Ashdod",
-    "Holon",
-    "Ramat Gan",
-    "Rehovot",
-    "Bat Yam",
-    "Herzliya",
-    "Hadera"
-  ],
+  "regionTitle": "De Sdérot à Haïfa. Et jusqu’à Jérusalem.",
+  "regionText": "Nous intervenons de Sdérot à Haïfa, ainsi que sur l’axe de Tel-Aviv à Jérusalem, Jérusalem comprise. Voici les principales villes desservies. Si la vôtre n’apparaît pas, contactez-nous pour vérifier la possibilité d’une visite.",
   "faqEyebrow": "BON À SAVOIR",
   "faqTitle": "Vos questions, nos réponses",
   "faqIntro": "Besoin de précisions ? Parlons-en lors de la réservation.",
@@ -140,7 +126,7 @@
     ],
     [
       "Où intervenez-vous ?",
-      "Dans le centre d’Israël, d’Ashdod à Hadera, notamment à Tel-Aviv, Rishon LeTsion, Petah Tikva, Netanya et dans les villes voisines."
+      "Nous intervenons de Sdérot à Haïfa, notamment à Ashkelon, Ashdod, Rehovot, Rishon LeZion, Tel-Aviv, Petah Tikva, Netanya et Hadéra. Nous desservons aussi l’axe Tel-Aviv–Jérusalem, dont Lod, Ramlé, Modiin et Beit Shemesh. Les principales villes figurent dans la zone d’intervention."
     ],
     [
       "Combien coûte le nettoyage de plusieurs unités ?",
@@ -224,15 +210,15 @@
   ],
   "understood": "Compris",
   "shareTitle": "L’air frais se partage.",
-  "shareText": "{brand} — nettoyage et recharge de climatisation dans le centre d’Israël.",
+  "shareText": "{brand} — nettoyage et entretien de climatisation de Sdérot à Haïfa et de Tel-Aviv à Jérusalem.",
   "share": "Partager le site",
   "shared": "Lien copié",
   "shareError": "Copiez le lien dans la barre d’adresse.",
   "footer": "Soin de la climatisation. Confort à la maison.",
   "privacyLink": "Confidentialité",
   "noJs": "Informations et contacts disponibles sans JavaScript. Activez JavaScript pour utiliser le formulaire.",
-  "pageTitle": "Nettoyage et recharge de climatisation dans le centre d’Israël",
-  "description": "{brand} : nettoyage, désinfection et recharge de climatisation d’Ashdod à Hadera. Nettoyage dès 250 ₪. Devis et rendez-vous sur WhatsApp.",
+  "pageTitle": "Nettoyage et entretien de climatisation — Sdérot, Haïfa, Jérusalem",
+  "description": "{brand} : nettoyage, désinfection et recharge de climatisation de Sdérot à Haïfa et de Tel-Aviv à Jérusalem. Nettoyage dès 250 ₪. Réservez en ligne, sur Telegram ou WhatsApp.",
   "whatsappCta": "Écrire sur WhatsApp",
   "serviceLabel": "Service souhaité",
   "serviceOptions": [
@@ -266,12 +252,13 @@
     "system": "Choisissez le type de climatiseur.",
     "quantity": "Choisissez entre 1 et 10 unités."
   },
-  "map": {
-    "title": "Zone d’intervention",
-    "sea": "Mer Méditerranée",
-    "note": "Zone indicative. Les déplacements hors de cette zone sont à convenir.",
-    "open": "Ouvrir la carte",
-    "north": "Nord"
-  },
-  "areaNav": "Zone d’intervention"
+  "areaNav": "Zone d’intervention",
+  "brandDescriptor": "nettoyage et entretien de climatisation",
+  "processIntro": "Envoyez une demande sur le site ou contactez-nous sur Telegram / WhatsApp. Voici la suite.",
+  "regionGroups": [
+    "Sdérot et la côte sud",
+    "Tel-Aviv et le Goush Dan",
+    "Le Sharon et la côte jusqu’à Haïfa",
+    "Vers Jérusalem"
+  ]
 }

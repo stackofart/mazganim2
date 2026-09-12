@@ -3,7 +3,7 @@ import { ref, computed, onMounted } from "vue";
 import Icon from "./components/Icon.vue";
 import BookingForm from "./components/BookingForm.vue";
 import ApartmentScene from "./components/ApartmentScene.vue";
-import ServiceAreaMap from "./components/ServiceAreaMap.vue";
+import BrandMark from "./components/BrandMark.vue";
 import BookingBird from "./components/BookingBird.vue";
 import { sceneCopy } from "./data/scene.js";
 import { useSceneInteraction } from "./composables/useSceneInteraction.js";
@@ -77,10 +77,9 @@ onMounted(() => {
     <a class="skip-link" href="#main">{{ t.skip }}</a>
     <header class="site-header">
       <div class="container header-inner">
-        <a class="brand" :href="localePath(locale)" :aria-label="company.name"
-          ><img class="brand-mark" src="/images/bird-mark.webp" width="64" height="52" alt="" aria-hidden="true" />
-          <span class="brand-name" lang="he" dir="rtl">{{ company.name }}</span></a
-        >
+        <a class="brand" :href="localePath(locale)" :aria-label="`${company.name} — ${t.brandDescriptor}`">
+          <BrandMark :descriptor="t.brandDescriptor" />
+        </a>
         <nav class="desktop-nav" :aria-label="t.menu">
           <a v-for="item in nav" :key="item.id" :href="`#${item.id}`">{{
             item.label
@@ -186,6 +185,7 @@ onMounted(() => {
               <div class="eyebrow">{{ t.processEyebrow }}</div>
               <h2>{{ t.processTitle }}</h2>
             </div>
+            <p>{{ t.processIntro }}</p>
           </div>
           <div class="steps">
             <article v-for="(step, i) in t.steps" :key="i">
@@ -194,6 +194,7 @@ onMounted(() => {
               <p>{{ step[1] }}</p>
             </article>
           </div>
+          <a class="text-link process-book" href="#booking-form" @click="startLead">{{ t.book }}<Icon name="arrow" :size="18" /></a>
         </div>
       </section>
       <section id="prices" class="section container price-section">
@@ -236,13 +237,15 @@ onMounted(() => {
                 company.displayPhone
               }}</bdi></a
             >
-          <ul class="city-list">
-            <li v-for="city in t.cities" :key="city">
-              <Icon name="pin" :size="15" />{{ city }}
-            </li>
-          </ul>
           </div>
-          <ServiceAreaMap :text="t" :locale="locale" />
+          <div class="area-cities">
+            <div v-for="group in t.cityGroups" :key="group.title" class="city-group">
+              <h3>{{ group.title }}</h3>
+              <ul class="city-list">
+                <li v-for="city in group.cities" :key="city"><Icon name="pin" :size="15" />{{ city }}</li>
+              </ul>
+            </div>
+          </div>
         </div>
       </section>
       <section id="guide" class="section container guide-section">
@@ -312,7 +315,7 @@ onMounted(() => {
     </main>
     <footer class="container footer">
       <a class="brand" :href="localePath(locale)"
-        ><img class="brand-mark" src="/images/bird-mark.webp" width="64" height="52" alt="" aria-hidden="true" /><span class="brand-name" lang="he" dir="rtl">{{ company.name }}</span></a
+        ><BrandMark :descriptor="t.brandDescriptor" /></a
       ><span>{{ t.footer }}</span
       ><button class="footer-privacy" @click="privacyDialog.showModal()">
         {{ t.privacyLink }}</button
