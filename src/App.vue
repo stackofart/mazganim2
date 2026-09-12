@@ -228,15 +228,7 @@ onMounted(() => {
           <div class="area-copy">
             <div class="eyebrow">{{ t.regionKicker }}</div>
             <h2>{{ t.regionTitle }}</h2>
-            <p>{{ t.regionText }}</p>
-            <a
-              :href="phoneUrl"
-              class="text-link"
-              @click="track('phone_click', { locale })"
-              ><Icon name="phone" :size="18" /><bdi>{{
-                company.displayPhone
-              }}</bdi></a
-            >
+            <p>{{ t.regionText }} <a class="area-contact-link" href="#contact" @click="startLead">{{ t.regionContact }}</a>.</p>
           </div>
           <div class="area-cities">
             <div v-for="group in t.cityGroups" :key="group.title" class="city-group">

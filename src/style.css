@@ -157,6 +157,8 @@ h3 { font-size: 23px; font-weight: 600; line-height: 1.25; letter-spacing: -.5px
 .area-layout { display: grid; grid-template-columns: .85fr 1.4fr; gap: 60px; align-items: start; }
 .area-layout h2 { max-width: 430px; }
 .area-copy > p { margin: 20px 0; font-size: 1rem; max-width: 430px; }
+.area-contact-link { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px; }
+.area-contact-link:hover { color: var(--accent); }
 .area-cities { display: grid; grid-template-columns: 1fr 1fr; gap: 30px 28px; }
 .city-group { min-width: 0; border-top: 1px solid #ab9e8077; padding-top: 18px; }
 .city-group h3 { font-size: 1rem; line-height: 1.45; }

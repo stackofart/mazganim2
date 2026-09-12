@@ -28,7 +28,7 @@ test('scene translations include all three states, alt text and price template',
   assert.deepEqual(Object.keys(copy).sort(),Object.keys(sceneCopy.ru).sort())
   assert.deepEqual(Object.keys(copy.lines).sort(),['hopeful','ready','resigned'])
   assert.ok(copy.leaving && copy.alt && copy.price.includes('{price}'))
-  assert.ok(copy.speaker && copy.pause && copy.resume)
+  assert.ok(copy.speaker)
   assert.equal(copy.quotes[0],copy.lines.resigned)
   assert.equal(new Set(copy.quotes).size,4)
  }

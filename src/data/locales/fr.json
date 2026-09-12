@@ -109,8 +109,8 @@
   "estimate": "Total au tarif indiqué",
   "estimateNote": "Les conditions finales et travaux supplémentaires sont convenus avant la visite.",
   "regionEyebrow": "PRÈS DE CHEZ VOUS",
-  "regionTitle": "De Sdérot à Haïfa. Et jusqu’à Jérusalem.",
-  "regionText": "Nous intervenons de Sdérot à Haïfa, ainsi que sur l’axe de Tel-Aviv à Jérusalem, Jérusalem comprise. Voici les principales villes desservies. Si la vôtre n’apparaît pas, contactez-nous pour vérifier la possibilité d’une visite.",
+  "regionTitle": "Les villes où nous intervenons",
+  "regionText": "Nous intervenons de Sdérot à Haïfa et de Tel-Aviv à Jérusalem, Jérusalem comprise. Les principales villes sont indiquées ci-dessous. Si la vôtre n’apparaît pas,",
   "faqEyebrow": "BON À SAVOIR",
   "faqTitle": "Vos questions, nos réponses",
   "faqIntro": "Besoin de précisions ? Parlons-en lors de la réservation.",
@@ -260,5 +260,6 @@
     "Tel-Aviv et le Goush Dan",
     "Le Sharon et la côte jusqu’à Haïfa",
     "Vers Jérusalem"
-  ]
+  ],
+  "regionContact": "contactez-nous pour vérifier la possibilité d’une visite"
 }

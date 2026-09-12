@@ -109,8 +109,8 @@
   "estimate": "Listed total",
   "estimateNote": "Final terms and additional work are agreed before the visit.",
   "regionEyebrow": "CLOSE TO HOME",
-  "regionTitle": "Sderot to Haifa. And to Jerusalem.",
-  "regionText": "We serve the area from Sderot to Haifa, plus the corridor from Tel Aviv to Jerusalem, including Jerusalem. These are the main cities we cover. If yours is not listed, contact us to check availability.",
+  "regionTitle": "Cities we serve",
+  "regionText": "We serve the area from Sderot to Haifa and from Tel Aviv to Jerusalem, including Jerusalem. The main cities are listed below. If yours is not listed,",
   "faqEyebrow": "GOOD TO KNOW",
   "faqTitle": "Your questions, answered",
   "faqIntro": "Need more information? Ask when you book.",
@@ -260,5 +260,6 @@
     "Tel Aviv & Gush Dan",
     "Sharon & the coast to Haifa",
     "Towards Jerusalem"
-  ]
+  ],
+  "regionContact": "contact us to check availability"
 }

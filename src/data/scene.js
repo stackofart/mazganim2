@@ -15,8 +15,6 @@ export const sceneCopy = {
     "leaving": "Я пока побуду на посту.",
     "price": "Чистка от {price} ₪ · Сдерот — Хайфа · до Иерусалима",
     "speaker": "Ваш кондиционер",
-    "pause": "Приостановить смену реплик",
-    "resume": "Возобновить смену реплик",
     "quotes": [
       "Я работаю. Просто немного устал.",
       "Мне бы немного заботы — и снова за работу.",
@@ -39,8 +37,6 @@ export const sceneCopy = {
     "leaving": "בינתיים אני נשאר במשמרת.",
     "price": "ניקוי החל מ־{price} ₪ · משדרות עד חיפה · ועד ירושלים",
     "speaker": "המזגן שלכם",
-    "pause": "השהיית החלפת המשפטים",
-    "resume": "המשך החלפת המשפטים",
     "quotes": [
       "אני עובד. רק קצת עייף.",
       "קצת טיפול — ואני חוזר לעניינים.",
@@ -63,8 +59,6 @@ export const sceneCopy = {
     "leaving": "I'll keep things cool here.",
     "price": "Cleaning from ₪{price} · Sderot to Haifa · to Jerusalem",
     "speaker": "Your air conditioner",
-    "pause": "Pause changing quotes",
-    "resume": "Resume changing quotes",
     "quotes": [
       "Still on duty. Just a little tired.",
       "A little care, and I’m ready to go again.",
@@ -87,8 +81,6 @@ export const sceneCopy = {
     "leaving": "سأبقى هنا في خدمتي.",
     "price": "التنظيف من {price} ₪ · من سديروت إلى حيفا · وحتى القدس",
     "speaker": "مكيّفكم",
-    "pause": "إيقاف تبديل العبارات مؤقتًا",
-    "resume": "استئناف تبديل العبارات",
     "quotes": [
       "ما زلت أعمل. متعب قليلًا فقط.",
       "قليل من العناية — وأعود للعمل بنشاط.",
@@ -111,8 +103,6 @@ export const sceneCopy = {
     "leaving": "Je reste au poste en attendant.",
     "price": "Nettoyage dès {price} ₪ · de Sdérot à Haïfa · jusqu’à Jérusalem",
     "speaker": "Votre climatiseur",
-    "pause": "Mettre les répliques en pause",
-    "resume": "Reprendre les répliques",
     "quotes": [
       "Toujours au poste. Juste un peu fatigué.",
       "Un peu d’attention, et je repars.",
