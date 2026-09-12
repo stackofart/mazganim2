@@ -33,7 +33,7 @@ export function contentFor(code = "ru") {
       details,
     })),
     systemTypes: t.types.map((label, i) => ({
-      value: ["wall", "multi", "vrf", "unknown"][i],
+      value: ["wall", "central", "vrf", "unknown"][i],
       label,
     })),
     faqs: t.faqs.map(([question, answer]) => ({ question, answer })),

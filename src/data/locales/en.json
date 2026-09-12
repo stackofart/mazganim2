@@ -1,6 +1,6 @@
 {
   "sourceSlogan": "Clean · Disinfect · Recharge",
-  "priceNote": "Extra inspection or complex models (VRF, multi-split) are billed separately by prior arrangement.",
+  "priceNote": "Additional diagnostics, central air conditioner servicing and VRF systems are priced separately by prior arrangement.",
   "priceLabels": [
     "One AC unit",
     "Two AC units",
@@ -60,7 +60,8 @@
       [
         "Inspection and careful disassembly",
         "Washing of washable filters",
-        "Heat exchanger cleaning with steam or gentle water pressure"
+        "Heat exchanger cleaning with a professional detergent compatible with its material and coating",
+        "Condensate drainage system cleaning and flow check"
       ]
     ],
     [
@@ -131,7 +132,11 @@
   "faqs": [
     [
       "What does cleaning include?",
-      "Inspection, careful disassembly, cleaning filters and internal components, disinfection, reassembly and testing. The exact work depends on the model and condition."
+      "Inspection, careful disassembly, cleaning of filters, the heat exchanger and internal components, condensate drainage system cleaning, disinfection, reassembly and testing. The heat exchanger cleaner and any rinsing are selected according to the equipment and cleaner manufacturers’ instructions. The exact work depends on the model and condition."
+    ],
+    [
+      "How often should an air conditioner be cleaned?",
+      "Professional cleaning is usually scheduled once a year, before the main season of use. Year-round operation or dusty conditions may require more frequent cleaning, depending on the system’s condition. Check washable filters roughly every two weeks and clean them according to your model’s instructions."
     ],
     [
       "Which areas do you cover?",
@@ -143,7 +148,7 @@
     ],
     [
       "Do you service complex systems?",
-      "Additional diagnostics and VRF or multi-split servicing are priced separately by prior arrangement."
+      "Diagnostics and servicing for central air conditioners and VRF systems are quoted separately by prior arrangement."
     ],
     [
       "How should I prepare?",
@@ -179,7 +184,7 @@
   "type": "AC type",
   "types": [
     "Wall-mounted AC",
-    "Multi-split",
+    "Central air conditioner",
     "VRF",
     "Not sure — please advise"
   ],

@@ -32,7 +32,7 @@ test('scene translations include all three states, alt text and price template',
 
 test('prices match the rendered reference; unsupported quantities require a quote',()=>{
  for(const [quantity,price] of [[1,250],[2,450],[3,600]])assert.equal(calculatePrice({type:'wall',quantity}),price)
- for(const input of [{type:'wall',quantity:4},{type:'wall',quantity:0},{type:'wall',quantity:1.5},{type:'multi',quantity:2},{type:'vrf',quantity:1},{type:'unknown',quantity:1}])assert.equal(calculatePrice(input),null)
+ for(const input of [{type:'wall',quantity:4},{type:'wall',quantity:0},{type:'wall',quantity:1.5},{type:'central',quantity:2},{type:'vrf',quantity:1},{type:'unknown',quantity:1}])assert.equal(calculatePrice(input),null)
 })
 test('Israeli mobile numbers normalize to E.164 and invalid phones fail',()=>{
  assert.equal(normalizePhone('054-757-7371'),'+972547577371')
@@ -52,8 +52,15 @@ test('refrigerant requests remain quote-only and name the correct service in all
 })
 test('requests validate fields and retain localized prices and campaign attribution',()=>{
  for(const quantity of [0,11,1.5])assert.throws(()=>makeRequest({type:'wall',quantity,city:'City'}))
- assert.throws(()=>makeRequest({type:'other',quantity:1,city:'City'}))
+ for(const type of ['other','multi'])assert.throws(()=>makeRequest({type,quantity:1,city:'City'}))
  assert.throws(()=>makeRequest({type:'wall',quantity:1,city:' '}))
+ for(const {code} of languages){
+  const t=contentFor(code),values={type:'central',quantity:1,city:'Test city',phone:'0541234567'}
+  const message=makeRequest(values,{},code)
+  assert.deepEqual(validateLead(values,code),{})
+  assert.ok(message.includes(t.systemTypes.find(type=>type.value==='central').label))
+  assert.ok(message.includes(t.quote));assert.ok(!message.includes('250 ₪'))
+ }
  for(const lang of languages){const t=contentFor(lang.code);const message=makeRequest({type:'wall',quantity:2,city:'Test city',phone:'0541234567'}, {utm_source:'instagram',utm_campaign:'summer'},lang.code);assert.ok(message.includes(t.requestHello));assert.ok(message.includes('450 ₪'));assert.ok(message.includes('instagram / summer'));assert.ok(message.includes('+972541234567'))}
 })
 test('WhatsApp does not use the original placeholder destinations',()=>{
@@ -93,7 +100,7 @@ test('callback failure is never reported as a successful lead',async()=>{
 })
 test('all five language dictionaries have matching keys and complete core content',()=>{
  const keys=Object.keys(locales.ru).sort()
- for(const lang of languages){assert.deepEqual(Object.keys(locales[lang.code]).sort(),keys);const t=contentFor(lang.code);assert.equal(t.faqs.length,8);assert.equal(t.services.length,3);assert.equal(t.cities.length,12);assert.equal(t.priceLabels.length,3)}
+ for(const lang of languages){assert.deepEqual(Object.keys(locales[lang.code]).sort(),keys);const t=contentFor(lang.code);assert.equal(t.faqs.length,9);assert.equal(t.services.length,3);assert.equal(t.cities.length,12);assert.equal(t.priceLabels.length,3)}
 })
 test('every SSG page has its own content, canonical, hreflang, direction and offers',async()=>{
  for(const lang of languages){
@@ -113,7 +120,9 @@ test('every SSG page has its own content, canonical, hreflang, direction and off
   const data=JSON.parse(html.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/)[1])
   const page=data['@graph'].find(n=>n['@type']==='WebPage');assert.equal(page.inLanguage,lang.code);assert.equal(page.description,t.description)
   const business=data['@graph'].find(n=>n['@type']==='HVACBusiness');assert.equal(business.name,company.name);assert.deepEqual(business.hasOfferCatalog.itemListElement.map(o=>o.price),[250,450,600]);assert.ok(business.hasOfferCatalog.itemListElement.every(o=>o.itemOffered.name===t.serviceOptions[0]))
-  assert.equal(data['@graph'].find(n=>n['@type']==='FAQPage').mainEntity.length,8)
+  const faqSchema=data['@graph'].find(n=>n['@type']==='FAQPage').mainEntity
+  assert.equal(faqSchema.length,9)
+  assert.deepEqual(faqSchema.map(faq=>[faq.name,faq.acceptedAnswer.text]),t.faqs.map(faq=>[faq.question,faq.answer]))
   assert.match(html,/<meta property="og:image" content="https:\/\/[^\"]+\/images\/social-cover.jpg"/)
   assert.match(html,/<meta name="twitter:card" content="summary_large_image"/)
   const services=data['@graph'].filter(n=>n['@type']==='Service');assert.equal(services.length,3)

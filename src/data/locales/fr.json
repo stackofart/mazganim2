@@ -1,6 +1,6 @@
 {
   "sourceSlogan": "Nettoyage · Désinfection · Recharge",
-  "priceNote": "Un contrôle supplémentaire ou les modèles complexes (VRF, multi-split) sont facturés séparément après accord préalable.",
+  "priceNote": "Le diagnostic supplémentaire, l’entretien des climatiseurs centraux et des systèmes VRF sont facturés séparément après accord préalable.",
   "priceLabels": [
     "Un climatiseur",
     "Deux climatiseurs",
@@ -60,7 +60,8 @@
       [
         "Inspection et démontage soigneux",
         "Lavage des filtres lavables",
-        "Nettoyage de l’échangeur à la vapeur ou à faible pression"
+        "Nettoyage de l’échangeur avec un détergent professionnel compatible avec son matériau et son revêtement",
+        "Nettoyage du système d’évacuation des condensats et contrôle de l’écoulement"
       ]
     ],
     [
@@ -131,7 +132,11 @@
   "faqs": [
     [
       "Que comprend le nettoyage ?",
-      "Inspection, démontage soigneux, nettoyage des filtres et composants internes, désinfection, remontage et test. Les étapes dépendent du modèle et de son état."
+      "Inspection, démontage soigneux, nettoyage des filtres, de l’échangeur, des composants internes et du système d’évacuation des condensats, désinfection, remontage et test. Le choix du nettoyant pour l’échangeur et la nécessité de le rincer suivent les consignes des fabricants de l’appareil et du produit. Les étapes dépendent du modèle et de son état."
+    ],
+    [
+      "À quelle fréquence faut-il nettoyer un climatiseur ?",
+      "Un nettoyage professionnel est généralement prévu une fois par an, avant la principale saison d’utilisation. Un fonctionnement toute l’année ou un environnement poussiéreux peut nécessiter un nettoyage plus fréquent, selon l’état du système. Vérifiez les filtres lavables environ toutes les deux semaines et nettoyez-les selon les consignes de votre modèle."
     ],
     [
       "Où intervenez-vous ?",
@@ -143,7 +148,7 @@
     ],
     [
       "Intervenez-vous sur les systèmes complexes ?",
-      "Le diagnostic supplémentaire et l’entretien VRF ou multi-split sont facturés séparément après accord préalable."
+      "Le diagnostic et l’entretien des climatiseurs centraux et des systèmes VRF font l’objet d’un devis séparé, convenu à l’avance."
     ],
     [
       "Comment préparer la visite ?",
@@ -179,7 +184,7 @@
   "type": "Type de climatiseur",
   "types": [
     "Climatiseur mural",
-    "Multi-split",
+    "Climatiseur central",
     "VRF",
     "Je ne sais pas — besoin de conseil"
   ],

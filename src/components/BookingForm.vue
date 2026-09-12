@@ -125,7 +125,7 @@ onMounted(() => {
               city: { type: "string", minLength: 1, maxLength: 100 },
               type: {
                 type: "string",
-                enum: ["wall", "multi", "vrf", "unknown"],
+                enum: ["wall", "central", "vrf", "unknown"],
               },
               quantity: { type: "integer", minimum: 1, maximum: 10 },
             },
