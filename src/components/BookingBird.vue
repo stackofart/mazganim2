@@ -7,7 +7,7 @@ const bird = ref(null), dock = ref(null), flying = ref(false), onDark = ref(fals
 const silhouetteId = useId();
 const wingClipId = `${silhouetteId}-wing`;
 const bodyClipId = `${silhouetteId}-body`;
-const birdImageId = `${silhouetteId}-image`;
+const birdMaskId = `${silhouetteId}-mask`;
 let contrastTime = 0;
 
 function updateContrast(time = 0) {
@@ -130,7 +130,9 @@ onUnmounted(() => {
           <filter :id="silhouetteId" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB">
             <feColorMatrix type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  -10 10 0 0 0" result="green" />
             <feComposite in="green" in2="SourceAlpha" operator="in" result="bird-alpha" />
-            <feFlood flood-color="currentColor" />
+            <!-- Keep filter output independent of inherited color: WebKit can
+                 retain the old filtered pixels when only currentColor changes. -->
+            <feFlood flood-color="#ffffff" />
             <feComposite in2="bird-alpha" operator="in" />
           </filter>
           <!-- This seam follows the transparent gap in the original logo.
@@ -141,7 +143,9 @@ onUnmounted(() => {
           <clipPath :id="bodyClipId" clipPathUnits="userSpaceOnUse">
             <path d="M740 0H1280V1280H450V1080L515 1040 577 1000 625 960 663 920 693 880 717 840 742 800 762 760 781 720 798 680 810 640 780 600 750 560 740 520Z" />
           </clipPath>
-          <image :id="birdImageId" href="/images/bird-mark.webp" width="1280" height="1280" :filter="'url(#' + silhouetteId + ')'" />
+          <mask :id="birdMaskId" maskUnits="userSpaceOnUse" maskContentUnits="userSpaceOnUse" x="0" y="0" width="1280" height="1280" mask-type="alpha">
+            <image href="/images/bird-mark.webp" width="1280" height="1280" :filter="'url(#' + silhouetteId + ')'" />
+          </mask>
         </defs>
         <g class="bird-feet" fill="none" stroke="currentColor" stroke-width="18" stroke-linecap="round" stroke-linejoin="round">
           <path class="bird-foot bird-foot-back" d="M745 920 752 1045 721 1209m0 0-21 25m21-25 17 25h18" />
@@ -149,11 +153,11 @@ onUnmounted(() => {
         </g>
         <g class="bird-wing">
           <g :clip-path="'url(#' + wingClipId + ')'">
-            <use :href="'#' + birdImageId" />
+            <rect class="bird-paint" width="1280" height="1280" fill="currentColor" :mask="'url(#' + birdMaskId + ')'" />
           </g>
         </g>
         <g :clip-path="'url(#' + bodyClipId + ')'">
-          <use :href="'#' + birdImageId" />
+          <rect class="bird-paint" width="1280" height="1280" fill="currentColor" :mask="'url(#' + birdMaskId + ')'" />
         </g>
       </svg>
     </span>
