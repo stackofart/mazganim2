@@ -1,9 +1,33 @@
 <script setup>
-import { onMounted, onUnmounted, ref } from 'vue';
+import { onMounted, onUnmounted, ref, useId } from 'vue';
 
 defineProps({ label: { type: String, required: true } });
 const emit = defineEmits(['book']);
-const bird = ref(null), dock = ref(null), flying = ref(false);
+const bird = ref(null), dock = ref(null), flying = ref(false), onDark = ref(false);
+const silhouetteId = useId();
+let contrastTime = 0;
+
+function updateContrast(time = 0) {
+  if (!bird.value || (time && time - contrastTime < 64)) return;
+  contrastTime = time;
+  const rect = bird.value.getBoundingClientRect();
+  // Sample beneath the actual flying silhouette, including inside the light form.
+  // The decorative bird ignores hit testing, so it cannot sample itself.
+  let element = document.elementFromPoint(
+    Math.max(0, Math.min(window.innerWidth - 1, rect.left + rect.width * .65)),
+    Math.max(0, Math.min(window.innerHeight - 1, rect.top + rect.height * .6)),
+  );
+  while (element) {
+    const channels = getComputedStyle(element).backgroundColor.match(/[\d.]+/g)?.map(Number);
+    if (channels?.length >= 3 && (channels[3] ?? 1) > .85) {
+      const [r, g, b] = channels;
+      onDark.value = (r * .2126 + g * .7152 + b * .0722) < 140;
+      return;
+    }
+    element = element.parentElement;
+  }
+  onDark.value = false;
+}
 let frame, lastTime = 0, lastScroll = 0, offset = 0, speed = 0;
 let reduceMotion, resizeObserver, direction = -1, flightHeight = 180;
 
@@ -24,6 +48,7 @@ function settle() {
   flying.value = false;
   lastScroll = window.scrollY;
   paint();
+  updateContrast();
 }
 
 function tick(time) {
@@ -37,6 +62,7 @@ function tick(time) {
     settle();
     return;
   }
+  updateContrast(time);
   paint();
   frame = requestAnimationFrame(tick);
 }
@@ -45,7 +71,11 @@ function onScroll() {
   const current = window.scrollY;
   const delta = current - lastScroll;
   lastScroll = current;
-  if (reduceMotion?.matches || document.hidden || Math.abs(delta) < 1) return;
+  if (reduceMotion?.matches) {
+    updateContrast();
+    return;
+  }
+  if (document.hidden || Math.abs(delta) < 1) return;
   // Downward scrolling leaves the bird behind in page space. Upward scrolling
   // gives it a smaller takeoff, keeping it above the button and inside the screen.
   offset = Math.max(-flightHeight, offset - Math.abs(delta) * (delta > 0 ? .75 : .35));
@@ -85,19 +115,20 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div ref="dock" class="booking-dock" :class="{ 'is-flying': flying }">
+  <div ref="dock" class="booking-dock" :class="{ 'is-flying': flying, 'is-on-dark': onDark }">
     <span ref="bird" class="booking-bird" aria-hidden="true">
-      <svg class="bird-silhouette" viewBox="0 80 1240 1080" fill="currentColor">
-        <!-- The crest, curved neck and long feather shapes follow the existing
-             bird logo; separate vector parts allow wings to move independently. -->
-        <g class="bird-feet" fill="none" stroke="currentColor" stroke-width="18" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M713 961 742 1068 723 1100m19-32 19 32h17" />
-          <path d="M810 900 816 1068 799 1100m17-32 24 32h17" />
-        </g>
-        <path class="bird-body" d="M752 529C837 545 900 484 958 515c44 11 50 36 78 49 40 22 56 54 55 84-41-36-78-28-111-4-60 50-82 124-109 182-82 144-209 192-359 233 171-88 263-234 323-329 40-65 85-116 142-145-29-24-60-29-95-23-53 15-97-9-130-33Z" />
-        <g class="bird-wing">
-          <path d="M52 160C187 330 372 417 576 473c139 47 208 153 150 306-68 194-231 318-472 315 152-66 249-87 323-194-89 19-151-32-193-95 90 18 171-12 241-41-130 32-334 49-424-158 119 59 264 69 351 50-165 28-443-45-474-287 143 121 305 154 411 161C278 484 52 389 52 160Z" />
-        </g>
+      <svg class="bird-silhouette" viewBox="0 120 1160 1020">
+        <defs>
+          <!-- Extract the green bird from the actual logo. The terracotta sun
+               has R > G and is excluded; SourceAlpha preserves the exact edges. -->
+          <filter :id="silhouetteId" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB">
+            <feColorMatrix type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  -10 10 0 0 0" result="green" />
+            <feComposite in="green" in2="SourceAlpha" operator="in" result="bird-alpha" />
+            <feFlood flood-color="currentColor" />
+            <feComposite in2="bird-alpha" operator="in" />
+          </filter>
+        </defs>
+        <image href="/images/bird-mark.webp" width="1280" height="1280" :filter="'url(#' + silhouetteId + ')'" />
       </svg>
     </span>
     <a class="booking-dock-button" href="#booking-form" @click="emit('book')">
@@ -110,24 +141,21 @@ onUnmounted(() => {
 .booking-dock { position: fixed; z-index: 25; inset-inline-end: 24px; bottom: max(22px,env(safe-area-inset-bottom)); }
 .booking-dock-button { position: relative; display: flex; align-items: center; justify-content: center; gap: 10px; min-height: 52px; max-width: 230px; padding: 15px 24px; border: 1px solid #fff8e099; border-radius: 28px; background: var(--ink); color: var(--paper); box-shadow: 0 5px 20px #152c3426; font-size: 1rem; line-height: 1.35; font-weight: 550; text-align: center; transition: background .2s; }
 .booking-dock-button:hover { background: #2c564c; }
-.booking-bird { position: absolute; bottom: calc(100% - 4px); inset-inline-end: 17px; display: block; width: 88px; height: 77px; color: var(--ink); pointer-events: none; transform-origin: 64% 94%; filter: drop-shadow(0 1px 0 var(--paper)) drop-shadow(0 -1px 0 var(--paper)); will-change: transform; }
-.bird-silhouette { display: block; width: 100%; height: 100%; overflow: visible; }
-.bird-wing { transform-origin: 720px 690px; transform: rotate(-46deg) scale(.65); transition: transform .26s ease-out; }
-.bird-feet { transform-origin: 790px 925px; transition: transform .2s ease, opacity .2s; }
-.is-flying .bird-wing { animation: wingbeat .32s ease-in-out infinite; }
-.is-flying .bird-feet { transform: rotate(-30deg) scaleY(.55); opacity: .6; }
-@keyframes wingbeat {
-  0%,100% { transform: rotate(-8deg) scale(1,.92); }
-  50% { transform: rotate(-72deg) scale(.75,.4); }
+.booking-bird { position: absolute; bottom: calc(100% - 4px); inset-inline-end: 17px; display: block; width: 96px; height: 84px; color: var(--ink); pointer-events: none; transform-origin: 64% 94%; filter: drop-shadow(0 1px 1px #152c3426); will-change: transform; }
+.bird-silhouette { display: block; width: 100%; height: 100%; overflow: visible; transform-origin: 60% 65%; }
+.is-on-dark .booking-bird { color: var(--paper); }
+.is-flying .bird-silhouette { animation: flight-glide .55s ease-in-out infinite alternate; }
+@keyframes flight-glide {
+  from { transform: rotate(-4deg); }
+  to { transform: rotate(4deg); }
 }
-[dir='rtl'] .bird-silhouette { transform: scaleX(-1); }
 @media(max-width:600px) {
   .booking-dock { inset-inline-end: 16px; bottom: max(16px,env(safe-area-inset-bottom)); }
   .booking-dock-button { min-height: 48px; padding: 13px 19px; max-width: 190px; font-size: .9375rem; }
-  .booking-bird { width: 76px; height: 66px; inset-inline-end: 12px; }
+  .booking-bird { width: 84px; height: 74px; inset-inline-end: 12px; }
 }
 @media(prefers-reduced-motion:reduce) {
   .booking-bird { transform: none!important; will-change: auto; }
-  .bird-wing,.bird-feet { animation: none!important; transition: none!important; }
+  .bird-silhouette { animation: none!important; }
 }
 </style>
