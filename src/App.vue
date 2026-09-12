@@ -1,9 +1,10 @@
 <script setup>
-import { ref, computed, onMounted, onUnmounted } from "vue";
+import { ref, computed, onMounted } from "vue";
 import Icon from "./components/Icon.vue";
 import BookingForm from "./components/BookingForm.vue";
 import ApartmentScene from "./components/ApartmentScene.vue";
 import ServiceAreaMap from "./components/ServiceAreaMap.vue";
+import BookingBird from "./components/BookingBird.vue";
 import { sceneCopy } from "./data/scene.js";
 import { useSceneInteraction } from "./composables/useSceneInteraction.js";
 import { company } from "./data/company.js";
@@ -13,9 +14,6 @@ const props = defineProps({ locale: { type: String, default: "ru" } });
 const t = computed(() => contentFor(props.locale));
 const scene = computed(() => sceneCopy[props.locale] || sceneCopy.ru);
 const heroBooking = ref(null);
-const heroSection = ref(null);
-const showFloatingContact = ref(false);
-let heroObserver;
 const heroInteraction = useSceneInteraction(heroBooking);
 const direction = computed(() =>
   ["he", "ar"].includes(props.locale) ? "rtl" : "ltr",
@@ -72,13 +70,6 @@ onMounted(() => {
   captureCampaign();
   document.documentElement.lang = props.locale;
   document.documentElement.dir = direction.value;
-  heroObserver = new IntersectionObserver(([entry]) => {
-    showFloatingContact.value = !entry.isIntersecting;
-  });
-  if (heroSection.value) heroObserver.observe(heroSection.value);
-});
-onUnmounted(() => {
-  heroObserver?.disconnect();
 });
 </script>
 <template>
@@ -137,7 +128,7 @@ onUnmounted(() => {
       </nav>
     </header>
     <main id="main">
-      <section ref="heroSection" class="hero container" @pointermove.passive="heroInteraction.move" @pointerleave="heroInteraction.resetPointer">
+      <section class="hero container" @pointermove.passive="heroInteraction.move" @pointerleave="heroInteraction.resetPointer">
         <div class="hero-copy">
           <div class="eyebrow">
             <span class="tiny-line"></span>{{ t.sourceSlogan }}
@@ -346,7 +337,7 @@ onUnmounted(() => {
         </div>
       </div>
     </footer>
-    <a v-if="directWhatsapp" v-show="showFloatingContact" class="floating-whatsapp" :href="directWhatsapp" target="_blank" rel="noopener noreferrer" :aria-label="t.whatsappCta" @click="track('lead_whatsapp_click', { locale, placement: 'floating' })"><Icon name="chat" :size="25" /><span>WhatsApp</span></a>
+    <BookingBird :label="t.book" @book="startLead" />
     <dialog
       ref="privacyDialog"
       class="detail-dialog"
