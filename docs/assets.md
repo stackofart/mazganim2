@@ -28,7 +28,8 @@ Golos Text: Google Fonts, latin and cyrillic variable WOFF2, SIL Open Font Licen
 Файлы проекта:
 - `public/images/mountain-coast.webp` — главный пейзаж, 1536×1024.
 - `public/images/mountain-coast-768.webp` — мобильная версия, 768×512.
-- `public/images/social-cover.jpg` — обложка ссылок, 1200×630.
+- `public/images/social-cover-contacts.jpg` — актуальная обложка ссылок, 1200×630, с брендом זיז и телефонами 052-446-4677 / 055-770-7506. Промпт правки: [contact-cover-prompt.md](contact-cover-prompt.md).
+- `public/images/social-cover.jpg` — архивная обложка с прежними контактами, больше не подключена к сайту.
 
 WebP закодированы через cwebp, JPEG для Open Graph — через sips; иллюстрации создавал ImageGen. Старый `hero.jpg` больше не используется на странице.
 
@@ -38,7 +39,7 @@ WebP закодированы через cwebp, JPEG для Open Graph — че�
 Use case: illustration-story. Create one original landscape artwork for the hero of an Israeli air-conditioner cleaning brand's website. Landscape 3:2 composition, high resolution. A striking modern Japanese woodblock-print inspired Mediterranean landscape: bold terracotta red mountain ridges rise above deep turquoise sea and rolling olive-green hills, warm ivory clouds curl in clean graphic shapes, a pale apricot sun floats in an ivory sky. Small white flat-roofed Mediterranean homes with a few discreet wall-mounted air conditioners nestle at the foot of the hills; an olive branch frames the lower left. Inspired by the user's reference of a vivid Japanese mountain nature print, but invent an original Israeli coastal landscape, not Mount Fuji and not a copy of an existing print. Rich flat ink layers, fine dark indigo engraved contour lines, subtle woodgrain and handmade paper grain, generous calm sky, elegant asymmetrical composition, sophisticated warm off-white/terracotta/deep teal palette. The mountain is the main hero, bold and graphic, houses are small secondary details. Editorial art print quality, no photorealism, no gradients or 3D, no lettering, no logos, no watermark, no border. This is a background illustration, not a webpage mockup.
 ```
 
-### Финальный промпт обложки
+### Исходный промпт архивной обложки
 
 Вход: созданный выше пейзаж, как художественный референс и исходный материал.
 

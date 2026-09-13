@@ -37,7 +37,6 @@ const nav = computed(() =>
     label: t.value.nav[i],
   })), { id: "area", label: t.value.areaNav }],
 );
-const phoneUrl = `tel:${company.phone}`;
 const directWhatsapp = computed(() => whatsappUrl(t.value.requestHello));
 function startLead() {
   track("lead_start", { locale: props.locale });
@@ -272,14 +271,16 @@ onMounted(() => {
               <span>{{ t.bookingTitle[1] }}</span>
             </h2>
             <p>{{ t.bookingIntro }}</p>
-            <a
-              :href="phoneUrl"
-              class="contact-phone"
-              @click="track('phone_click', { locale })"
-              ><Icon name="phone" :size="20" /><bdi>{{
-                company.displayPhone
-              }}</bdi></a
-            >
+            <div class="contact-phones">
+              <a
+                v-for="phone in company.phones"
+                :key="phone.number"
+                :href="`tel:${phone.number}`"
+                class="contact-phone"
+                @click="track('phone_click', { locale })"
+                ><Icon name="phone" :size="20" /><bdi>{{ phone.display }}</bdi></a
+              >
+            </div>
             <div class="contact-channels">
               <a
                 :href="company.telegram"

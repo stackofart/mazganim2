@@ -1,13 +1,17 @@
 import { serviceCities } from "./service-area.js";
 // Extracted from stackofart/mazganim at c8a86eebd08f9fc875a120a14e60bccd3aec1956.
-// WhatsApp uses the company contact number; change it here if needed.
+// Contact numbers updated by the owner on 2026-09-13.
+const phones = [
+  { number: "+972524464677", display: "052-446-4677" },
+  { number: "+972557707506", display: "055-770-7506" },
+];
 export const company = {
   name: "זיז",
   siteUrl: "https://mazganim-clean-air.gerasim459.workers.dev",
-  phone: "+972547577371",
-  displayPhone: "054-757-7371",
-  whatsapp: "+972547577371",
-  telegram: "https://t.me/IGideonI",
+  phones,
+  phone: phones[0].number,
+  whatsapp: phones[0].number,
+  telegram: `https://t.me/${phones[0].number}`,
   formEndpoint: "https://formspree.io/f/mpwrzaby",
   serviceArea: serviceCities.map(city => city.en),
   currency: "ILS",

@@ -189,7 +189,8 @@ h3 { font-size: 23px; font-weight: 600; line-height: 1.25; letter-spacing: -.5px
 .booking-copy h2 { font-size: clamp(38px,4.1vw,57px); line-height: 1.15; letter-spacing: -2px; }
 .booking-copy h2 span { color: #dfa67e; }
 .booking-copy > p { color: #d0d7c8; font-size: 14px; max-width: 380px; margin-top: 24px; }
-.contact-phone { display: flex; align-items: center; gap: 12px; margin-top: 36px; font-size: 25px; letter-spacing: -.8px; }
+.contact-phones { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; margin-top: 36px; }
+.contact-phone { display: flex; align-items: center; gap: 12px; min-height: 44px; font-size: 25px; letter-spacing: -.8px; }
 .contact-channels { display: flex; flex-wrap: wrap; gap: 25px; margin-top: 24px; }
 .contact-channels a { display: flex; gap: 8px; align-items: center; font-size: 14px; text-decoration: underline; text-underline-offset: 6px; }
 .booking-form { padding: 34px; background: var(--paper); color: var(--ink); border-radius: 3px; min-width: 0; }

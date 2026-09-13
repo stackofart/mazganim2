@@ -39,8 +39,8 @@ test('prices match the rendered reference; unsupported quantities require a quot
  for(const input of [{type:'wall',quantity:4},{type:'wall',quantity:0},{type:'wall',quantity:1.5},{type:'central',quantity:2},{type:'vrf',quantity:1},{type:'unknown',quantity:1}])assert.equal(calculatePrice(input),null)
 })
 test('Israeli mobile numbers normalize to E.164 and invalid phones fail',()=>{
- assert.equal(normalizePhone('054-757-7371'),'+972547577371')
- assert.equal(normalizePhone('+972 (54) 757 7371'),'+972547577371')
+ assert.equal(normalizePhone('052-446-4677'),'+972524464677')
+ assert.equal(normalizePhone('+972 (55) 770 7506'),'+972557707506')
  for(const phone of ['123','054123456','0441234567','+9720541234567','<script>',''])assert.equal(normalizePhone(phone),null)
 })
 test('refrigerant requests remain quote-only and name the correct service in all languages',()=>{
@@ -130,11 +130,15 @@ test('every SSG page has its own content, canonical, hreflang, direction and off
   const canonical=html.match(/<link rel="canonical" href="([^"]+)"/)[1]
   assert.equal(new URL(canonical).pathname,localePath(lang.code))
   assert.equal((html.match(/<link rel="alternate" hreflang=/g)||[]).length,6)
-  assert.ok(html.includes('tel:+972547577371'));assert.ok(html.includes('https://t.me/IGideonI'))
+  for(const phone of company.phones){assert.ok(html.includes(`tel:${phone.number}`));assert.ok(html.includes(phone.display))}
+  assert.ok(html.includes('https://t.me/+972524464677'))
+  assert.ok(!/547577371|054-757-7371|IGideonI/.test(html))
   const data=JSON.parse(html.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/)[1])
   const page=data['@graph'].find(n=>n['@type']==='WebPage');assert.equal(page.inLanguage,lang.code);assert.equal(page.description,t.description)
   const business=data['@graph'].find(n=>n['@type']==='HVACBusiness');assert.equal(business.name,company.name);assert.deepEqual(business.hasOfferCatalog.itemListElement.map(o=>o.price),[250,450,600]);assert.ok(business.hasOfferCatalog.itemListElement.every(o=>o.itemOffered.name===t.serviceOptions[0]))
   assert.deepEqual(business.areaServed.map(city=>city.name),company.serviceArea)
+  assert.deepEqual(business.telephone,['+972524464677','+972557707506'])
+  assert.deepEqual(business.contactPoint.map(contact=>contact.telephone),business.telephone)
   for(const city of t.cities)assert.ok(html.includes(city))
   assert.ok(html.includes(t.brandDescriptor.replaceAll('&','&amp;')))
   assert.ok(html.includes(sceneCopy[lang.code].speaker))
@@ -143,12 +147,12 @@ test('every SSG page has its own content, canonical, hreflang, direction and off
   const faqSchema=data['@graph'].find(n=>n['@type']==='FAQPage').mainEntity
   assert.equal(faqSchema.length,9)
   assert.deepEqual(faqSchema.map(faq=>[faq.name,faq.acceptedAnswer.text]),t.faqs.map(faq=>[faq.question,faq.answer]))
-  assert.match(html,/<meta property="og:image" content="https:\/\/[^\"]+\/images\/social-cover.jpg"/)
+  assert.match(html,/<meta property="og:image" content="https:\/\/[^\"]+\/images\/social-cover-contacts.jpg"/)
   assert.match(html,/<meta name="twitter:card" content="summary_large_image"/)
   const services=data['@graph'].filter(n=>n['@type']==='Service');assert.equal(services.length,3)
   assert.ok(services.some(s=>s['@id'].endsWith('#service-refrigerant')))
   for(const service of services)assert.ok(html.includes(`id="${new URL(service.url).hash.slice(1)}"`))
-  assert.ok(html.includes('https://wa.me/972547577371'))
+  assert.ok(html.includes('https://wa.me/972524464677'))
   for(const match of html.matchAll(/href="#([^\"]+)"/g))assert.ok(html.includes(`id="${match[1]}"`))
   for(const match of html.matchAll(/(?:src|href)="(\/(?:assets|fonts|images)\/[^\"?#]+)"/g))await access(`dist${match[1]}`)
  }

@@ -34,7 +34,7 @@ for (const lang of languages) {
       "@id": `${origin}/#website`,
       url: `${origin}/`,
       name: company.name,
-      image: `${origin}/images/social-cover.jpg`,
+      image: `${origin}/images/social-cover-contacts.jpg`,
       inLanguage: languages.map((l) => l.code),
     },
     {
@@ -62,19 +62,19 @@ for (const lang of languages) {
       "@id": `${origin}/#business`,
       name: company.name,
       url: `${origin}/`,
-      telephone: company.phone,
-      image: `${origin}/images/social-cover.jpg`,
+      telephone: company.phones.map(({ number }) => number),
+      image: `${origin}/images/social-cover-contacts.jpg`,
       sameAs: [company.telegram],
       areaServed: company.serviceArea.map((name) => ({
         "@type": "City",
         name,
       })),
-      contactPoint: {
+      contactPoint: company.phones.map(({ number }) => ({
         "@type": "ContactPoint",
-        telephone: company.phone,
+        telephone: number,
         contactType: "customer service",
         availableLanguage: languages.map((l) => l.label),
-      },
+      })),
       hasOfferCatalog: {
         "@type": "OfferCatalog",
         name: t.serviceOptions[0],
@@ -113,14 +113,14 @@ ${languages.map((l) => `<link rel="alternate" hreflang="${l.code}" href="${escap
 <meta property="og:title" content="${escapeAttr(title)}" />
 <meta property="og:description" content="${escapeAttr(t.description)}" />
 <meta property="og:url" content="${escapeAttr(url)}" />
-<meta property="og:image" content="${origin}/images/social-cover.jpg" />
-<meta property="og:image:secure_url" content="${origin}/images/social-cover.jpg" />
+<meta property="og:image" content="${origin}/images/social-cover-contacts.jpg" />
+<meta property="og:image:secure_url" content="${origin}/images/social-cover-contacts.jpg" />
 <meta property="og:image:type" content="image/jpeg" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
 <meta property="og:image:alt" content="${escapeAttr(company.name + ' — ' + t.pageTitle)}" />
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:image" content="${origin}/images/social-cover.jpg" />
+<meta name="twitter:image" content="${origin}/images/social-cover-contacts.jpg" />
 <meta name="twitter:image:alt" content="${escapeAttr(company.name + ' — ' + t.pageTitle)}" />
 <meta name="twitter:title" content="${escapeAttr(title)}" />
 <meta name="twitter:description" content="${escapeAttr(t.description)}" />
