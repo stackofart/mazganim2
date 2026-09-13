@@ -6,7 +6,7 @@ export const sceneCopy = {
       "Позаботьтесь о нём."
     ],
     "intro": "Чистка, дезинфекция и заправка кондиционеров.",
-    "alt": "Кондиционер без лица в светлой квартире. Окно распахнуто наружу; зелёная птица с двумя лапами сидит на внешнем краю подоконника, за ней — крыши на закате.",
+    "alt": "Кондиционер без лица в светлой квартире. Нижняя створка окна поднята вверх; зелёная птица с двумя лапами сидит на внешнем краю подоконника в открытом проёме, за ней — крыши на закате.",
     "lines": {
       "resigned": "Я работаю. Просто немного устал.",
       "hopeful": "О, про меня вспомнили?",
@@ -28,7 +28,7 @@ export const sceneCopy = {
       "תדאגו גם לו."
     ],
     "intro": "ניקוי, חיטוי ומילוי גז למזגנים.",
-    "alt": "מזגן ללא פנים בדירה מוארת. החלון פתוח כלפי חוץ; ציפור ירוקה בעלת שתי רגליים יושבת בקצה החיצוני של האדן, וברקע גגות בשקיעה.",
+    "alt": "מזגן ללא פנים בדירה מוארת. הכנף התחתונה של החלון מורמת כלפי מעלה; ציפור ירוקה בעלת שתי רגליים יושבת בקצה החיצוני של האדן, בפתח הפתוח, וברקע גגות בשקיעה.",
     "lines": {
       "resigned": "אני עובד. רק קצת עייף.",
       "hopeful": "אה, נזכרתם בי?",
@@ -50,7 +50,7 @@ export const sceneCopy = {
       "Take care of it, too."
     ],
     "intro": "Air conditioner cleaning, disinfection and refrigerant recharge.",
-    "alt": "A faceless air conditioner in a sunlit apartment. The window is swung open outwards; a green bird with two legs perches on the outer sill, with rooftops at sunset beyond.",
+    "alt": "A faceless air conditioner in a sunlit apartment. The lower window sash is raised; a green bird with two legs perches on the outer sill in the open aperture, with rooftops at sunset beyond.",
     "lines": {
       "resigned": "Still on duty. Just a little tired.",
       "hopeful": "Oh, you remembered me?",
@@ -72,7 +72,7 @@ export const sceneCopy = {
       "اعتنوا به أيضًا."
     ],
     "intro": "تنظيف وتعقيم وتعبئة غاز المكيّفات.",
-    "alt": "مكيّف بلا ملامح وجه في شقة مضيئة. النافذة مفتوحة نحو الخارج؛ طائر أخضر بساقين يقف على الحافة الخارجية، وخلفه أسطح البيوت عند الغروب.",
+    "alt": "مكيّف بلا ملامح وجه في شقة مضيئة. الجزء السفلي من النافذة مرفوع إلى الأعلى؛ طائر أخضر بساقين يقف على الحافة الخارجية ضمن الفتحة المفتوحة، وخلفه أسطح البيوت عند الغروب.",
     "lines": {
       "resigned": "ما زلت أعمل. متعب قليلًا فقط.",
       "hopeful": "آه، تذكّرتموني؟",
@@ -94,7 +94,7 @@ export const sceneCopy = {
       "Prenez soin de lui."
     ],
     "intro": "Nettoyage, désinfection et recharge de climatisation.",
-    "alt": "Un climatiseur sans visage dans un appartement lumineux. La fenêtre est grande ouverte vers l’extérieur ; un oiseau vert à deux pattes est posé sur le rebord extérieur, devant les toits au soleil couchant.",
+    "alt": "Un climatiseur sans visage dans un appartement lumineux. Le châssis inférieur de la fenêtre à guillotine est relevé ; un oiseau vert à deux pattes est posé sur le rebord extérieur de l’ouverture, devant les toits au soleil couchant.",
     "lines": {
       "resigned": "Toujours au poste. Juste un peu fatigué.",
       "hopeful": "Oh, vous avez pensé à moi ?",

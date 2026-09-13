@@ -17,7 +17,7 @@ function updateContrast(time = 0) {
   // Sample beneath the actual flying silhouette, including inside the light form.
   // The decorative bird ignores hit testing, so it cannot sample itself.
   let element = document.elementFromPoint(
-    Math.max(0, Math.min(window.innerWidth - 1, rect.left + rect.width * .65)),
+    Math.max(0, Math.min(window.innerWidth - 1, rect.left + rect.width * (direction === 1 ? .65 : .35))),
     Math.max(0, Math.min(window.innerHeight - 1, rect.top + rect.height * .6)),
   );
   while (element) {
@@ -171,8 +171,13 @@ onUnmounted(() => {
 .booking-dock { position: fixed; z-index: 25; inset-inline-end: 24px; bottom: max(22px,env(safe-area-inset-bottom)); }
 .booking-dock-button { position: relative; display: flex; align-items: center; justify-content: center; gap: 10px; min-height: 52px; max-width: 230px; padding: 15px 24px; border: 1px solid #fff8e099; border-radius: 28px; background: var(--ink); color: var(--paper); box-shadow: 0 5px 20px #152c3426; font-size: 1rem; line-height: 1.35; font-weight: 550; text-align: center; transition: background .2s; }
 .booking-dock-button:hover { background: #2c564c; }
-.booking-bird { --airborne: 0; position: absolute; bottom: calc(100% - 4px); inset-inline-end: 17px; display: block; width: 96px; height: 96px; color: var(--ink); pointer-events: none; transform-origin: 64% 94%; filter: drop-shadow(0 1px 1px #152c3426); will-change: transform; }
-.bird-silhouette { display: block; width: 100%; height: 100%; overflow: visible; }
+.booking-bird { --airborne: 0; position: absolute; bottom: calc(100% - 4px); inset-inline-end: 17px; display: block; width: 96px; height: 96px; color: var(--ink); pointer-events: none; transform-origin: 36% 94%; filter: drop-shadow(0 1px 1px #152c3426); will-change: transform; }
+/* Mirror the complete silhouette, including its animated wing and feet.
+   The outer span remains free to translate and tilt during flight. */
+.bird-silhouette { display: block; width: 100%; height: 100%; overflow: visible; transform: scaleX(-1); }
+/* The dock is on the left in RTL, so the original pose already faces inward. */
+[dir='rtl'] .booking-bird { transform-origin: 64% 94%; }
+[dir='rtl'] .bird-silhouette { transform: none; }
 .is-on-dark .booking-bird { color: var(--paper); }
 .bird-wing { transform-origin: 690px 750px; }
 .is-flying .bird-wing { animation: bird-wingbeat .38s ease-in-out infinite; }

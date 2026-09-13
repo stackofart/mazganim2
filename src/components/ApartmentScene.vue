@@ -18,8 +18,8 @@ onUnmounted(() => window.clearInterval(timer));
 <template>
   <figure class="apartment-scene" :data-mood="mood">
     <div class="scene-stage">
-      <img class="scene-art" src="/images/quiet-apartment-open.webp"
-        srcset="/images/quiet-apartment-open-768.webp 768w, /images/quiet-apartment-open.webp 1536w"
+      <img class="scene-art" src="/images/quiet-apartment-sash.webp"
+        srcset="/images/quiet-apartment-sash-768.webp 768w, /images/quiet-apartment-sash.webp 1536w"
         sizes="(max-width: 800px) calc(100vw - 40px), (max-width: 1320px) 55vw, 720px"
         width="1536" height="1024" :alt="text.alt" fetchpriority="high" />
     </div>

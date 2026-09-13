@@ -138,7 +138,7 @@ test('every SSG page has its own content, canonical, hreflang, direction and off
   for(const city of t.cities)assert.ok(html.includes(city))
   assert.ok(html.includes(t.brandDescriptor.replaceAll('&','&amp;')))
   assert.ok(html.includes(sceneCopy[lang.code].speaker))
-  assert.ok(html.includes('quiet-apartment-open.webp'))
+  assert.ok(html.includes('quiet-apartment-sash.webp'))
   assert.ok(!html.includes('class="service-area-map"'))
   const faqSchema=data['@graph'].find(n=>n['@type']==='FAQPage').mainEntity
   assert.equal(faqSchema.length,9)
