@@ -32,7 +32,7 @@ const booking = ref({
   website: "",
 });
 const nav = computed(() =>
-  [...["services", "process", "prices", "faq"].map((id, i) => ({
+  [...["services", "prices", "faq"].map((id, i) => ({
     id,
     label: t.value.nav[i],
   })), { id: "area", label: t.value.areaNav }],
@@ -140,7 +140,7 @@ onMounted(() => {
               @click="startLead"
               >{{ t.book }}</a
             ><a href="#prices" class="button button-secondary"
-              >{{ t.nav[2] }}</a
+              >{{ t.nav[1] }}</a
             >
           </div>
         </div>
@@ -175,25 +175,6 @@ onMounted(() => {
             <p>{{ service.text }}</p>
             <ul class="service-points"><li v-for="point in service.details" :key="point"><Icon name="check" :size="15" />{{ point }}</li></ul>
           </article>
-        </div>
-      </section>
-      <section id="process" class="process-section">
-        <div class="container">
-          <div class="section-heading">
-            <div>
-              <div class="eyebrow">{{ t.processEyebrow }}</div>
-              <h2>{{ t.processTitle }}</h2>
-            </div>
-            <p>{{ t.processIntro }}</p>
-          </div>
-          <div class="steps">
-            <article v-for="(step, i) in t.steps" :key="i">
-              <span class="step-number">0{{ i + 1 }}</span>
-              <h3>{{ step[0] }}</h3>
-              <p>{{ step[1] }}</p>
-            </article>
-          </div>
-          <a class="text-link process-book" href="#booking-form" @click="startLead">{{ t.book }}<Icon name="arrow" :size="18" /></a>
         </div>
       </section>
       <section id="prices" class="section container price-section">

@@ -8,7 +8,6 @@
   ],
   "nav": [
     "Services",
-    "Réservation",
     "Tarifs",
     "Questions"
   ],
@@ -84,22 +83,6 @@
     ]
   ],
   "detailNote": "L’entretien de l’unité extérieure, les modèles complexes et les travaux supplémentaires sont convenus à l’avance.",
-  "processEyebrow": "PRENDRE RENDEZ-VOUS",
-  "processTitle": "Comment réserver une intervention",
-  "steps": [
-    [
-      "Envoyez une demande",
-      "Choisissez un service et indiquez votre ville, le nombre de climatiseurs et votre téléphone."
-    ],
-    [
-      "Convenons du prix et du rendez-vous",
-      "Nous vous contactons pour préciser l’état du système, le tarif et la date de visite."
-    ],
-    [
-      "Nous venons réaliser l’intervention",
-      "Nous effectuons le service convenu et vérifions le bon fonctionnement du climatiseur."
-    ]
-  ],
   "pricingEyebrow": "DES TARIFS CLAIRS",
   "pricingTitle": "Plus propre chez vous. Plus avantageux ensemble.",
   "pricingIntro": "Tarifs pour des climatiseurs muraux nettoyés lors d’une seule visite.",
@@ -254,7 +237,6 @@
   },
   "areaNav": "Zone d’intervention",
   "brandDescriptor": "nettoyage et entretien de climatisation",
-  "processIntro": "Envoyez une demande sur le site ou contactez-nous sur Telegram / WhatsApp. Voici la suite.",
   "regionGroups": [
     "Sdérot et la côte sud",
     "Tel-Aviv et le Goush Dan",

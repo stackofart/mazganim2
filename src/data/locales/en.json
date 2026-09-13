@@ -8,7 +8,6 @@
   ],
   "nav": [
     "Services",
-    "How to book",
     "Pricing",
     "FAQ"
   ],
@@ -84,22 +83,6 @@
     ]
   ],
   "detailNote": "Outdoor unit servicing, complex models and additional work are agreed in advance.",
-  "processEyebrow": "BOOKING A SERVICE",
-  "processTitle": "How to book a service",
-  "steps": [
-    [
-      "Send a request",
-      "Choose a service and tell us your city, number of units and contact number."
-    ],
-    [
-      "Agree on the price and time",
-      "We will contact you to discuss the system’s condition, the cost and a suitable appointment."
-    ],
-    [
-      "We visit and carry out the work",
-      "We complete the agreed service and check that the air conditioner works properly."
-    ]
-  ],
   "pricingEyebrow": "CLEAR PRICING",
   "pricingTitle": "A cleaner home. Better together.",
   "pricingIntro": "Prices for wall-mounted units cleaned in one visit.",
@@ -254,7 +237,6 @@
   },
   "areaNav": "Service area",
   "brandDescriptor": "air conditioner cleaning & maintenance",
-  "processIntro": "Send a request on the website or contact us on Telegram / WhatsApp. Here is what happens next.",
   "regionGroups": [
     "Sderot & the southern coast",
     "Tel Aviv & Gush Dan",
