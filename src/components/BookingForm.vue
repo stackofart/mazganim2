@@ -191,6 +191,28 @@ onUnmounted(() => {
       :disabled="!interactive || status === 'sending'"
     >
       <h3>{{ t.formTitle }}</h3>
+      <div class="messenger-buttons">
+        <a
+          v-if="contactUrl"
+          :href="contactUrl"
+          class="button whatsapp-button"
+          target="_blank"
+          rel="noopener noreferrer"
+          :aria-label="t.whatsappCta"
+          @click="
+            track('lead_whatsapp_click', {
+              locale,
+              placement: 'form',
+              system_type: values.type,
+              quantity: values.quantity,
+            })
+          "
+          ><Icon name="chat" :size="19" />WhatsApp</a
+        >
+        <a :href="company.telegram" class="button telegram-button" target="_blank" rel="noopener noreferrer"
+          @click="track('telegram_click', { locale, placement: 'form' })"
+          ><Icon name="telegram" :size="19" />Telegram</a>
+      </div>
       <p class="form-subtitle">{{ t.formIntro }}</p>
       <label class="form-field">{{ t.serviceLabel }}
         <select v-model="values.service" name="service" :aria-invalid="!!fieldErrors.service" :aria-describedby="fieldErrors.service ? 'service-error' : undefined" @change="track('service_select', { service: values.service, locale })">
@@ -316,28 +338,6 @@ onUnmounted(() => {
           {{ t.privacy }}
         </button>
       </p>
-      <div class="messenger-buttons">
-        <a
-          v-if="contactUrl"
-          :href="contactUrl"
-          class="button whatsapp-button"
-          target="_blank"
-          rel="noopener noreferrer"
-          :aria-label="t.whatsappCta"
-          @click="
-            track('lead_whatsapp_click', {
-              locale,
-              placement: 'form',
-              system_type: values.type,
-              quantity: values.quantity,
-            })
-          "
-          ><Icon name="chat" :size="19" />WhatsApp</a
-        >
-        <a :href="company.telegram" class="button telegram-button" target="_blank" rel="noopener noreferrer"
-          @click="track('telegram_click', { locale, placement: 'form' })"
-          ><Icon name="telegram" :size="19" />Telegram</a>
-      </div>
       <p v-if="error" role="alert" tabindex="-1" class="form-error">{{ error }}</p>
     </fieldset>
   </form>

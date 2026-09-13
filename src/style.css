@@ -217,7 +217,7 @@ h3 { font-size: 23px; font-weight: 600; line-height: 1.25; letter-spacing: -.5px
 .form-submit { width: 100%; }
 .form-note { margin-top: 14px; color: var(--muted); font-size: 10px; line-height: 1.8; }
 .inline-button { padding: 0; background: none; color: var(--ink); text-decoration: underline; font-size: inherit; }
-.messenger-buttons { display: grid; grid-template-columns: repeat(auto-fit,minmax(140px,1fr)); gap: 10px; margin-top: 22px; }
+.messenger-buttons { display: grid; grid-template-columns: repeat(auto-fit,minmax(140px,1fr)); gap: 10px; margin: 20px 0 24px; padding-bottom: 24px; border-bottom: 1px solid var(--line); }
 .messenger-buttons .button { min-width: 0; gap: 8px; padding-inline: 12px; }
 .telegram-button { background: transparent; border-color: #aebaaa; color: var(--ink); }
 .telegram-button:hover { background: #e4e8dc; }
@@ -247,6 +247,29 @@ h3 { font-size: 23px; font-weight: 600; line-height: 1.25; letter-spacing: -.5px
 [dir='rtl'] :is(h1,h2,h3,.eyebrow) { letter-spacing: 0; }
 [dir='rtl'] :is(.text-link,.button,.share-button) > svg:last-child { transform: scaleX(-1); }
 [lang='ar'] .hero h1 { line-height: 1.4; }
+/* Match the existing desktop navigation breakpoint; smaller layouts keep their type scale. */
+@media (min-width:1101px) {
+  :root { --text-body: 1.125rem; --text-small: 1rem; --text-caption: .875rem; }
+  h3 { font-size: 26px; }
+  .eyebrow,.faq-section .eyebrow,.guide-index { font-size: 13px; }
+  .brand-descriptor,.desktop-nav a,.language-select select { font-size: var(--text-caption); }
+  .desktop-nav { flex-wrap: wrap; justify-content: center; gap: 4px clamp(12px,1.4vw,20px); }
+  .text-link,.button,.price-bottom .text-link,.contact-channels a,.share-button,.footer-languages { font-size: var(--text-small); }
+  .hero-actions .button,.hero-price,.price-label { font-size: var(--text-body); }
+  .hero-description,.section-heading > p,.service-card > p,.service-points li,
+  .steps p,.pricing-intro,.area-copy > p,.guide-grid p,.faq-section > div > p,
+  .faq-list p,.booking-copy > p,.form-subtitle,.form-success p,.dialog-content p { font-size: var(--text-body); }
+  .benefits span,.gas-callout p,.city-list li,.city-group h3 { font-size: var(--text-small); }
+  .benefits strong,.step-number,.price-bottom p { font-size: var(--text-caption); }
+  .steps h3,.gas-callout h3,.guide-grid h3 { font-size: 24px; }
+  .faq-list summary { font-size: 20px; }
+  .form-fields h3 { font-size: 30px; }
+  .booking-form label,.quantity-row,.estimate-row { font-size: var(--text-small); }
+  .booking-form :is(input,select,textarea) { font-size: var(--text-body); }
+  .booking-form label > span,.booking-form small,.form-note,.form-error,
+  .footer > span,.footer-privacy,.share-status { font-size: var(--text-caption); }
+  .estimate-row strong { font-size: 24px; }
+}
 @media (max-width:1100px) {
   .container { width: calc(100% - 56px); }
   .desktop-nav { display: none; }
