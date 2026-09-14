@@ -27,7 +27,8 @@ async function initialize() {
     await loadScript();
     if (disposed) return;
     widget = window.turnstile.render(host.value, {
-      sitekey: siteKey, action: 'booking', language: props.locale, theme: 'light', size: 'flexible',
+      sitekey: siteKey, action: 'booking', language: props.locale, theme: 'light',
+      size: host.value.clientWidth < 300 ? 'compact' : 'flexible',
       'response-field': false,
       callback: token => { failed.value = false; emit('token', token); },
       'expired-callback': () => emit('token', ''),
