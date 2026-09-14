@@ -11,7 +11,7 @@ export const company = {
   phones,
   phone: phones[0].number,
   whatsapp: phones[0].number,
-  telegram: `https://t.me/${phones[0].number}`,
+  telegram: "https://t.me/zeezair",
   formEndpoint: "https://formspree.io/f/mpwrzaby",
   serviceArea: serviceCities.map(city => city.en),
   currency: "ILS",

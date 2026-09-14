@@ -131,7 +131,8 @@ test('every SSG page has its own content, canonical, hreflang, direction and off
   assert.equal(new URL(canonical).pathname,localePath(lang.code))
   assert.equal((html.match(/<link rel="alternate" hreflang=/g)||[]).length,6)
   for(const phone of company.phones){assert.ok(html.includes(`tel:${phone.number}`));assert.ok(html.includes(phone.display))}
-  assert.ok(html.includes('https://t.me/+972524464677'))
+  assert.ok(html.includes('https://t.me/zeezair'))
+  assert.ok(!html.includes('https://t.me/+972524464677'))
   assert.ok(!/547577371|054-757-7371|IGideonI/.test(html))
   const data=JSON.parse(html.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/)[1])
   const page=data['@graph'].find(n=>n['@type']==='WebPage');assert.equal(page.inLanguage,lang.code);assert.equal(page.description,t.description)
