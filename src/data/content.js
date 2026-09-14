@@ -35,11 +35,7 @@ export function contentFor(code = "ru") {
       text,
       details,
     })),
-    systemTypes: t.types.map((label, i) => ({
-      value: ["wall", "central", "vrf", "unknown"][i],
-      label,
-    })),
     faqs: t.faqs.map(([question, answer]) => ({ question, answer })),
   };
 }
-export const { services, systemTypes, faqs } = contentFor("ru");
+export const { services, faqs } = contentFor("ru");

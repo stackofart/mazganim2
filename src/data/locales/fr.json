@@ -88,8 +88,6 @@
   "pricingIntro": "Tarifs pour des climatiseurs muraux nettoyés lors d’une seule visite.",
   "selected": "Sélectionné",
   "select": "Choisir",
-  "quote": "Sur devis",
-  "estimate": "Total au tarif indiqué",
   "estimateNote": "Les conditions finales et travaux supplémentaires sont convenus avant la visite.",
   "regionEyebrow": "PRÈS DE CHEZ VOUS",
   "regionTitle": "Les villes où nous intervenons",
@@ -144,26 +142,14 @@
   "bookingIntro": "Quelques détails pour discuter du tarif et d’un horaire adapté.",
   "promise": "Vous confirmez après accord sur tous les détails.",
   "formTitle": "Contactez-nous",
-  "formIntro": "Laissez votre numéro, nous vous recontacterons.",
+  "formIntro": "Laissez votre nom et votre numéro de téléphone, nous vous recontacterons.",
   "name": "Votre nom",
   "optional": "facultatif",
-  "city": "Ville",
   "phone": "Téléphone",
   "phoneHint": "Mobile israélien : 05XXXXXXXX ou +9725XXXXXXXX",
-  "type": "Type de climatiseur",
-  "types": [
-    "Climatiseur mural",
-    "Climatiseur central",
-    "VRF",
-    "Je ne sais pas — besoin de conseil"
-  ],
-  "quantity": "Nombre d’unités",
-  "decrease": "Diminuer la quantité",
-  "increase": "Augmenter la quantité",
   "note": "Commentaire",
   "namePlaceholder": "Comment vous appeler ?",
-  "cityPlaceholder": "Où intervenir ?",
-  "notePlaceholder": "Modèle, état ou horaire souhaité",
+  "notePlaceholder": "Votre question ou le meilleur moment pour vous appeler",
   "send": "Envoyer la demande",
   "sending": "Envoi…",
   "sent": "Demande acceptée par le formulaire",
@@ -171,7 +157,7 @@
   "sendAnother": "Nouvelle demande",
   "sendError": "Échec de l’envoi. Réessayez ou contactez-nous par téléphone ou Telegram.",
   "invalidPhone": "Saisissez un mobile, par exemple 054-123-4567 ou +972 54 123 4567.",
-  "invalidRequest": "Vérifiez la ville, le système et le nombre d’unités.",
+  "invalidRequest": "Vérifiez votre nom, votre numéro de téléphone et votre commentaire.",
   "prepare": "Préparer un message",
   "ready": "Votre message est prêt",
   "copy": "Copier le message",
@@ -203,7 +189,6 @@
   "pageTitle": "Nettoyage et entretien de climatisation — Sdérot, Haïfa, Jérusalem",
   "description": "{brand} : nettoyage, désinfection et recharge de climatisation de Sdérot à Haïfa et de Tel-Aviv à Jérusalem. Nettoyage dès 250 ₪. Réservez en ligne, sur Telegram ou WhatsApp.",
   "whatsappCta": "Écrire sur WhatsApp",
-  "serviceLabel": "Service souhaité",
   "serviceOptions": [
     "Nettoyage et désinfection",
     "Recharge de fluide"
@@ -230,10 +215,8 @@
   "printLabel": "MONTAGNES · MER · MAISON",
   "regionKicker": "ZONE D’INTERVENTION",
   "validation": {
-    "city": "Indiquez la ville où intervenir.",
-    "service": "Choisissez une prestation dans la liste.",
-    "system": "Choisissez le type de climatiseur.",
-    "quantity": "Choisissez entre 1 et 10 unités."
+    "name": "Indiquez votre nom, en 80 caractères maximum.",
+    "note": "Limitez votre commentaire à 300 caractères."
   },
   "areaNav": "Zone d’intervention",
   "brandDescriptor": "nettoyage et entretien de climatisation",
@@ -243,5 +226,7 @@
     "Le Sharon et la côte jusqu’à Haïfa",
     "Vers Jérusalem"
   ],
-  "regionContact": "contactez-nous pour vérifier la possibilité d’une visite"
+  "regionContact": "contactez-nous pour vérifier la possibilité d’une visite",
+  "bulkPriceTitle": "Quatre climatiseurs ou plus",
+  "bulkPriceText": "Le prix est convenu au cas par cas."
 }

@@ -1,7 +1,7 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
 import {readFile,access} from 'node:fs/promises'
-import {calculatePrice,normalizePhone,makeRequest,whatsappUrl,sendLead,validateLead} from '../src/lib.js'
+import {normalizePhone,makeRequest,whatsappUrl,sendLead,validateLead} from '../src/lib.js'
 import {company} from '../src/data/company.js'
 import {serviceCities} from '../src/data/service-area.js'
 import {languages,locales,contentFor,localePath} from '../src/data/content.js'
@@ -34,51 +34,43 @@ test('scene translations include all three states, alt text and price template',
  }
 })
 
-test('prices match the rendered reference; unsupported quantities require a quote',()=>{
- for(const [quantity,price] of [[1,250],[2,450],[3,600]])assert.equal(calculatePrice({type:'wall',quantity}),price)
- for(const input of [{type:'wall',quantity:4},{type:'wall',quantity:0},{type:'wall',quantity:1.5},{type:'central',quantity:2},{type:'vrf',quantity:1},{type:'unknown',quantity:1}])assert.equal(calculatePrice(input),null)
-})
 test('Israeli mobile numbers normalize to E.164 and invalid phones fail',()=>{
  assert.equal(normalizePhone('052-446-4677'),'+972524464677')
  assert.equal(normalizePhone('+972 (55) 770 7506'),'+972557707506')
  for(const phone of ['123','054123456','0441234567','+9720541234567','<script>',''])assert.equal(normalizePhone(phone),null)
 })
-test('refrigerant requests remain quote-only and name the correct service in all languages',()=>{
- for(const locale of languages.map(l=>l.code)){
-  const values={service:'refrigerant',type:'wall',quantity:2,city:'Test city'}
-  const t=contentFor(locale),message=makeRequest(values,{},locale)
-  assert.equal(calculatePrice(values),null)
-  assert.ok(message.includes(t.serviceOptions[1]))
-  assert.ok(message.includes(t.quote));assert.ok(!message.includes('450 ₪'))
-  assert.equal(t.services[1].id,'refrigerant')
- }
- assert.throws(()=>makeRequest({service:'other',type:'wall',quantity:1,city:'Test'}))
-})
-test('requests validate fields and retain localized prices and campaign attribution',()=>{
- for(const quantity of [0,11,1.5])assert.throws(()=>makeRequest({type:'wall',quantity,city:'City'}))
- for(const type of ['other','multi'])assert.throws(()=>makeRequest({type,quantity:1,city:'City'}))
- assert.throws(()=>makeRequest({type:'wall',quantity:1,city:' '}))
+test('callback messages include contact details and attribution without removed service fields',()=>{
  for(const {code} of languages){
-  const t=contentFor(code),values={type:'central',quantity:1,city:'Test city',phone:'0541234567'}
-  const message=makeRequest(values,{},code)
+  const t=contentFor(code)
+  const values={name:'  Test  ',phone:'0541234567',note:'Call after 17:00',city:'Old city',type:'wall',service:'cleaning',quantity:2}
+  const message=makeRequest(values,{utm_source:'instagram',utm_campaign:'summer'},code)
   assert.deepEqual(validateLead(values,code),{})
-  assert.ok(message.includes(t.systemTypes.find(type=>type.value==='central').label))
-  assert.ok(message.includes(t.quote));assert.ok(!message.includes('250 ₪'))
+  assert.ok(message.includes(t.requestHello))
+  assert.ok(message.includes(`${t.name}: Test`))
+  assert.ok(message.includes(`${t.phone}: +972541234567`))
+  assert.ok(message.includes(`${t.note}: Call after 17:00`))
+  assert.ok(message.includes('instagram / summer'))
+  assert.ok(!/Old city|450|₪/.test(message))
+  assert.ok(!message.includes(t.serviceOptions[0]))
+  assert.equal(makeRequest({}, {}, code),t.requestHello)
+  assert.ok(makeRequest({name:'Test'}, {}, code).includes(`${t.name}: Test`))
+  assert.throws(()=>makeRequest({phone:'123'}, {}, code))
  }
- for(const lang of languages){const t=contentFor(lang.code);const message=makeRequest({type:'wall',quantity:2,city:'Test city',phone:'0541234567'}, {utm_source:'instagram',utm_campaign:'summer'},lang.code);assert.ok(message.includes(t.requestHello));assert.ok(message.includes('450 ₪'));assert.ok(message.includes('instagram / summer'));assert.ok(message.includes('+972541234567'))}
 })
 test('WhatsApp does not use the original placeholder destinations',()=>{
  if(!company.whatsapp)assert.equal(whatsappUrl('test'),'')
  else{const url=new URL(whatsappUrl('Hello & + ?'));assert.equal(url.hostname,'wa.me');assert.equal(url.pathname,'/'+company.whatsapp.replace(/\D/g,''));assert.equal(url.searchParams.get('text'),'Hello & + ?')}
 })
-const lead={name:'Test',city:'Test city',phone:'0541234567',type:'wall',quantity:2,note:'Test only'}
+const lead={name:'Test',phone:'0541234567',note:'Test only'}
 test('validation identifies each invalid field in every language and blocks transport',async()=>{
  for(const {code} of languages){
   assert.deepEqual(validateLead(lead,code),{})
-  const invalid={...lead,city:'  ',phone:'123',type:'other',quantity:0,service:'other'}
+  const invalid={...lead,name:'  ',phone:'123',note:'x'.repeat(301)}
   const errors=validateLead(invalid,code),t=contentFor(code)
-  assert.deepEqual(Object.keys(errors),['service','city','phone','system','quantity'])
-  assert.equal(errors.phone,t.invalidPhone);assert.equal(errors.city,t.validation.city)
+  assert.deepEqual(Object.keys(errors),['name','phone','note'])
+  assert.equal(errors.phone,t.invalidPhone);assert.equal(errors.name,t.validation.name);assert.equal(errors.note,t.validation.note)
+  assert.deepEqual(validateLead({...lead,name:'x'.repeat(81)},code),{name:t.validation.name})
+  assert.deepEqual(validateLead({name:'Test',phone:lead.phone},code),{})
   assert.deepEqual(validateLead({...lead,phone:'123'},code),{phone:t.invalidPhone})
   let sent=false
   await assert.rejects(sendLead(invalid,{locale:code,fetcher:async()=>{sent=true;return {ok:true}}}),e=>{
@@ -90,9 +82,21 @@ test('validation identifies each invalid field in every language and blocks tran
 test('callback transport posts to the original endpoint and succeeds only after acceptance',async()=>{
  let called=0
  const result=await sendLead(lead,{locale:'en',campaign:{utm_source:'test'},fetcher:async(url,options)=>{
-  called++;assert.equal(url,'https://formspree.io/f/mpwrzaby');assert.equal(options.method,'POST');assert.equal(options.credentials,'omit');const payload=JSON.parse(options.body);assert.equal(payload.phone,'+972541234567');assert.equal(payload.utm_source,'test');assert.ok(payload.message.includes('450 ₪'));return {ok:true}
+  called++;assert.equal(url,'https://formspree.io/f/mpwrzaby');assert.equal(options.method,'POST');assert.equal(options.credentials,'omit');const payload=JSON.parse(options.body);assert.equal(payload.phone,'+972541234567');assert.equal(payload.utm_source,'test');assert.equal(payload.name,'Test');assert.equal(payload.note,'Test only');assert.ok(payload.message.includes('Test only'));assert.ok(!payload.message.includes('₪'));assert.deepEqual(Object.keys(payload).sort(),['_gotcha','_subject','locale','message','name','note','phone','utm_source'].sort());return {ok:true}
  }})
  assert.equal(called,1);assert.equal(result.status,'accepted')
+})
+test('callback needs only a name and phone and never sends removed or arbitrary fields',async()=>{
+ let called=0
+ await sendLead({name:' Test ',phone:lead.phone,city:'Old city',type:'wall',quantity:3,service:'cleaning',extra:'ignored'},{fetcher:async(url,options)=>{
+  called++
+  const payload=JSON.parse(options.body)
+  assert.equal(payload.name,'Test');assert.equal(payload.note,'')
+  for(const key of ['city','type','quantity','service','extra'])assert.ok(!(key in payload))
+  assert.ok(!/Old city|600|₪/.test(payload.message))
+  return {ok:true}
+ }})
+ assert.equal(called,1)
 })
 test('callback failure is never reported as a successful lead',async()=>{
  await assert.rejects(sendLead(lead,{fetcher:async()=>({ok:false,status:422})}))
@@ -126,6 +130,16 @@ test('every SSG page has its own content, canonical, hreflang, direction and off
   assert.ok(html.includes(sceneCopy[lang.code].lines.resigned))
   assert.match(html,/data-mood="resigned"/)
   assert.match(html,/<fieldset[^>]*disabled/)
+  const form=html.match(/<form[^>]*id="booking-form"[\s\S]*?<\/form>/)[0]
+  assert.deepEqual([...form.matchAll(/<(?:input|textarea)[^>]*name="([^"]+)"/g)].map(match=>match[1]),['name','phone','note','_gotcha'])
+  assert.ok(!/<select|estimate-row|quantity-control/.test(form))
+  assert.match(form,/<input[^>]*name="name"[^>]*required/)
+  assert.match(form,/<input[^>]*name="phone"[^>]*required/)
+  assert.ok(!/<textarea[^>]*required/.test(form))
+  assert.ok(html.includes(t.bulkPriceTitle));assert.ok(html.includes(t.bulkPriceText))
+  assert.equal((html.match(/class="price-option"/g)||[]).length,3)
+  assert.equal((html.match(/class="price-bulk"/g)||[]).length,1)
+
   assert.match(html,/index, follow, max-image-preview:large/)
   const canonical=html.match(/<link rel="canonical" href="([^"]+)"/)[1]
   assert.equal(new URL(canonical).pathname,localePath(lang.code))

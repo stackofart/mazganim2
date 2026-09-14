@@ -47,12 +47,6 @@ export function track(event, properties = {}) {
   window.dataLayer = window.dataLayer || [];
   window.dataLayer.push({ event, ...properties, ...readCampaign() });
 }
-export function calculatePrice({ type, quantity, service = "cleaning" }) {
-  const count = Number(quantity);
-  return service === "cleaning" && type === "wall" && Number.isInteger(count)
-    ? (company.prices[count] ?? null)
-    : null;
-}
 export function normalizePhone(value) {
   const number = String(value || "").replace(/[\s()-]/g, "");
   if (/^05\d{8}$/.test(number)) return `+972${number.slice(1)}`;
@@ -62,38 +56,20 @@ export function normalizePhone(value) {
 // Shared by the form and transport so invalid fields never reach the network.
 export function validateLead(values, locale = "ru") {
   const t = contentFor(locale), errors = {};
-  if (!["cleaning", "refrigerant"].includes(values.service || "cleaning")) errors.service = t.validation.service;
-  const city = String(values.city || "").trim();
-  if (!city || city.length > 100) errors.city = t.validation.city;
+  const name = String(values.name || "").trim();
+  if (!name || name.length > 80) errors.name = t.validation.name;
   if (!normalizePhone(values.phone)) errors.phone = t.invalidPhone;
-  if (!t.systemTypes.some(type => type.value === values.type)) errors.system = t.validation.system;
-  const quantity = Number(values.quantity);
-  if (!Number.isInteger(quantity) || quantity < 1 || quantity > 10) errors.quantity = t.validation.quantity;
+  if (String(values.note || "").trim().length > 300) errors.note = t.validation.note;
   return errors;
 }
 export function makeRequest(values, campaign = {}, locale = "ru") {
   const t = contentFor(locale);
-  const service = values.service || "cleaning";
-  if (!["cleaning", "refrigerant"].includes(service)) throw new Error(t.invalidRequest);
-  const type = t.systemTypes.find((type) => type.value === values.type);
-  const quantity = Number(values.quantity);
-  if (!type || !Number.isInteger(quantity) || quantity < 1 || quantity > 10)
-    throw new Error(t.invalidRequest);
   const clean = (value) =>
     String(value || "")
       .replace(/[\r\n]/g, " ")
       .trim()
       .slice(0, 300);
-  const city = clean(values.city);
-  if (!city || city.length > 100) throw new Error(t.invalidRequest);
-  const lines = [
-    t.requestHello,
-    "",
-    `${t.serviceLabel}: ${t.serviceOptions[service === "refrigerant" ? 1 : 0]}`,
-    `${t.type}: ${type.label}`,
-    `${t.quantity}: ${quantity}`,
-    `${t.city}: ${city}`,
-  ];
+  const lines = [t.requestHello, ""];
   if (clean(values.name)) lines.push(`${t.name}: ${clean(values.name)}`);
   if (values.phone) {
     const phone = normalizePhone(values.phone);
@@ -101,14 +77,12 @@ export function makeRequest(values, campaign = {}, locale = "ru") {
     lines.push(`${t.phone}: ${phone}`);
   }
   if (clean(values.note)) lines.push(`${t.note}: ${clean(values.note)}`);
-  const price = calculatePrice(values);
-  lines.push(`${t.estimate}: ${price === null ? t.quote : `${price} ₪`}`);
   const source = [campaign.utm_source, campaign.utm_campaign]
     .filter((v) => typeof v === "string" && v)
     .map(clean)
     .join(" / ");
   if (source) lines.push("", `${t.source}: ${source}`);
-  return lines.join("\n");
+  return lines.join("\n").trim();
 }
 export function whatsappUrl(message) {
   const number = company.whatsapp.replace(/\D/g, "");
@@ -135,7 +109,7 @@ export async function sendLead(
       .trim()
       .slice(0, 80),
     phone,
-    city: String(values.city).trim().slice(0, 100),
+    note: String(values.note || "").trim().slice(0, 300),
     message,
     locale,
     _subject: `${company.name}: AC service request`,

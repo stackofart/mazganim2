@@ -23,11 +23,7 @@ const menuOpen = ref(false),
   shareStatus = ref("");
 const booking = ref({
   name: "",
-  city: "",
   phone: "",
-  service: "cleaning",
-  type: "wall",
-  quantity: 1,
   note: "",
   website: "",
 });
@@ -193,6 +189,10 @@ onMounted(() => {
           >
             <dt class="price-label">{{ t.priceLabels[quantity - 1] }}</dt>
             <dd class="price-value"><bdi>{{ company.prices[quantity] }} <span>₪</span></bdi></dd>
+          </div>
+          <div class="price-bulk">
+            <dt>{{ t.bulkPriceTitle }}</dt>
+            <dd>{{ t.bulkPriceText }}</dd>
           </div>
         </dl>
         <div class="gas-callout"><Icon name="cylinder" :size="36" /><div><h3>{{ t.gasPriceTitle }}</h3><p>{{ t.gasPriceText }}</p></div></div>

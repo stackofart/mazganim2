@@ -142,6 +142,9 @@ h3 { font-size: 23px; font-weight: 600; line-height: 1.25; letter-spacing: -.5px
 .price-label { font-size: 15px; }
 .price-value { font-size: 58px; font-weight: 500; letter-spacing: -3px; margin: 22px 0 0; line-height: 1.1; }
 .price-value span { font-size: 27px; letter-spacing: 0; }
+.price-bulk { grid-column: 1 / -1; display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px 24px; padding: 24px 28px; border: 1px solid #b4bcaa; border-radius: 3px; background: #ecebdf; }
+.price-bulk dt { font-size: 18px; font-weight: 600; }
+.price-bulk dd { margin: 0; font-size: 16px; color: var(--muted); }
 .gas-callout { display: flex; gap: 22px; align-items: center; margin-top: 26px; padding: 25px 28px; border: 1px solid var(--line); background: #ecebdf; }
 .gas-callout h3 { font-size: 19px; }
 .gas-callout p { font-size: 12px; color: var(--muted); margin-top: 6px; }
@@ -202,13 +205,6 @@ h3 { font-size: 23px; font-weight: 600; line-height: 1.25; letter-spacing: -.5px
 #booking-form { scroll-margin-top: 16px; }
 .booking-form textarea { resize: vertical; min-height: 86px; }
 .booking-form small { display: block; color: var(--muted); margin-top: 6px; font-size: .75rem; line-height: 1.6; }
-.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 17px; }
-.quantity-row,.estimate-row { display: flex; align-items: center; justify-content: space-between; gap: 18px; margin-bottom: 18px; font-size: 12px; }
-.quantity-control { display: flex; align-items: center; gap: 10px; }
-.quantity-control button { width: 35px; height: 35px; background: #e8e8d9; color: var(--ink); font-size: 20px; border-radius: 2px; }
-.quantity-control output { min-width: 18px; text-align: center; }
-.estimate-row { padding: 18px 0; border-block: 1px solid var(--line); }
-.estimate-row strong { font-size: 19px; }
 .form-submit { width: 100%; }
 .form-note { margin-top: 14px; color: var(--muted); font-size: 10px; line-height: 1.8; }
 .inline-button { padding: 0; background: none; color: var(--ink); text-decoration: underline; font-size: inherit; }
@@ -259,11 +255,10 @@ h3 { font-size: 23px; font-weight: 600; line-height: 1.25; letter-spacing: -.5px
   .gas-callout h3,.guide-grid h3 { font-size: 24px; }
   .faq-list summary { font-size: 20px; }
   .form-fields h3 { font-size: 30px; }
-  .booking-form label,.quantity-row,.estimate-row { font-size: var(--text-small); }
+  .booking-form label { font-size: var(--text-small); }
   .booking-form :is(input,select,textarea) { font-size: var(--text-body); }
   .booking-form label > span,.booking-form small,.form-note,.form-error,
   .footer > span,.footer-privacy,.share-status { font-size: var(--text-caption); }
-  .estimate-row strong { font-size: 24px; }
 }
 @media (max-width:1100px) {
   .container { width: calc(100% - 56px); }
@@ -318,6 +313,7 @@ h3 { font-size: 23px; font-weight: 600; line-height: 1.25; letter-spacing: -.5px
   .service-card h3 { font-size: 25px; }
   .service-top { margin-bottom: 25px; }
   .price-grid { gap: 10px; }
+  .price-bulk { padding: 21px 16px; }
   .price-option { padding: 21px 16px; }
   .price-label { font-size: 12px; }
   .price-value { font-size: 43px; margin-top: 20px; letter-spacing: -2px; }
@@ -342,7 +338,6 @@ h3 { font-size: 23px; font-weight: 600; line-height: 1.25; letter-spacing: -.5px
   .booking-form { padding: 26px 22px; }
   .booking-form :is(input,select,textarea) { font-size: 16px; }
   .form-fields h3 { font-size: 25px; }
-  .form-row { grid-template-columns: 1fr; gap: 0; }
   .footer { gap: 17px; padding-bottom: 95px; }
   .footer > span { max-width: 160px; }
   .footer-privacy { margin-inline-start: 0; }
@@ -358,6 +353,7 @@ h3 { font-size: 23px; font-weight: 600; line-height: 1.25; letter-spacing: -.5px
   .hero h1 { font-size: 36px; }
   .price-grid { grid-template-columns: 1fr; }
   .price-option { display: grid; grid-template-columns: 1fr 1fr; gap: 13px; align-items: center; padding: 22px; }
+  .price-bulk { padding: 22px; }
   .price-label { font-size: 16px; }
   .price-value { margin: 0; text-align: end; font-size: 42px; }
   .area-cities { gap: 28px 16px; }

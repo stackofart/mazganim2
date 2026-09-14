@@ -88,8 +88,6 @@
   "pricingIntro": "Prices for wall-mounted units cleaned in one visit.",
   "selected": "Selected",
   "select": "Select",
-  "quote": "By arrangement",
-  "estimate": "Listed total",
   "estimateNote": "Final terms and additional work are agreed before the visit.",
   "regionEyebrow": "CLOSE TO HOME",
   "regionTitle": "Cities we serve",
@@ -144,26 +142,14 @@
   "bookingIntro": "A few details help us discuss the price and a convenient time.",
   "promise": "Your booking is confirmed after all details are agreed.",
   "formTitle": "Contact us",
-  "formIntro": "Leave your phone number and we will get in touch.",
+  "formIntro": "Leave your name and phone number — we’ll get in touch.",
   "name": "Your name",
   "optional": "optional",
-  "city": "City",
   "phone": "Phone",
   "phoneHint": "Israeli mobile: 05XXXXXXXX or +9725XXXXXXXX",
-  "type": "AC type",
-  "types": [
-    "Wall-mounted AC",
-    "Central air conditioner",
-    "VRF",
-    "Not sure — please advise"
-  ],
-  "quantity": "Number of units",
-  "decrease": "Decrease quantity",
-  "increase": "Increase quantity",
   "note": "Comment",
   "namePlaceholder": "How should we address you?",
-  "cityPlaceholder": "Where do you need cleaning?",
-  "notePlaceholder": "Model, condition or preferred time",
+  "notePlaceholder": "Your question or a convenient time to call",
   "send": "Send request",
   "sending": "Sending…",
   "sent": "Request accepted by the form",
@@ -171,7 +157,7 @@
   "sendAnother": "New request",
   "sendError": "The request could not be sent. Please retry or contact us by phone or Telegram.",
   "invalidPhone": "Enter a mobile number, e.g. 054-123-4567 or +972 54 123 4567.",
-  "invalidRequest": "Check the city, system type and number of units.",
+  "invalidRequest": "Check your name, phone number and comment.",
   "prepare": "Prepare a message",
   "ready": "Your message is ready",
   "copy": "Copy message",
@@ -203,7 +189,6 @@
   "pageTitle": "Air conditioner cleaning & maintenance — Sderot, Haifa, Jerusalem",
   "description": "{brand}: air conditioner cleaning, disinfection and refrigerant recharge from Sderot to Haifa and Tel Aviv to Jerusalem. Cleaning from ₪250. Book online, on Telegram or WhatsApp.",
   "whatsappCta": "Chat on WhatsApp",
-  "serviceLabel": "Service needed",
   "serviceOptions": [
     "Cleaning and disinfection",
     "Refrigerant recharge"
@@ -230,10 +215,8 @@
   "printLabel": "MOUNTAINS · SEA · HOME",
   "regionKicker": "SERVICE AREA",
   "validation": {
-    "city": "Enter the city where you need service.",
-    "service": "Choose a service from the list.",
-    "system": "Choose the air conditioner type.",
-    "quantity": "Enter between 1 and 10 units."
+    "name": "Enter your name, up to 80 characters.",
+    "note": "Keep your comment within 300 characters."
   },
   "areaNav": "Service area",
   "brandDescriptor": "air conditioner cleaning & maintenance",
@@ -243,5 +226,7 @@
     "Sharon & the coast to Haifa",
     "Towards Jerusalem"
   ],
-  "regionContact": "contact us to check availability"
+  "regionContact": "contact us to check availability",
+  "bulkPriceTitle": "Four or more air conditioners",
+  "bulkPriceText": "We’ll agree on the price individually."
 }

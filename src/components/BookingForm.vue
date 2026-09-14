@@ -8,7 +8,6 @@ import {
   track,
   makeRequest,
   whatsappUrl,
-  calculatePrice,
   sendLead,
   validateLead,
 } from "../lib.js";
@@ -20,7 +19,6 @@ const form = ref(null), fieldErrors = ref({});
 const interactive = ref(false),
   error = ref(""),
   status = ref("idle");
-const price = computed(() => calculatePrice(values.value));
 const requestText = computed(() => {
   try {
     return makeRequest(values.value, readCampaign(), props.locale);
@@ -46,7 +44,7 @@ async function revealError(field) {
   if (!target) return;
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   target.focus({ preventScroll: true });
-  const region = target.closest('.form-field, .quantity-row') || target;
+  const region = target.closest('.form-field') || target;
   region.scrollIntoView({ block: 'center', behavior: reducedMotion ? 'instant' : 'smooth' });
   if (field && !reducedMotion) {
     region.getAnimations().forEach(animation => animation.cancel());
@@ -75,17 +73,10 @@ async function submit() {
     status.value = "success";
     track("lead_submitted", {
       locale: props.locale,
-      system_type: values.value.type,
-      service: values.value.service,
-      quantity: Number(values.value.quantity),
     });
     values.value = {
       name: "",
       phone: "",
-      city: "",
-      type: values.value.type,
-      service: values.value.service,
-      quantity: values.value.quantity,
       note: "",
       website: "",
     };
@@ -121,29 +112,23 @@ onMounted(() => {
           inputSchema: {
             type: "object",
             properties: {
-              service: { type: "string", enum: ["cleaning", "refrigerant"] },
-              city: { type: "string", minLength: 1, maxLength: 100 },
-              type: {
-                type: "string",
-                enum: ["wall", "central", "vrf", "unknown"],
-              },
-              quantity: { type: "integer", minimum: 1, maximum: 10 },
+              name: { type: "string", minLength: 1, maxLength: 80 },
+              phone: { type: "string", minLength: 1, maxLength: 22 },
+              note: { type: "string", maxLength: 300 },
             },
-            required: ["city", "type", "quantity"],
+            required: ["name", "phone"],
             additionalProperties: false,
           },
           annotations: { readOnlyHint: false, untrustedContentHint: false },
           async execute(input) {
             if (status.value === "sending")
               throw new Error("Submission in progress");
-            if (
-              !input ||
-              typeof input.city !== "string" ||
-              typeof input.quantity !== "number"
-            )
+            if (!input || typeof input.name !== "string" || typeof input.phone !== "string" ||
+              (input.note !== undefined && typeof input.note !== "string"))
               throw new Error(t.value.invalidRequest);
-            const staged = { ...values.value, ...input };
-            makeRequest(staged, {}, props.locale);
+            const staged = { ...values.value, name: input.name, phone: input.phone, note: input.note ?? "" };
+            const errors = validateLead(staged, props.locale);
+            if (Object.keys(errors).length) throw new Error(Object.values(errors)[0]);
             values.value = staged;
             status.value = "idle";
             await nextTick();
@@ -153,8 +138,6 @@ onMounted(() => {
             return {
               status: "prepared",
               sent: false,
-              price: price.value,
-              currency: "ILS",
               message: requestText.value,
             };
           },
@@ -203,8 +186,6 @@ onUnmounted(() => {
             track('lead_whatsapp_click', {
               locale,
               placement: 'form',
-              system_type: values.type,
-              quantity: values.quantity,
             })
           "
           ><Icon name="chat" :size="19" />WhatsApp</a
@@ -214,35 +195,20 @@ onUnmounted(() => {
           ><Icon name="telegram" :size="19" />Telegram</a>
       </div>
       <p class="form-subtitle">{{ t.formIntro }}</p>
-      <label class="form-field">{{ t.serviceLabel }}
-        <select v-model="values.service" name="service" :aria-invalid="!!fieldErrors.service" :aria-describedby="fieldErrors.service ? 'service-error' : undefined" @change="track('service_select', { service: values.service, locale })">
-          <option value="cleaning">{{ t.serviceOptions[0] }}</option>
-          <option value="refrigerant">{{ t.serviceOptions[1] }}</option>
-        </select>
-        <small v-if="fieldErrors.service" id="service-error" class="field-error" role="alert">{{ fieldErrors.service }}</small>
+      <label class="form-field">
+        {{ t.name }}
+        <input
+          v-model="values.name"
+          name="name"
+          autocomplete="name"
+          maxlength="80"
+          :placeholder="t.namePlaceholder"
+          :aria-invalid="!!fieldErrors.name"
+          :aria-describedby="fieldErrors.name ? 'name-error' : undefined"
+          required
+        />
+        <small v-if="fieldErrors.name" id="name-error" class="field-error" role="alert">{{ fieldErrors.name }}</small>
       </label>
-      <div class="form-row">
-        <label
-          >{{ t.name }} <span>({{ t.optional }})</span
-          ><input
-            v-model="values.name"
-            name="name"
-            autocomplete="given-name"
-            maxlength="80"
-            :placeholder="t.namePlaceholder" /></label
-        ><label class="form-field"
-          >{{ t.city
-          }}<input
-            v-model="values.city"
-            name="city"
-            :aria-invalid="!!fieldErrors.city"
-            :aria-describedby="fieldErrors.city ? 'city-error' : undefined"
-            autocomplete="address-level2"
-            maxlength="100"
-            :placeholder="t.cityPlaceholder"
-            required
-        /><small v-if="fieldErrors.city" id="city-error" class="field-error" role="alert">{{ fieldErrors.city }}</small></label>
-      </div>
       <label class="form-field"
         >{{ t.phone
         }}<input
@@ -261,53 +227,6 @@ onUnmounted(() => {
         <small v-else id="phone-hint">{{ t.phoneHint }}</small></label
       >
       <label class="form-field"
-        >{{ t.type
-        }}<select v-model="values.type" name="system" :aria-invalid="!!fieldErrors.system" :aria-describedby="fieldErrors.system ? 'system-error' : undefined">
-          <option
-            v-for="type in t.systemTypes"
-            :key="type.value"
-            :value="type.value"
-          >
-            {{ type.label }}
-          </option>
-        </select><small v-if="fieldErrors.system" id="system-error" class="field-error" role="alert">{{ fieldErrors.system }}</small></label
-      >
-      <div class="quantity-row">
-        <span id="quantity-label">{{ t.quantity }}</span>
-        <div
-          class="quantity-control"
-          role="group"
-          aria-labelledby="quantity-label"
-        >
-          <button
-            type="button"
-            :aria-label="t.decrease"
-            :disabled="values.quantity <= 1"
-            @click="values.quantity--"
-          >
-            −</button
-          ><output name="quantity" tabindex="-1" :aria-invalid="!!fieldErrors.quantity" :aria-describedby="fieldErrors.quantity ? 'quantity-error' : undefined" aria-live="polite" :aria-label="t.quantity">{{
-            values.quantity
-          }}</output
-          ><button
-            type="button"
-            :aria-label="t.increase"
-            :disabled="values.quantity >= 10"
-            @click="values.quantity++"
-          >
-            +
-          </button>
-        </div>
-        <small v-if="fieldErrors.quantity" id="quantity-error" class="field-error" role="alert">{{ fieldErrors.quantity }}</small>
-      </div>
-      <div class="estimate-row" aria-live="polite">
-        <span>{{ t.estimate }}</span
-        ><strong
-          ><bdi v-if="price !== null">{{ price }} ₪</bdi
-          ><template v-else>{{ t.quote }}</template></strong
-        >
-      </div>
-      <label
         >{{ t.note }} <span>({{ t.optional }})</span
         ><textarea
           v-model="values.note"
@@ -315,7 +234,10 @@ onUnmounted(() => {
           maxlength="300"
           rows="2"
           :placeholder="t.notePlaceholder"
+          :aria-invalid="!!fieldErrors.note"
+          :aria-describedby="fieldErrors.note ? 'note-error' : undefined"
         ></textarea>
+        <small v-if="fieldErrors.note" id="note-error" class="field-error" role="alert">{{ fieldErrors.note }}</small>
       </label>
       <label class="honeypot" aria-hidden="true"
         >Website<input
