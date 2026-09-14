@@ -313,6 +313,7 @@ onMounted(() => {
           <span class="share-status" role="status">{{ shareStatus }}</span>
         </div>
       </div>
+      <p class="footer-credit" lang="en" dir="ltr">Website by Natan Makovich</p>
     </footer>
     <BookingBird :label="t.book" @book="startLead" />
     <dialog

@@ -227,6 +227,7 @@ h3 { font-size: 23px; font-weight: 600; line-height: 1.25; letter-spacing: -.5px
 .footer-tools { display: flex; width: 100%; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px 24px; border-top: 1px solid var(--line); padding-top: 16px; }
 .footer-languages { display: flex; flex-wrap: wrap; gap: 12px 23px; font-size: 12px; }
 .footer-share { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; }
+.footer-credit { width: 100%; margin: 8px 0 0; color: var(--muted); font-size: 12px; line-height: 1.6; text-align: center; }
 .detail-dialog { width: min(580px,calc(100% - 32px)); max-height: 85dvh; margin: auto; padding: 0; background: var(--paper); color: var(--ink); border: 1px solid #a4af9b; border-radius: 3px; }
 .detail-dialog::backdrop { background: #132e29b8; backdrop-filter: blur(3px); }
 .dialog-content { position: relative; padding: 40px; }
