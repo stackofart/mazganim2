@@ -1,13 +1,55 @@
 {
   "$schema": "./node_modules/wrangler/config-schema.json",
   "name": "mazganim-clean-air",
-  "compatibility_date": "2026-09-11",
+  "main": "worker/index.js",
+  "compatibility_date": "2026-09-14",
   "workers_dev": true,
   "preview_urls": false,
   "assets": {
     "directory": "./dist",
+    "binding": "ASSETS",
+    "run_worker_first": [
+      "/api/*"
+    ],
     "html_handling": "auto-trailing-slash",
-    "not_found_handling": "404-page",
+    "not_found_handling": "404-page"
   },
-  "observability": { "enabled": true },
+  "d1_databases": [
+    {
+      "binding": "LEADS_DB",
+      "database_name": "zeez-site-leads",
+      "database_id": "2d596991-4227-4ed1-968f-2d6e4bddab30",
+      "migrations_dir": "migrations"
+    }
+  ],
+  "send_email": [
+    {
+      "name": "EMAIL",
+      "destination_address": "gerasim459@gmail.com",
+      "allowed_sender_addresses": [
+        "requests@zeez.co.il"
+      ]
+    }
+  ],
+  "ratelimits": [
+    {
+      "name": "LEAD_RATE_LIMITER",
+      "namespace_id": "45920260914",
+      "simple": {
+        "limit": 20,
+        "period": 60
+      }
+    }
+  ],
+  "triggers": {
+    "crons": [
+      "*/2 * * * *"
+    ]
+  },
+  "observability": {
+    "enabled": true
+  },
+  "vars": {
+    "TURNSTILE_SITE_KEY": "0x4AAAAAAEz0dTJbiN-2SVTi"
+  }
 }

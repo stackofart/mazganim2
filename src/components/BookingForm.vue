@@ -1,6 +1,7 @@
 <script setup>
 import { ref, computed, onMounted, onUnmounted, watch, nextTick } from "vue";
 import Icon from "./Icon.vue";
+import LeadChallenge from "./LeadChallenge.vue";
 import { contentFor } from "../data/content.js";
 import { company } from "../data/company.js";
 import {
@@ -16,6 +17,8 @@ const emit = defineEmits(["privacy"]);
 const values = defineModel({ required: true });
 const t = computed(() => contentFor(props.locale));
 const form = ref(null), fieldErrors = ref({});
+const challenge = ref(null), turnstileToken = ref("");
+let requestId;
 const interactive = ref(false),
   error = ref(""),
   status = ref("idle");
@@ -32,6 +35,7 @@ watch(
   values,
   () => {
     error.value = "";
+    requestId = undefined;
     const current = validateLead(values.value, props.locale);
     fieldErrors.value = Object.fromEntries(Object.keys(fieldErrors.value)
       .filter(key => current[key]).map(key => [key, current[key]]));
@@ -61,12 +65,20 @@ async function submit() {
     await revealError(firstInvalid);
     return;
   }
+  if (!turnstileToken.value) {
+    error.value = t.value.challengeRequired;
+    await revealError();
+    return;
+  }
+  requestId ||= crypto.randomUUID();
   status.value = "sending";
   submission = new AbortController();
-  const timer = setTimeout(() => submission.abort(), 15000);
+  const timer = setTimeout(() => submission.abort(), 20000);
   try {
     await sendLead(values.value, {
       locale: props.locale,
+      id: requestId,
+      turnstileToken: turnstileToken.value,
       campaign: readCampaign(),
       signal: submission.signal,
     });
@@ -88,12 +100,14 @@ async function submit() {
       fieldErrors.value = e.fieldErrors;
       await revealError(Object.keys(e.fieldErrors)[0]);
     } else {
-      error.value = t.value.sendError;
+      error.value = e.code === 'challenge' ? t.value.challengeRequired
+        : ['rate_limit', 'phone_limit'].includes(e.code) ? t.value.rateLimited : t.value.sendError;
       await revealError();
     }
   } finally {
     clearTimeout(timer);
     submission = undefined;
+    if (status.value !== "success") challenge.value?.reset();
   }
 }
 onMounted(() => {
@@ -246,6 +260,8 @@ onUnmounted(() => {
           tabindex="-1"
           autocomplete="off"
       /></label>
+      <LeadChallenge ref="challenge" :locale="locale" :unavailable="t.challengeUnavailable"
+        :retry-label="t.retryChallenge" @token="turnstileToken = $event" />
       <button
         type="submit"
         class="button form-submit"

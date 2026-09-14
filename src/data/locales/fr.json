@@ -152,10 +152,10 @@
   "notePlaceholder": "Votre question ou le meilleur moment pour vous appeler",
   "send": "Envoyer la demande",
   "sending": "Envoi…",
-  "sent": "Demande acceptée par le formulaire",
-  "sentNote": "L’horaire et le prix final restent à confirmer avec le spécialiste.",
+  "sent": "Demande enregistrée",
+  "sentNote": "Votre demande est enregistrée. Nous vous contacterons pour convenir du rendez-vous et du prix.",
   "sendAnother": "Nouvelle demande",
-  "sendError": "Échec de l’envoi. Réessayez ou contactez-nous par téléphone ou Telegram.",
+  "sendError": "Nous ne pouvons pas confirmer la réception. Réessayez sans créer de doublon, ou contactez-nous par messagerie.",
   "invalidPhone": "Saisissez un mobile, par exemple 054-123-4567 ou +972 54 123 4567.",
   "invalidRequest": "Vérifiez votre nom, votre numéro de téléphone et votre commentaire.",
   "prepare": "Préparer un message",
@@ -164,7 +164,7 @@
   "copied": "Message copié",
   "copyError": "Sélectionnez et copiez le message ci-dessous.",
   "whatsapp": "Ouvrir WhatsApp",
-  "formNote": "Envoyer la demande transmet vos données à l’entreprise via Formspree.",
+  "formNote": "L’envoi transmet vos coordonnées à notre entreprise via Cloudflare.",
   "messageNote": "Vous envoyez vous-même le message depuis votre messagerie.",
   "privacy": "À propos des données",
   "requestHello": "Bonjour ! Je souhaite discuter de l’entretien de ma climatisation.",
@@ -173,7 +173,7 @@
   "contact": "Nous contacter directement",
   "privacyTitle": "Vos données",
   "privacyText": [
-    "Pour vous rappeler, le formulaire transmet les informations saisies à l’entreprise via Formspree, uniquement après votre clic sur Envoyer la demande.",
+    "Votre nom, téléphone et commentaire transitent par Cloudflare et sont enregistrés dans une base de demandes privée. Une copie est envoyée à notre boîte Gmail. Les données sont conservées dans la base pendant 30 jours après acceptation du message par le service de messagerie ; les demandes dont l’envoi a échoué sont conservées jusqu’à résolution. Turnstile vérifie les demandes pour prévenir le spam.",
     "Ouvrir WhatsApp transmet le texte à l’application. Vous décidez de l’envoyer. L’utilisation de Telegram relève de ses propres règles.",
     "Les paramètres de campagne sont conservés pendant la session de cet onglet pour identifier la source du contact. Aucun pixel publicitaire n’est connecté. Pour toute question sur les données envoyées, contactez {brand} par téléphone."
   ],
@@ -228,5 +228,9 @@
   ],
   "regionContact": "contactez-nous pour vérifier la possibilité d’une visite",
   "bulkPriceTitle": "Quatre climatiseurs ou plus",
-  "bulkPriceText": "Le prix est convenu au cas par cas."
+  "bulkPriceText": "Le prix est convenu au cas par cas.",
+  "challengeRequired": "La vérification de sécurité est en cours. Patientez puis réessayez.",
+  "challengeUnavailable": "Impossible de charger la vérification. Réessayez ou contactez-nous sur WhatsApp / Telegram.",
+  "retryChallenge": "Réessayer",
+  "rateLimited": "Trop de tentatives. Patientez quelques minutes ou contactez-nous par messagerie."
 }

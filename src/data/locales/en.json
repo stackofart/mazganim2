@@ -152,10 +152,10 @@
   "notePlaceholder": "Your question or a convenient time to call",
   "send": "Send request",
   "sending": "Sending…",
-  "sent": "Request accepted by the form",
-  "sentNote": "The visit time and final price still need to be agreed with our specialist.",
+  "sent": "Request saved",
+  "sentNote": "Your request is saved. We will contact you to agree on the visit and price.",
   "sendAnother": "New request",
-  "sendError": "The request could not be sent. Please retry or contact us by phone or Telegram.",
+  "sendError": "We could not confirm receipt. You can retry without creating a duplicate, or contact us in a messenger.",
   "invalidPhone": "Enter a mobile number, e.g. 054-123-4567 or +972 54 123 4567.",
   "invalidRequest": "Check your name, phone number and comment.",
   "prepare": "Prepare a message",
@@ -164,7 +164,7 @@
   "copied": "Message copied",
   "copyError": "Select and copy the message below.",
   "whatsapp": "Open WhatsApp",
-  "formNote": "Send request shares your details with the company via Formspree.",
+  "formNote": "Sending this request shares your contact details with us through Cloudflare.",
   "messageNote": "You send the message yourself in the messenger of your choice.",
   "privacy": "About your data",
   "requestHello": "Hello! I would like to discuss AC servicing.",
@@ -173,7 +173,7 @@
   "contact": "Contact us directly",
   "privacyTitle": "Your data",
   "privacyText": [
-    "For a callback, this form shares the details you enter with the company through Formspree, only when you press Send request.",
+    "Your name, phone and comment are sent through Cloudflare and saved in a private requests database. A copy is sent to our Gmail inbox. Database records are retained for 30 days after the mail service accepts the email; requests with sending errors remain until the issue is resolved. Turnstile checks requests to prevent spam.",
     "Opening WhatsApp passes the prepared text to that app. You choose whether to send it. Telegram is subject to that service’s own terms.",
     "Campaign tags are stored for this tab’s session to identify the source of an enquiry. No advertising pixels are connected. Contact {brand} by phone about data you have already submitted."
   ],
@@ -228,5 +228,9 @@
   ],
   "regionContact": "contact us to check availability",
   "bulkPriceTitle": "Four or more air conditioners",
-  "bulkPriceText": "We’ll agree on the price individually."
+  "bulkPriceText": "We’ll agree on the price individually.",
+  "challengeRequired": "The security check is not complete yet. Please wait and try again.",
+  "challengeUnavailable": "The security check could not load. Retry or contact us on WhatsApp / Telegram.",
+  "retryChallenge": "Retry check",
+  "rateLimited": "Too many attempts. Wait a few minutes or contact us in a messenger."
 }

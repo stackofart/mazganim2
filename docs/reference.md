@@ -12,7 +12,7 @@
 | Центр Израиля от Ашдода до Хадеры | `ServiceArea` во всех локалях | Перенесены регион и 12 городов; исправлена опечатка с латинскими символами в арабском названии Хадеры |
 | Чистка, дренаж, дезинфекция, сборка, диагностика | `InfoBlock3`, `PriceList.note` | Сохранены основные услуги, сложные работы по согласованию |
 | Пять языков | `src/i18n.js`, `locales/` | Самостоятельные статические URL, hreflang и RTL |
-| Formspree mpwrzaby | `src/components/ContactForm.jsx` | Сохранён endpoint, добавлены таймаут, honeypot и корректные состояния; живые тестовые заявки не отправлялись |
+| Formspree mpwrzaby | `src/components/ContactForm.jsx` | Исторический источник; заменён Cloudflare Worker + D1 + Email Routing, см. cloudflare-leads.md |
 | WhatsApp | `App.jsx`: 71234567890; `WhatsAppButton.jsx`: 972512345678 | Оба выглядят как заглушки и не совпадают с телефоном; требуется подтверждение реального номера |
 | Email info@example.com и t.me/yourusername | `src/components/App.jsx` | Заглушки исключены |
 

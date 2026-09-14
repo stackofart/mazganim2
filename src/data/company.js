@@ -12,7 +12,7 @@ export const company = {
   phone: phones[0].number,
   whatsapp: phones[0].number,
   telegram: "https://t.me/zeezair",
-  formEndpoint: "https://formspree.io/f/mpwrzaby",
+  formEndpoint: "/api/leads",
   serviceArea: serviceCities.map(city => city.en),
   currency: "ILS",
   prices: { 1: 250, 2: 450, 3: 600 },

@@ -93,7 +93,7 @@ export function whatsappUrl(message) {
 // Single transport function: tests inject fetch so they never submit real leads.
 export async function sendLead(
   values,
-  { locale = "ru", campaign = {}, fetcher = fetch, signal } = {},
+  { locale = "ru", campaign = {}, fetcher = fetch, signal, id, turnstileToken } = {},
 ) {
   const t = contentFor(locale);
   const fieldErrors = validateLead(values, locale);
@@ -102,7 +102,6 @@ export async function sendLead(
   }
   const phone = normalizePhone(values.phone);
   if (!phone) throw new Error(t.invalidPhone);
-  const message = makeRequest(values, campaign, locale);
   if (values.website) throw new Error(t.sendError);
   const payload = {
     name: String(values.name || "")
@@ -110,11 +109,11 @@ export async function sendLead(
       .slice(0, 80),
     phone,
     note: String(values.note || "").trim().slice(0, 300),
-    message,
+    id,
     locale,
-    _subject: `${company.name}: AC service request`,
-    _gotcha: "",
-    ...Object.fromEntries(
+    website: "",
+    turnstileToken,
+    campaign: Object.fromEntries(
       campaignKeys
         .filter((k) => typeof campaign[k] === "string")
         .map((k) => [k, campaign[k].slice(0, 120)]),
@@ -127,6 +126,9 @@ export async function sendLead(
     credentials: "omit",
     signal,
   });
-  if (!response.ok) throw new Error(t.sendError);
-  return { status: "accepted" };
+  const result = await response.json().catch(() => ({}));
+  if (response.status !== 202 || result.status !== "accepted" || result.id !== id) {
+    throw Object.assign(new Error(t.sendError), { code: result.code });
+  }
+  return result;
 }

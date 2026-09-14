@@ -79,24 +79,34 @@ test('validation identifies each invalid field in every language and blocks tran
   assert.equal(sent,false)
  }
 })
-test('callback transport posts to the original endpoint and succeeds only after acceptance',async()=>{
+const submissionId = '45920260-0914-4abc-8def-123456789012'
+const accepted = {status:202,json:async()=>({status:'accepted',id:submissionId})}
+test('callback sends a minimal, idempotent request to the same-origin Cloudflare endpoint',async()=>{
  let called=0
- const result=await sendLead(lead,{locale:'en',campaign:{utm_source:'test'},fetcher:async(url,options)=>{
-  called++;assert.equal(url,'https://formspree.io/f/mpwrzaby');assert.equal(options.method,'POST');assert.equal(options.credentials,'omit');const payload=JSON.parse(options.body);assert.equal(payload.phone,'+972541234567');assert.equal(payload.utm_source,'test');assert.equal(payload.name,'Test');assert.equal(payload.note,'Test only');assert.ok(payload.message.includes('Test only'));assert.ok(!payload.message.includes('₪'));assert.deepEqual(Object.keys(payload).sort(),['_gotcha','_subject','locale','message','name','note','phone','utm_source'].sort());return {ok:true}
+ const result=await sendLead(lead,{id:submissionId,turnstileToken:'token',locale:'en',campaign:{utm_source:'test'},fetcher:async(url,options)=>{
+  called++;assert.equal(url,'/api/leads');assert.equal(options.method,'POST');assert.equal(options.credentials,'omit');
+  const payload=JSON.parse(options.body)
+  assert.equal(payload.phone,'+972541234567');assert.equal(payload.campaign.utm_source,'test');assert.equal(payload.name,'Test');assert.equal(payload.note,'Test only')
+  assert.equal(payload.id,submissionId);assert.equal(payload.turnstileToken,'token')
+  assert.deepEqual(Object.keys(payload).sort(),['id','locale','name','note','phone','campaign','website','turnstileToken'].sort())
+  return accepted
  }})
  assert.equal(called,1);assert.equal(result.status,'accepted')
 })
 test('callback needs only a name and phone and never sends removed or arbitrary fields',async()=>{
  let called=0
- await sendLead({name:' Test ',phone:lead.phone,city:'Old city',type:'wall',quantity:3,service:'cleaning',extra:'ignored'},{fetcher:async(url,options)=>{
+ await sendLead({name:' Test ',phone:lead.phone,city:'Old city',type:'wall',quantity:3,service:'cleaning',extra:'ignored'},{id:submissionId,turnstileToken:'token',fetcher:async(url,options)=>{
   called++
   const payload=JSON.parse(options.body)
   assert.equal(payload.name,'Test');assert.equal(payload.note,'')
   for(const key of ['city','type','quantity','service','extra'])assert.ok(!(key in payload))
-  assert.ok(!/Old city|600|₪/.test(payload.message))
-  return {ok:true}
+  return accepted
  }})
  assert.equal(called,1)
+})
+test('a successful HTTP response without durable acceptance is not a successful lead',async()=>{
+ for(const reply of [{status:200,json:async()=>({})},{status:202,json:async()=>({status:'accepted',id:'wrong'})}])
+  await assert.rejects(sendLead(lead,{id:submissionId,turnstileToken:'token',fetcher:async()=>reply}))
 })
 test('callback failure is never reported as a successful lead',async()=>{
  await assert.rejects(sendLead(lead,{fetcher:async()=>({ok:false,status:422})}))
