@@ -5,6 +5,23 @@ import { readFileSync } from 'node:fs';
 import worker, { deliverOne, drainOutbox } from '../worker/index.js';
 const schema = readFileSync(new URL('../migrations/0001_lead_outbox.sql', import.meta.url), 'utf8');
 const origin = 'https://zeez.co.il';
+test('legacy domains redirect to the primary domain without losing language or campaign parameters', async () => {
+  const env = { ASSETS: { fetch: async () => new Response('static') } };
+  for (const host of ['www.zeez.co.il', 'mazganim-clean-air.gerasim459.workers.dev']) {
+    for (const [path, expected] of [['/', '/'], ['/he/', '/he/'], ['/en', '/en/'], ['/ru/', '/'], ['/sitemap.xml', '/sitemap.xml']]) {
+      for (const method of ['GET', 'HEAD']) {
+        const query = '?utm_source=google&gclid=abc%2B123&gbraid=test';
+        const result = await worker.fetch(new Request(`https://${host}${path}${query}`, { method }), env, {});
+        assert.equal(result.status, 301);
+        assert.equal(result.headers.get('Location'), `${origin}${expected}${query}`);
+      }
+    }
+  }
+  assert.equal(await (await worker.fetch(new Request(origin + '/he/'), env, {})).text(), 'static');
+  assert.equal(await (await worker.fetch(new Request('http://127.0.0.1/he/'), env, {})).text(), 'static');
+  assert.equal((await worker.fetch(new Request('https://www.zeez.co.il/api/leads'), env, {})).status, 405);
+  assert.equal((await worker.fetch(new Request('https://www.zeez.co.il/api/leads', { method: 'POST' }), env, {})).status, 403);
+});
 function fixture(t) {
   const db = new DatabaseSync(':memory:'); db.exec(schema); t.after(() => db.close());
   const emails = [], pending = [];

@@ -152,7 +152,10 @@ test('every SSG page has its own content, canonical, hreflang, direction and off
 
   assert.match(html,/index, follow, max-image-preview:large/)
   const canonical=html.match(/<link rel="canonical" href="([^"]+)"/)[1]
-  assert.equal(new URL(canonical).pathname,localePath(lang.code))
+  assert.equal(canonical,`https://zeez.co.il${localePath(lang.code)}`)
+  for(const match of html.matchAll(/<link rel="alternate" hreflang="[^"]+" href="([^"]+)"/g))assert.equal(new URL(match[1]).origin,'https://zeez.co.il')
+  for(const match of html.matchAll(/<meta property="og:(?:url|image|image:secure_url)" content="([^"]+)"/g))assert.equal(new URL(match[1]).origin,'https://zeez.co.il')
+  assert.ok(!html.includes('mazganim-clean-air.gerasim459.workers.dev'))
   assert.equal((html.match(/<link rel="alternate" hreflang=/g)||[]).length,6)
   for(const phone of company.phones){assert.ok(html.includes(`tel:${phone.number}`));assert.ok(html.includes(phone.display))}
   assert.ok(html.includes('https://t.me/zeezair'))
@@ -186,5 +189,8 @@ test('sitemap exposes all language pages and robots allows indexing',async()=>{
  const sitemap=await readFile('dist/sitemap.xml','utf8'),robots=await readFile('dist/robots.txt','utf8')
  assert.equal((sitemap.match(/<url>/g)||[]).length,5)
  assert.match(robots,/Allow: \//)
+ assert.ok(robots.includes('Sitemap: https://zeez.co.il/sitemap.xml'))
+ assert.ok(!sitemap.includes('workers.dev'))
+ assert.deepEqual([...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map(m=>m[1]),languages.map(l=>`https://zeez.co.il${localePath(l.code)}`))
  for(const lang of languages)assert.ok(sitemap.includes(`hreflang="${lang.code}"`))
 })

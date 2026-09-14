@@ -38,8 +38,11 @@ function startLead() {
   track("lead_start", { locale: props.locale });
   menuOpen.value = false;
 }
-function switchLanguage(event) {
-  location.assign(localePath(event.target.value));
+function switchLanguage(code) {
+  const url = new URL(localePath(code), location.origin);
+  url.search = location.search;
+  url.hash = location.hash;
+  location.assign(url.href);
 }
 async function shareSite() {
   const url = new URL(localePath(props.locale), location.origin);
@@ -85,7 +88,7 @@ onMounted(() => {
             ><Icon name="globe" :size="17" /><span class="sr-only">{{
               t.language
             }}</span
-            ><select :value="locale" @change="switchLanguage">
+            ><select :value="locale" @change="switchLanguage($event.target.value)">
               <option
                 v-for="lang in languages"
                 :key="lang.code"
@@ -300,6 +303,7 @@ onMounted(() => {
           v-for="lang in languages"
           :key="lang.code"
           :href="localePath(lang.code)"
+          @click.prevent="switchLanguage(lang.code)"
           :lang="lang.code"
           :hreflang="lang.code"
           :aria-current="locale === lang.code ? 'page' : undefined"

@@ -1,6 +1,6 @@
 # זיז
 
-Сайт: [mazganim-clean-air.gerasim459.workers.dev](https://mazganim-clean-air.gerasim459.workers.dev). Репозиторий: [stackofart/mazganim2](https://github.com/stackofart/mazganim2).
+Сайт: [mazganim-clean-air.gerasim459.workers.dev](https://zeez.co.il). Репозиторий: [stackofart/mazganim2](https://github.com/stackofart/mazganim2).
 
 Сайт чистки, дезинфекции и заправки кондиционеров в центральном Израиле. Vue 3 + Vite, готовый HTML на этапе сборки, Cloudflare Workers Static Assets. Статические страницы не требуют серверного рендера. API формы работает в Cloudflare Worker: Turnstile, закрытая D1 и отправка писем владельцу через Cloudflare Email Routing.
 
@@ -55,14 +55,14 @@ npx wrangler deploy --dry-run
 
 ## Cloudflare Workers
 
-`SITE_URL` задан в переменных сборки Cloudflare: `https://mazganim-clean-air.gerasim459.workers.dev`. От него зависят canonical, Open Graph и sitemap. Для локальной сборки используется тот же адрес из `company.siteUrl`; при необходимости переопределите его через `.env` или окружение. Пример — `.env.example`.
+`SITE_URL` задан в переменных сборки Cloudflare: `https://zeez.co.il`. От него зависят canonical, Open Graph и sitemap. Для локальной сборки используется тот же адрес из `company.siteUrl`; переменная сборки должна совпадать с этим адресом, иначе публикация остановится. Пример — `.env.example`.
 
 ```sh
 npx wrangler login
 npm run deploy
 ```
 
-Команда проверяет бизнес-данные, собирает сайт, запускает тесты и выполняет `wrangler deploy`. При необходимости смените имя Worker в `wrangler.jsonc`. После подключения собственного домена пересоберите с новым `SITE_URL`.
+Команда проверяет бизнес-данные, собирает сайт, запускает тесты и выполняет `wrangler deploy`. При необходимости смените имя Worker в `wrangler.jsonc`. При смене основного домена обновите `company.siteUrl` и `SITE_URL` одновременно.
 
 Автоматическая публикация настроена через Cloudflare Workers Builds:
 
@@ -74,7 +74,7 @@ npm run deploy
 | Root directory | `/` |
 | Build command | `npm run build:checked` |
 | Deploy command | `npx wrangler deploy` |
-| Build variable `SITE_URL` | `https://mazganim-clean-air.gerasim459.workers.dev` |
+| Build variable `SITE_URL` | `https://zeez.co.il` |
 | Node.js | 22 — версия задана в `.nvmrc` |
 
 Cloudflare устанавливает зависимости по `package-lock.json`, запускает сборку и тесты, затем публикует результат. Ошибка сборки или тестов останавливает публикацию. Без `SITE_URL` сборка в Workers Builds завершается ошибкой, чтобы не опубликовать SEO-ссылки на закрытый предпросмотр. В переменных **сборки**, а не runtime-настройках, задайте реальный адрес.
@@ -82,6 +82,8 @@ Cloudflare устанавливает зависимости по `package-lock.
 Каждый push в `main` обновляет сайт. Сохранение файла на компьютере само по себе публикацию не запускает: изменения нужно закоммитить и отправить в GitHub. Изменение файла через веб-интерфейс GitHub с коммитом в `main` тоже запускает публикацию. Автосборки других веток отключены. Для отката можно отменить проблемный коммит через `git revert` и отправить новый коммит.
 
 Конфигурация `.openai/hosting.json` нужна только закрытому предпросмотру Sites и не требуется для вашего аккаунта Cloudflare. Cloudflare-токены, `.env` и `.dev.vars` не должны попадать в репозиторий. Публикацию выполняет сама платформа Cloudflare через существующее подключение GitHub; GitHub Actions и локальная авторизация Wrangler для обычных обновлений не нужны.
+
+Основной домен — `zeez.co.il`. Домены `zeez.co.il` и `www.zeez.co.il` подключены к этому Worker через Cloudflare Domains. Старый `workers.dev` и `www` перенаправляют страницы на основной домен кодом 301, сохраняя путь и параметры. API не перенаправляется, чтобы уже открытые вкладки могли завершить отправку заявки. Картинки, шрифты и сборочные ресурсы обслуживаются напрямую Static Assets без вызова Worker.
 
 ## Заявки и контакты
 

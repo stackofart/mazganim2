@@ -1,3 +1,5 @@
+import { company } from '../src/data/company.js';
+
 const OWNER = 'gerasim459@gmail.com';
 const SENDER = 'requests@zeez.co.il';
 const HOSTS = new Set(['zeez.co.il', 'www.zeez.co.il', 'mazganim-clean-air.gerasim459.workers.dev']);
@@ -154,6 +156,20 @@ export async function drainOutbox(env, now = Date.now()) {
 export default {
   async fetch(request, env, ctx) {
     const url = new URL(request.url);
+    // Only page navigations redirect. Existing tabs can still POST their forms
+    // to the original same-origin API; never redirect a submitted lead body.
+    if (!url.pathname.startsWith('/api/') && ['GET', 'HEAD'].includes(request.method) &&
+        HOSTS.has(url.hostname) && url.origin !== company.siteUrl) {
+      const destination = new URL(company.siteUrl);
+      destination.pathname = url.pathname;
+      destination.search = url.search;
+      if (/^\/ru\/?$/.test(destination.pathname)) destination.pathname = '/';
+      else if (/^\/(he|en|ar|fr)$/.test(destination.pathname)) destination.pathname += '/';
+      return new Response(null, { status: 301, headers: {
+        Location: destination.href, 'Cache-Control': 'public, max-age=3600',
+        'X-Content-Type-Options': 'nosniff',
+      } });
+    }
     if (!url.pathname.startsWith('/api/')) return env.ASSETS.fetch(request);
     try {
       if (url.pathname === '/api/form-config' && request.method === 'GET') {

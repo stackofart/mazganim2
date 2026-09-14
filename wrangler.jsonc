@@ -9,7 +9,10 @@
     "directory": "./dist",
     "binding": "ASSETS",
     "run_worker_first": [
-      "/api/*"
+      "/*",
+      "!/assets/*",
+      "!/fonts/*",
+      "!/images/*"
     ],
     "html_handling": "auto-trailing-slash",
     "not_found_handling": "404-page"

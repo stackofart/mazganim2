@@ -7,7 +7,7 @@ const phones = [
 ];
 export const company = {
   name: "זיז",
-  siteUrl: "https://mazganim-clean-air.gerasim459.workers.dev",
+  siteUrl: "https://zeez.co.il",
   phones,
   phone: phones[0].number,
   whatsapp: phones[0].number,

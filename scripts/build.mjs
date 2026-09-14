@@ -9,6 +9,9 @@ if (env.WORKERS_CI === "1" && !env.SITE_URL) {
 }
 const origin = new URL(env.SITE_URL || company.siteUrl).origin;
 if (!origin.startsWith("https://")) throw new Error("SITE_URL must use HTTPS.");
+if (origin !== company.siteUrl) {
+  throw new Error(`SITE_URL must match the primary domain ${company.siteUrl}. Update the Cloudflare build variable before deploying.`);
+}
 const isPublic =
   company.verified &&
   /^\+9725\d{8}$/.test(company.phone) &&

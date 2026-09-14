@@ -20,7 +20,7 @@
 
 Напишите в WhatsApp 052-446-4677: город, количество кондиционеров и что вас беспокоит. Согласуем работу, цену и удобное время.
 
-Ссылка: https://mazganim-clean-air.gerasim459.workers.dev/?utm_source=instagram&utm_medium=social&utm_campaign=mountain_launch&utm_content=intro_ru
+Ссылка: https://zeez.co.il/?utm_source=instagram&utm_medium=social&utm_campaign=mountain_launch&utm_content=intro_ru
 
 ### Пост 2 — знакомство, иврит
 
@@ -32,7 +32,7 @@
 
 שלחו לנו בוואטסאפ 052-446-4677 את העיר, מספר המזגנים ותיאור קצר של הבעיה. נתאם את העבודה, המחיר והמועד.
 
-Ссылка: https://mazganim-clean-air.gerasim459.workers.dev/he/?utm_source=facebook&utm_medium=social&utm_campaign=mountain_launch&utm_content=intro_he
+Ссылка: https://zeez.co.il/he/?utm_source=facebook&utm_medium=social&utm_campaign=mountain_launch&utm_content=intro_he
 
 ### Пост 3 — полезный ответ
 
@@ -42,7 +42,7 @@
 
 Пришлите модель кондиционера и описание проблемы в WhatsApp. Обсудим, с чего начать и какой осмотр нужен.
 
-Ссылка: https://mazganim-clean-air.gerasim459.workers.dev/?utm_source=facebook&utm_medium=social&utm_campaign=ac_care&utm_content=cooling_question#guide
+Ссылка: https://zeez.co.il/?utm_source=facebook&utm_medium=social&utm_campaign=ac_care&utm_content=cooling_question#guide
 
 ### Пост 4 — несколько кондиционеров
 
@@ -52,7 +52,7 @@
 
 Работаем от Сдерота до Хайфы и от Тель-Авива до Иерусалима включительно. Напишите город, количество блоков и удобное время. Сложные модели, дополнительные работы и заправка газом согласуются отдельно.
 
-Ссылка: https://mazganim-clean-air.gerasim459.workers.dev/?utm_source=instagram&utm_medium=social&utm_campaign=ac_care&utm_content=cleaning_prices#prices
+Ссылка: https://zeez.co.il/?utm_source=instagram&utm_medium=social&utm_campaign=ac_care&utm_content=cleaning_prices#prices
 
 ## Сценарий короткого видео
 
@@ -76,7 +76,7 @@ GA4, Meta Pixel и внешняя аналитика пока не подклю�
 
 ## Следующие действия владельца
 
-1. Подключить постоянный домен, затем сменить SITE_URL и дождаться новой сборки. Обновить ссылки в этих заготовках.
+1. Использовать основной домен `https://zeez.co.il` во всех публикациях и рекламных ссылках. `SITE_URL` и `company.siteUrl` должны совпадать.
 2. Настроить Google Business Profile с реальными контактами и зонами обслуживания. Не указывать выдуманный офис, часы работы или отзывы.
 3. Подтвердить сайт в Google Search Console и отправить `/sitemap.xml`.
 4. Добавлять реальные фото работ и отзывы с разрешением авторов. Будущие страницы городов должны иметь собственную полезную информацию, а не одинаковые тексты с заменённым названием города.
