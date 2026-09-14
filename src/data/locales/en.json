@@ -175,7 +175,8 @@
   "privacyText": [
     "Your name, phone and comment are sent through Cloudflare and saved in a private requests database. A copy is sent to our Gmail inbox. Database records are retained for 30 days after the mail service accepts the email; requests with sending errors remain until the issue is resolved. Turnstile checks requests to prevent spam.",
     "Opening WhatsApp passes the prepared text to that app. You choose whether to send it. Telegram is subject to that service’s own terms.",
-    "Campaign tags are stored for this tab’s session to identify the source of an enquiry. No advertising pixels are connected. Contact {brand} by phone about data you have already submitted."
+    "Campaign tags are stored for this tab’s session to identify the source of an enquiry. No advertising pixels are connected. Contact {brand} by phone about data you have already submitted.",
+    "With your consent, Google Analytics 4 uses cookies to measure visits, traffic sources, engagement time, scrolling, clicks and accepted enquiries. Form data (name, phone number and comment) is not sent to Google Analytics. Advertising personalization is disabled. Your choice and analytics cookies are stored for up to 180 days. You can change your choice and stop collection through “Analytics settings” in the site footer."
   ],
   "understood": "Understood",
   "shareTitle": "Fresh air is worth sharing.",
@@ -232,5 +233,13 @@
   "challengeRequired": "The security check is not complete yet. Please wait and try again.",
   "challengeUnavailable": "The security check could not load. Retry or contact us on WhatsApp / Telegram.",
   "retryChallenge": "Retry check",
-  "rateLimited": "Too many attempts. Wait a few minutes or contact us in a messenger."
+  "rateLimited": "Too many attempts. Wait a few minutes or contact us in a messenger.",
+  "analytics": {
+    "title": "Visitor analytics",
+    "text": "Allow Google Analytics to measure visits and clicks? Your name, phone number and enquiry comment are not sent to Analytics.",
+    "details": "Learn more",
+    "accept": "Allow",
+    "decline": "Decline",
+    "settings": "Analytics settings"
+  }
 }

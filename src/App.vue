@@ -5,6 +5,7 @@ import BookingForm from "./components/BookingForm.vue";
 import ApartmentScene from "./components/ApartmentScene.vue";
 import BrandMark from "./components/BrandMark.vue";
 import BookingBird from "./components/BookingBird.vue";
+import AnalyticsConsent from "./components/AnalyticsConsent.vue";
 import { sceneCopy } from "./data/scene.js";
 import { useSceneInteraction } from "./composables/useSceneInteraction.js";
 import { company } from "./data/company.js";
@@ -20,6 +21,7 @@ const direction = computed(() =>
 );
 const menuOpen = ref(false),
   privacyDialog = ref(null),
+  analyticsConsent = ref(null),
   shareStatus = ref("");
 const booking = ref({
   name: "",
@@ -34,8 +36,8 @@ const nav = computed(() =>
   })), { id: "area", label: t.value.areaNav }],
 );
 const directWhatsapp = computed(() => whatsappUrl(t.value.requestHello));
-function startLead() {
-  track("lead_start", { locale: props.locale });
+function startLead(placement) {
+  track("lead_start", { locale: props.locale, placement });
   menuOpen.value = false;
 }
 function switchLanguage(code) {
@@ -121,7 +123,7 @@ onMounted(() => {
           @click="menuOpen = false"
           >{{ item.label }}</a
         >
-        <a href="#booking-form" @click="startLead">{{ t.book }}</a>
+        <a href="#booking-form" @click="startLead('menu')">{{ t.book }}</a>
       </nav>
     </header>
     <main id="main">
@@ -136,9 +138,9 @@ onMounted(() => {
           <div class="hero-actions">
             <a ref="heroBooking" href="#booking-form" class="button"
               @pointerenter="heroInteraction.enter" @pointerleave="heroInteraction.exit" @focus="heroInteraction.focus" @blur="heroInteraction.blur"
-              @click="startLead"
+              @click="startLead('hero')"
               >{{ t.book }}</a
-            ><a href="#prices" class="button button-secondary"
+            ><a href="#prices" class="button button-secondary" @click="track('prices_click', { locale, placement: 'hero' })"
               >{{ t.nav[1] }}</a
             >
           </div>
@@ -201,7 +203,7 @@ onMounted(() => {
         <div class="gas-callout"><Icon name="cylinder" :size="36" /><div><h3>{{ t.gasPriceTitle }}</h3><p>{{ t.gasPriceText }}</p></div></div>
         <div class="price-bottom">
           <p>{{ t.priceNote }} {{ t.estimateNote }}</p>
-          <a class="text-link" href="#contact" @click="startLead"
+          <a class="text-link" href="#contact" @click="startLead('prices')"
             >{{ t.book }}<Icon name="arrow" :size="18"
           /></a>
         </div>
@@ -211,7 +213,7 @@ onMounted(() => {
           <div class="area-copy">
             <div class="eyebrow">{{ t.regionKicker }}</div>
             <h2>{{ t.regionTitle }}</h2>
-            <p>{{ t.regionText }} <a class="area-contact-link" href="#contact" @click="startLead">{{ t.regionContact }}</a>.</p>
+            <p>{{ t.regionText }} <a class="area-contact-link" href="#contact" @click="startLead('area')">{{ t.regionContact }}</a>.</p>
           </div>
           <div class="area-cities">
             <div v-for="group in t.cityGroups" :key="group.title" class="city-group">
@@ -232,7 +234,7 @@ onMounted(() => {
           <div class="eyebrow">{{ t.faqEyebrow }}</div>
           <h2>{{ t.faqTitle }}</h2>
           <p>{{ t.faqIntro }}</p>
-          <a class="text-link" href="#contact"
+          <a class="text-link" href="#contact" @click="startLead('faq')"
             >{{ t.ask }}<Icon name="arrow" :size="18"
           /></a>
         </div>
@@ -261,7 +263,7 @@ onMounted(() => {
                 :key="phone.number"
                 :href="`tel:${phone.number}`"
                 class="contact-phone"
-                @click="track('phone_click', { locale })"
+                @click="track('phone_click', { locale, placement: 'contact' })"
                 ><Icon name="phone" :size="20" /><bdi>{{ phone.display }}</bdi></a
               >
             </div>
@@ -270,14 +272,14 @@ onMounted(() => {
                 :href="company.telegram"
                 target="_blank"
                 rel="noopener noreferrer"
-                @click="track('telegram_click', { locale })"
+                @click="track('telegram_click', { locale, placement: 'contact' })"
                 ><Icon name="telegram" :size="18" />Telegram</a
               ><a
                 v-if="directWhatsapp"
                 :href="directWhatsapp"
                 target="_blank"
                 rel="noopener noreferrer"
-                @click="track('lead_whatsapp_click', { locale })"
+                @click="track('lead_whatsapp_click', { locale, placement: 'contact' })"
                 ><Icon name="chat" :size="18" />WhatsApp</a
               >
             </div>
@@ -317,9 +319,11 @@ onMounted(() => {
           <span class="share-status" role="status">{{ shareStatus }}</span>
         </div>
       </div>
+      <button class="footer-privacy analytics-settings" @click="analyticsConsent.open()">{{ t.analytics.settings }}</button>
       <p class="footer-credit" lang="en" dir="ltr">Website by Natan Makovich</p>
     </footer>
-    <BookingBird :label="t.book" @book="startLead" />
+    <BookingBird :label="t.book" @book="startLead('floating')" />
+    <AnalyticsConsent ref="analyticsConsent" :locale="locale" @privacy="privacyDialog.showModal()" />
     <dialog
       ref="privacyDialog"
       class="detail-dialog"

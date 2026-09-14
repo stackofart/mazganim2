@@ -175,7 +175,8 @@
   "privacyText": [
     "Votre nom, téléphone et commentaire transitent par Cloudflare et sont enregistrés dans une base de demandes privée. Une copie est envoyée à notre boîte Gmail. Les données sont conservées dans la base pendant 30 jours après acceptation du message par le service de messagerie ; les demandes dont l’envoi a échoué sont conservées jusqu’à résolution. Turnstile vérifie les demandes pour prévenir le spam.",
     "Ouvrir WhatsApp transmet le texte à l’application. Vous décidez de l’envoyer. L’utilisation de Telegram relève de ses propres règles.",
-    "Les paramètres de campagne sont conservés pendant la session de cet onglet pour identifier la source du contact. Aucun pixel publicitaire n’est connecté. Pour toute question sur les données envoyées, contactez {brand} par téléphone."
+    "Les paramètres de campagne sont conservés pendant la session de cet onglet pour identifier la source du contact. Aucun pixel publicitaire n’est connecté. Pour toute question sur les données envoyées, contactez {brand} par téléphone.",
+    "Avec votre accord, Google Analytics 4 utilise des cookies pour mesurer les visites, les sources de trafic, le temps d’interaction, le défilement, les clics et les demandes acceptées. Les données du formulaire (nom, téléphone et commentaire) ne sont pas transmises à Google Analytics. La personnalisation publicitaire est désactivée. Votre choix et les cookies de statistiques sont conservés jusqu’à 180 jours. Vous pouvez modifier votre choix et arrêter la collecte via « Paramètres des statistiques » en bas du site."
   ],
   "understood": "Compris",
   "shareTitle": "L’air frais se partage.",
@@ -232,5 +233,13 @@
   "challengeRequired": "La vérification de sécurité est en cours. Patientez puis réessayez.",
   "challengeUnavailable": "Impossible de charger la vérification. Réessayez ou contactez-nous sur WhatsApp / Telegram.",
   "retryChallenge": "Réessayer",
-  "rateLimited": "Trop de tentatives. Patientez quelques minutes ou contactez-nous par messagerie."
+  "rateLimited": "Trop de tentatives. Patientez quelques minutes ou contactez-nous par messagerie.",
+  "analytics": {
+    "title": "Statistiques de visite",
+    "text": "Autoriser Google Analytics à mesurer les visites et les clics ? Votre nom, téléphone et commentaire ne sont pas transmis à Analytics.",
+    "details": "En savoir plus",
+    "accept": "Autoriser",
+    "decline": "Refuser",
+    "settings": "Paramètres des statistiques"
+  }
 }

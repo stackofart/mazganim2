@@ -1,5 +1,6 @@
 import { company } from "./data/company.js";
 import { contentFor } from "./data/content.js";
+import { analyticsClient } from "./analytics.js";
 export const campaignKeys = [
   "utm_source",
   "utm_medium",
@@ -42,10 +43,12 @@ export function readCampaign() {
   }
 }
 export function track(event, properties = {}) {
-  if (typeof window === "undefined") return;
-  // Intentionally does not send anything. Connect your consent-aware analytics in one place.
-  window.dataLayer = window.dataLayer || [];
-  window.dataLayer.push({ event, ...properties, ...readCampaign() });
+  try {
+    return analyticsClient()?.track(event, properties) || false;
+  } catch {
+    // Analytics must never interrupt a click or turn an accepted lead into an error.
+    return false;
+  }
 }
 export function normalizePhone(value) {
   const number = String(value || "").replace(/[\s()-]/g, "");

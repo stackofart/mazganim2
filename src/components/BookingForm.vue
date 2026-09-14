@@ -19,6 +19,15 @@ const t = computed(() => contentFor(props.locale));
 const form = ref(null), fieldErrors = ref({});
 const challenge = ref(null), turnstileToken = ref("");
 let requestId;
+let formStarted = false;
+function startForm(event) {
+  if (!formStarted && ['name', 'phone', 'note'].includes(event.target.name)) {
+    formStarted = track('form_start', { locale: props.locale, placement: 'form' });
+  }
+}
+function trackError(reason) {
+  track('form_error', { locale: props.locale, placement: 'form', reason });
+}
 const interactive = ref(false),
   error = ref(""),
   status = ref("idle");
@@ -62,10 +71,12 @@ async function submit() {
   fieldErrors.value = validateLead(values.value, props.locale);
   const firstInvalid = Object.keys(fieldErrors.value)[0];
   if (firstInvalid) {
+    trackError('validation');
     await revealError(firstInvalid);
     return;
   }
   if (!turnstileToken.value) {
+    trackError('challenge');
     error.value = t.value.challengeRequired;
     await revealError();
     return;
@@ -85,7 +96,9 @@ async function submit() {
     status.value = "success";
     track("lead_submitted", {
       locale: props.locale,
+      placement: 'form',
     });
+    formStarted = false;
     values.value = {
       name: "",
       phone: "",
@@ -96,6 +109,9 @@ async function submit() {
     document.getElementById("form-success")?.focus();
   } catch (e) {
     status.value = "error";
+    trackError(e.fieldErrors ? 'validation' : e.code === 'challenge' ? 'challenge'
+      : ['rate_limit', 'phone_limit'].includes(e.code) ? 'rate_limit'
+      : e.name === 'AbortError' || e instanceof TypeError ? 'network' : 'server');
     if (e.fieldErrors) {
       fieldErrors.value = e.fieldErrors;
       await revealError(Object.keys(e.fieldErrors)[0]);
@@ -167,7 +183,7 @@ onUnmounted(() => {
 });
 </script>
 <template>
-  <form ref="form" id="booking-form" class="booking-form" novalidate @submit.prevent="submit">
+  <form ref="form" id="booking-form" class="booking-form" novalidate @input="startForm" @submit.prevent="submit">
     <div
       v-if="status === 'success'"
       id="form-success"
